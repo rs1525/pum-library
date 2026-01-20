@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- General -->
+    <string name="app_name">PUM</string>
+    
+    <!-- Navigation -->
+    <string name="tab_widgets">KWGT</string>
+    <string name="tab_wallpapers">KLWP</string>
+    <string name="tab_wallpaper_cloud">Wallpaper</string>
+    
+    <!-- Menu -->
+    <string name="menu_changelog">Changelog</string>
+    <string name="menu_about">About</string>
+    <string name="menu_settings">Settings</string>
+    
+    <!-- Search -->
+    <string name="search_placeholder">Search...</string>
+    
+    <!-- Cards -->
+    <string name="btn_apply">Apply</string>
+    <string name="no_widgets_found">No Widgets Found</string>
+    <string name="no_wallpapers_found">No Wallpapers Found</string>
+    
+    <!-- Cloud Wallpapers -->
+    <string name="loading_wallpapers">Loading wallpapers...</string>
+    <string name="no_wallpapers_available">No wallpapers available</string>
+    <string name="retry">Retry</string>
+    <string name="apply_wallpaper">Apply Wallpaper</string>
+    <string name="home_screen">Home Screen</string>
+    <string name="lock_screen">Lock Screen</string>
+    <string name="both_screens">Both Screens</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="wallpaper_info">Wallpaper Info</string>
+    <string name="download">Download</string>
+    <string name="download_started">Download started</string>
+    <string name="download_failed">Download failed</string>
+    <string name="downloading_title">Downloading %s</string>
+    <string name="downloading_description">Downloading wallpaper...</string>
+    <string name="wallpaper_downloaded">Wallpaper downloaded!</string>
+    <string name="wallpaper_applied">Wallpaper applied!</string>
+    <string name="wallpaper_by_author">by %s</string>
+    <string name="wallpaper_failed_load">Failed to load image</string>
+    <string name="wallpaper_failed_apply">Failed to apply wallpaper</string>
+    <string name="wallpaper_info_name">Name</string>
+    <string name="wallpaper_info_author">Author</string>
+    <string name="wallpaper_info_resolution">Resolution</string>
+    <string name="wallpaper_info_collection">Collection</string>
+    
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_system">Follow system</string>
+    <string name="settings_accent_color">Accent color</string>
+    <string name="settings_select_accent_color">Select accent color</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_app_language">App language</string>
+    <string name="settings_data_cache">Data and Cache</string>
+    <string name="settings_clear_cache">Clear image cache</string>
+    <string name="settings_clear_cache_desc">Free up storage space</string>
+    <string name="settings_cache_cleared">Cache cleared successfully</string>
+    <string name="settings_cache_error">Error clearing cache</string>
+    <string name="settings_download_wifi">Download on WiFi only</string>
+    <string name="settings_download_wifi_desc">Save mobile data when downloading</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_notifications_desc">Receive new widgets alerts</string>
+    <string name="settings_info">Information</string>
+    <string name="settings_version">App version</string>
+    <string name="settings_rate">Rate on Google Play</string>
+    <string name="settings_rate_desc">Your opinion helps us improve!</string>
+    <string name="settings_report">Report a problem</string>
+    <string name="settings_report_desc">Send us your feedback</string>
+    <string name="settings_no_email_app">No email app installed</string>
+    <string name="settings_select_theme">Select theme</string>
+    <string name="settings_select_language">Select language</string>
+    
+    <!-- About -->
+    <string name="about_title">About</string>
+    <string name="about_back">Back</string>
+    <string name="about_developer_desc">I am a developer and designer in constant learning, I am passionate about screen customizations, if you like my work, please support, rate and follow me on my social networks.</string>
+    <string name="about_pum_title">PUM - Pack Universal Manager</string>
+    <string name="about_pum_desc">Library to manage widget and wallpaper packs in a universal and simple way.</string>
+    <string name="about_error_opening_link">Error opening link</string>
+    
+    <!-- Changelog -->
+    <string name="changelog_title">Changelog</string>
+    <string name="changelog_accept">Accept</string>
+    <string name="changelog_widgets">Total %d beautiful widgets</string>
+    <string name="changelog_wallpapers">Total %d beautiful wallpapers</string>
+    <string name="changelog_widgets_added">Beautiful widgets added</string>
+    <string name="changelog_more_widgets_soon">Soon there will be more widgets</string>
+    
+    <!-- Colors -->
+    <string name="color_blue">Blue</string>
+    <string name="color_purple">Purple</string>
+    <string name="color_green">Green</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_red">Red</string>
+    <string name="color_teal">Teal</string>
+    <string name="color_pink">Pink</string>
+    <string name="color_cyan">Cyan</string>
+    
+    <!-- Languages -->
+    <string name="language_spanish">Español</string>
+    <string name="language_english">English</string>
+    <string name="language_auto">Auto</string>
+</resources>

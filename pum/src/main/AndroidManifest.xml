@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Queries to detect KWGT and KLWP apps (required for Android 11+) -->
+    <queries>
+        <package android:name="org.kustom.widget" />
+        <package android:name="org.kustom.widget.pro" />
+        <package android:name="org.kustom.wallpaper" />
+        <package android:name="org.kustom.wallpaper.pro" />
+    </queries>
+    
+    <!-- Permissions for Kustom integration -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" 
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" 
+        android:maxSdkVersion="32" />
+    
+    <application>
+        <!-- Content Provider for Kustom integration - EXACTLY like Lunex -->
+        <provider
+            android:name=".provider.KustomProvider"
+            android:authorities="${applicationId}"
+            android:exported="true"
+            android:grantUriPermissions="true">
+            <intent-filter>
+                <action android:name="org.kustom.provider.WIDGETS" />
+                <action android:name="org.kustom.provider.WALLPAPERS" />
+                <action android:name="org.kustom.provider.KOMPONENTS" />
+                <action android:name="org.kustom.provider.LOCKSCREENS" />
+            </intent-filter>
+        </provider>
+    </application>
+        
+</manifest>

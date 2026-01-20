@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- General -->
+    <string name="app_name">PUM</string>
+    
+    <!-- Navigation -->
+    <string name="tab_widgets">KWGT</string>
+    <string name="tab_wallpapers">KLWP</string>
+    <string name="tab_wallpaper_cloud">Wallpaper</string>
+    
+    <!-- Menu -->
+    <string name="menu_changelog">Registro de cambios</string>
+    <string name="menu_about">Acerca de</string>
+    <string name="menu_settings">Configuración</string>
+    
+    <!-- Search -->
+    <string name="search_placeholder">Buscar...</string>
+    
+    <!-- Cards -->
+    <string name="btn_apply">Aplicar</string>
+    <string name="no_widgets_found">No se encontraron widgets</string>
+    <string name="no_wallpapers_found">No se encontraron wallpapers</string>
+    
+    <!-- Cloud Wallpapers -->
+    <string name="loading_wallpapers">Cargando wallpapers...</string>
+    <string name="no_wallpapers_available">No hay wallpapers disponibles</string>
+    <string name="retry">Reintentar</string>
+    <string name="apply_wallpaper">Aplicar Wallpaper</string>
+    <string name="home_screen">Pantalla de inicio</string>
+    <string name="lock_screen">Pantalla de bloqueo</string>
+    <string name="both_screens">Ambas pantallas</string>
+    <string name="cancel">Cancelar</string>
+    <string name="close">Cerrar</string>
+    <string name="wallpaper_info">Información del Wallpaper</string>
+    <string name="download">Descargar</string>
+    <string name="download_started">Descarga iniciada</string>
+    <string name="download_failed">Descarga fallida</string>
+    <string name="downloading_title">Descargando %s</string>
+    <string name="downloading_description">Descargando wallpaper...</string>
+    <string name="wallpaper_downloaded">¡Wallpaper descargado!</string>
+    <string name="wallpaper_applied">¡Fondo de pantalla aplicado!</string>
+    <string name="wallpaper_by_author">por %s</string>
+    <string name="wallpaper_failed_load">Error al cargar imagen</string>
+    <string name="wallpaper_failed_apply">Error al aplicar fondo</string>
+    <string name="wallpaper_info_name">Nombre</string>
+    <string name="wallpaper_info_author">Autor</string>
+    <string name="wallpaper_info_resolution">Resolución</string>
+    <string name="wallpaper_info_collection">Colección</string>
+    
+    <!-- Settings -->
+    <string name="settings_title">Configuración</string>
+    <string name="settings_appearance">Apariencia</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_light">Claro</string>
+    <string name="settings_theme_dark">Oscuro</string>
+    <string name="settings_theme_system">Seguir sistema</string>
+    <string name="settings_accent_color">Color de acento</string>
+    <string name="settings_select_accent_color">Seleccionar color de acento</string>
+    <string name="settings_language">Idioma</string>
+    <string name="settings_app_language">Idioma de la app</string>
+    <string name="settings_data_cache">Datos y Caché</string>
+    <string name="settings_clear_cache">Limpiar caché de imágenes</string>
+    <string name="settings_clear_cache_desc">Liberar espacio de almacenamiento</string>
+    <string name="settings_cache_cleared">Caché limpiado correctamente</string>
+    <string name="settings_cache_error">Error al limpiar caché</string>
+    <string name="settings_download_wifi">Descargar solo en WiFi</string>
+    <string name="settings_download_wifi_desc">Ahorra datos móviles al descargar</string>
+    <string name="settings_notifications">Notificaciones</string>
+    <string name="settings_notifications_desc">Recibir avisos de nuevos widgets</string>
+    <string name="settings_info">Información</string>
+    <string name="settings_version">Versión de la app</string>
+    <string name="settings_rate">Calificar en Google Play</string>
+    <string name="settings_rate_desc">¡Tu opinión nos ayuda a mejorar!</string>
+    <string name="settings_report">Reportar un problema</string>
+    <string name="settings_report_desc">Envíanos tus comentarios</string>
+    <string name="settings_no_email_app">No hay app de correo instalada</string>
+    <string name="settings_select_theme">Seleccionar tema</string>
+    <string name="settings_select_language">Seleccionar idioma</string>
+    
+    <!-- About -->
+    <string name="about_title">Acerca de</string>
+    <string name="about_back">Volver</string>
+    <string name="about_developer_desc">Soy un desarrollador y diseñador en constante aprendizaje, me apasionan las configuraciones de pantallas, si le agrada mi trabajo, por favor apoyar, califica y sígueme en mis redes sociales.</string>
+    <string name="about_pum_title">PUM - Pack Universal Manager</string>
+    <string name="about_pum_desc">Librería para gestionar packs de widgets y wallpapers de manera universal y sencilla.</string>
+    <string name="about_error_opening_link">Error al abrir el enlace</string>
+    
+    <!-- Changelog -->
+    <string name="changelog_title">Registro de cambios</string>
+    <string name="changelog_accept">Aceptar</string>
+    <string name="changelog_widgets">Total %d hermosos widgets</string>
+    <string name="changelog_wallpapers">Total %d hermosos wallpapers</string>
+    <string name="changelog_widgets_added">Hermosos widgets añadidos</string>
+    <string name="changelog_more_widgets_soon">Pronto habrá más widgets</string>
+    
+    <!-- Colors -->
+    <string name="color_blue">Azul</string>
+    <string name="color_purple">Púrpura</string>
+    <string name="color_green">Verde</string>
+    <string name="color_orange">Naranja</string>
+    <string name="color_red">Rojo</string>
+    <string name="color_teal">Turquesa</string>
+    <string name="color_pink">Rosa</string>
+    <string name="color_cyan">Cian</string>
+    
+    <!-- Languages -->
+    <string name="language_spanish">Español</string>
+    <string name="language_english">English</string>
+    <string name="language_auto">Automático</string>
+</resources>
