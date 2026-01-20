@@ -63,6 +63,7 @@
     <string name="settings_no_email_app">未安装邮件应用</string>
     <string name="settings_select_theme">选择主题</string>
     <string name="settings_select_language">选择语言</string>
+    <string name="settings_accent_default">默认（应用颜色）</string>
     <string name="about_title">关于</string>
     <string name="about_back">返回</string>
     <string name="about_developer_desc">我是一名不断学习的开发者和设计师，我热衷于屏幕定制。如果您喜欢我的作品，请支持、评分并在社交网络上关注我。</string>

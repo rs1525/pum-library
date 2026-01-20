@@ -63,6 +63,7 @@
     <string name="settings_no_email_app">لا يوجد تطبيق بريد إلكتروني مثبت</string>
     <string name="settings_select_theme">اختيار السمة</string>
     <string name="settings_select_language">اختيار اللغة</string>
+    <string name="settings_accent_default">افتراضي (لون التطبيق)</string>
     <string name="about_title">حول</string>
     <string name="about_back">رجوع</string>
     <string name="about_developer_desc">أنا مطور ومصمم في تعلم مستمر، أنا شغوف بتخصيصات الشاشة. إذا أعجبك عملي، يرجى دعمي وتقييمي ومتابعتي على شبكاتي الاجتماعية.</string>

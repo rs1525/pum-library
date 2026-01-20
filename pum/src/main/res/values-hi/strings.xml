@@ -63,6 +63,7 @@
     <string name="settings_no_email_app">कोई ईमेल ऐप इंस्टॉल नहीं</string>
     <string name="settings_select_theme">थीम चुनें</string>
     <string name="settings_select_language">भाषा चुनें</string>
+    <string name="settings_accent_default">डिफ़ॉल्ट (ऐप रंग)</string>
     <string name="about_title">के बारे में</string>
     <string name="about_back">वापस</string>
     <string name="about_developer_desc">मैं निरंतर सीखने वाला एक डेवलपर और डिज़ाइनर हूं, मुझे स्क्रीन कस्टमाइज़ेशन का शौक है। अगर आपको मेरा काम पसंद है, तो कृपया सपोर्ट करें, रेट करें और मेरे सोशल नेटवर्क पर फॉलो करें।</string>

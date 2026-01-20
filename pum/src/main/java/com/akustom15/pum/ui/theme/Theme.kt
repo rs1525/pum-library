@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.akustom15.pum.R
 import com.akustom15.pum.data.AccentColor
 import com.akustom15.pum.data.PumPreferences
 import com.akustom15.pum.data.ThemeMode
@@ -26,6 +27,9 @@ private fun getDarkColorScheme(accentColor: Color) =
                 background = PumColors.Background,
                 surface = PumColors.Surface,
                 surfaceVariant = PumColors.SurfaceVariant,
+                surfaceContainerHigh = Color(0xFF2C2C2E), // Dark dialog background
+                surfaceContainer = Color(0xFF252527),
+                surfaceContainerHighest = Color(0xFF3A3A3C),
                 onPrimary = Color.White,
                 onSecondary = Color.White,
                 onBackground = PumColors.OnBackground,
@@ -60,7 +64,23 @@ fun PumTheme(
         
         val themeMode = preferences.themeMode.collectAsState().value
         val accentColorPref = preferences.accentColor.collectAsState().value
-        val accentColor = Color(accentColorPref.colorValue)
+        
+        // Si es DEFAULT, obtener color desde resources de la app (pum_accent_color)
+        // Si no existe, usar el color por defecto del enum
+        val accentColor = if (accentColorPref.isDefault) {
+                try {
+                        val colorResId = context.resources.getIdentifier("pum_accent_color", "color", context.packageName)
+                        if (colorResId != 0) {
+                                Color(context.getColor(colorResId))
+                        } else {
+                                Color(accentColorPref.colorValue)
+                        }
+                } catch (e: Exception) {
+                        Color(accentColorPref.colorValue)
+                }
+        } else {
+                Color(accentColorPref.colorValue)
+        }
         
         val systemDarkTheme = isSystemInDarkTheme()
         

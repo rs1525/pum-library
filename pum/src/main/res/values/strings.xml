@@ -76,6 +76,7 @@
     <string name="settings_no_email_app">No email app installed</string>
     <string name="settings_select_theme">Select theme</string>
     <string name="settings_select_language">Select language</string>
+    <string name="settings_accent_default">Default (App color)</string>
     
     <!-- About -->
     <string name="about_title">About</string>

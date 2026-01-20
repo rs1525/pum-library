@@ -76,6 +76,7 @@
     <string name="settings_no_email_app">No hay app de correo instalada</string>
     <string name="settings_select_theme">Seleccionar tema</string>
     <string name="settings_select_language">Seleccionar idioma</string>
+    <string name="settings_accent_default">Predeterminado (Color de la app)</string>
     
     <!-- About -->
     <string name="about_title">Acerca de</string>

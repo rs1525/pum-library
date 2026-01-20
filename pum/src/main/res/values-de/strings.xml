@@ -63,6 +63,7 @@
     <string name="settings_no_email_app">Keine E-Mail-App installiert</string>
     <string name="settings_select_theme">Design auswählen</string>
     <string name="settings_select_language">Sprache auswählen</string>
+    <string name="settings_accent_default">Standard (App-Farbe)</string>
     <string name="about_title">Über</string>
     <string name="about_back">Zurück</string>
     <string name="about_developer_desc">Ich bin ein Entwickler und Designer in ständigem Lernen, ich bin leidenschaftlich an Bildschirmanpassungen interessiert. Wenn Ihnen meine Arbeit gefällt, unterstützen Sie mich bitte, bewerten Sie und folgen Sie mir in meinen sozialen Netzwerken.</string>

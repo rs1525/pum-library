@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default accent color - Apps should override this in their own colors.xml -->
+    <color name="pum_accent_color">#FF2196F3</color>
+</resources>

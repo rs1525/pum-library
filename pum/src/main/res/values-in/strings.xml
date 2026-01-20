@@ -63,6 +63,7 @@
     <string name="settings_no_email_app">Tidak ada aplikasi email terpasang</string>
     <string name="settings_select_theme">Pilih tema</string>
     <string name="settings_select_language">Pilih bahasa</string>
+    <string name="settings_accent_default">Bawaan (Warna aplikasi)</string>
     <string name="about_title">Tentang</string>
     <string name="about_back">Kembali</string>
     <string name="about_developer_desc">Saya seorang pengembang dan desainer yang terus belajar, saya sangat menyukai kustomisasi layar. Jika Anda menyukai pekerjaan saya, tolong dukung, nilai dan ikuti saya di media sosial saya.</string>

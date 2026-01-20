@@ -63,6 +63,7 @@
     <string name="settings_no_email_app">Nenhum app de e-mail instalado</string>
     <string name="settings_select_theme">Selecionar tema</string>
     <string name="settings_select_language">Selecionar idioma</string>
+    <string name="settings_accent_default">Padrão (Cor do app)</string>
     <string name="about_title">Sobre</string>
     <string name="about_back">Voltar</string>
     <string name="about_developer_desc">Sou um desenvolvedor e designer em constante aprendizado, sou apaixonado por customizações de tela. Se você gosta do meu trabalho, por favor apoie, avalie e me siga nas redes sociais.</string>

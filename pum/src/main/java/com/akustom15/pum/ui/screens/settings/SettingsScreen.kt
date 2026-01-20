@@ -480,6 +480,22 @@ private fun AccentColorDialog(
     onSelect: (AccentColor) -> Unit,
     onDismiss: () -> Unit
 ) {
+    val context = LocalContext.current
+    
+    // Obtener el color predeterminado desde resources
+    val defaultColor = remember {
+        try {
+            val colorResId = context.resources.getIdentifier("pum_accent_color", "color", context.packageName)
+            if (colorResId != 0) {
+                Color(context.getColor(colorResId))
+            } else {
+                Color(AccentColor.DEFAULT.colorValue)
+            }
+        } catch (e: Exception) {
+            Color(AccentColor.DEFAULT.colorValue)
+        }
+    }
+    
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
@@ -491,7 +507,43 @@ private fun AccentColorDialog(
         },
         text = {
             Column {
-                AccentColor.entries.chunked(4).forEach { row ->
+                // Primera fila: opción Predeterminado
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onSelect(AccentColor.DEFAULT) }
+                        .padding(vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(CircleShape)
+                            .background(defaultColor),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (selectedColor == AccentColor.DEFAULT) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = "Seleccionado",
+                                tint = Color.White,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Text(
+                        text = stringResource(R.string.settings_accent_default),
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                // Colores disponibles (excluyendo DEFAULT)
+                val colors = AccentColor.entries.filter { !it.isDefault }
+                colors.chunked(4).forEach { row ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()

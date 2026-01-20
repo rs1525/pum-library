@@ -63,6 +63,7 @@
     <string name="settings_no_email_app">Aucune application de messagerie installée</string>
     <string name="settings_select_theme">Sélectionner le thème</string>
     <string name="settings_select_language">Sélectionner la langue</string>
+    <string name="settings_accent_default">Par défaut (Couleur de l\'app)</string>
     <string name="about_title">À propos</string>
     <string name="about_back">Retour</string>
     <string name="about_developer_desc">Je suis un développeur et designer en apprentissage constant, je suis passionné par les personnalisations d\'écran. Si vous aimez mon travail, veuillez me soutenir, noter et me suivre sur mes réseaux sociaux.</string>

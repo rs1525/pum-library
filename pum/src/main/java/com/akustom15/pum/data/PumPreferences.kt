@@ -36,8 +36,10 @@ enum class AppLanguage(val code: String, val displayName: String) {
 
 /**
  * Enum para los colores de acento disponibles
+ * DEFAULT usa el color definido en colors.xml de la app (pum_accent_color)
  */
-enum class AccentColor(val colorValue: Long, val displayName: String) {
+enum class AccentColor(val colorValue: Long, val displayName: String, val isDefault: Boolean = false) {
+    DEFAULT(0xFF2196F3, "Predeterminado", true), // Color se obtiene de resources
     BLUE(0xFF2196F3, "Azul"),
     PURPLE(0xFF9C27B0, "Púrpura"),
     GREEN(0xFF4CAF50, "Verde"),
