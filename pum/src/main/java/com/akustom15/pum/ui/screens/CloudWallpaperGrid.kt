@@ -280,7 +280,9 @@ fun AnimatedWallpaperItem(
             CachedImage(
                 url = wallpaper.url,
                 contentDescription = wallpaper.name,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+                useThumbnail = true,
+                thumbnailWidth = 400
             )
         }
     }
@@ -661,7 +663,8 @@ private fun ZoomableWallpaper(
                         translationX = offset.x
                         translationY = offset.y
                     },
-                contentScale = ContentScale.Fit
+                contentScale = ContentScale.Fit,
+                useThumbnail = false
             )
         }
     }

@@ -181,7 +181,7 @@ fun AboutScreen(
                                 socialMediaLinks.forEach { socialMedia ->
                                     Box(
                                         modifier = Modifier
-                                            .size(56.dp)
+                                            .size(44.dp)
                                             .clickable {
                                                 try {
                                                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(socialMedia.url))
@@ -197,7 +197,7 @@ fun AboutScreen(
                                             painter = painterResource(id = socialMedia.iconRes),
                                             contentDescription = socialMedia.name,
                                             tint = MaterialTheme.colorScheme.onSurface,
-                                            modifier = Modifier.size(48.dp)
+                                            modifier = Modifier.size(28.dp)
                                         )
                                     }
                                 }
