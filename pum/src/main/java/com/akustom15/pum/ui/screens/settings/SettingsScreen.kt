@@ -279,7 +279,7 @@ private fun SettingsSection(
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),
             shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 content()
