@@ -10,7 +10,8 @@ object PumColors {
     // Background colors
     val Background = Color(0xFF1C1C1E) // Dark background
     val Surface = Color(0xFF2C2C2E) // Slightly lighter surface
-    val SurfaceVariant = Color(0xFF3A3A3C) // Card backgrounds
+    val SurfaceVariant = Color(0xFF2F2F32) // Card backgrounds
+    val PreviewBackground = Color(0xFF1C1C1E) // Preview area inside cards
 
     // Primary/Accent colors (configurable dynamically)
     private val DefaultPrimary = Color(0xFF2196F3) // Blue accent color (default)

@@ -19,6 +19,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import com.akustom15.pum.R
+import androidx.compose.foundation.background
+import com.akustom15.pum.ui.theme.PumColors
 
 /** Card component - todas las imágenes mismo tamaño SIN fondo negro extra */
 @Composable
@@ -45,7 +47,8 @@ fun ItemCard(
                                 modifier =
                                         Modifier.fillMaxWidth()
                                                 .aspectRatio(16f / 9f) // Proporción horizontal uniforme
-                                                .clip(RoundedCornerShape(10.dp)),
+                                                .clip(RoundedCornerShape(10.dp))
+                                                .background(PumColors.PreviewBackground),
                                 contentAlignment = Alignment.Center
                         ) {
                                 if (previewUrl != null) {
