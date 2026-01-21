@@ -1,5 +1,6 @@
 package com.akustom15.pum.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -7,16 +8,20 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.stringResource
+import androidx.core.graphics.drawable.toBitmap
 import coil.compose.AsyncImage
 import com.akustom15.pum.R
 import androidx.compose.foundation.background
@@ -33,6 +38,8 @@ fun ItemCard(
         onApplyClick: () -> Unit = {},
         onClick: () -> Unit = {}
 ) {
+        val context = LocalContext.current
+        
         Card(
                 modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
                 shape = RoundedCornerShape(16.dp),
@@ -105,18 +112,17 @@ fun ItemCard(
                                 // Icono + nombre app
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                         if (appIcon != null) {
-                                                AsyncImage(
-                                                        model = appIcon,
-                                                        contentDescription = "App icon",
-                                                        modifier =
-                                                                Modifier.size(22.dp)
-                                                                        .clip(
-                                                                                RoundedCornerShape(
-                                                                                        4.dp
-                                                                                )
-                                                                        ),
-                                                        contentScale = ContentScale.Crop
-                                                )
+                                                val drawable = remember(appIcon) { context.getDrawable(appIcon) }
+                                                drawable?.let { d ->
+                                                        val bitmap = remember(d) { d.toBitmap(width = 66, height = 66) }
+                                                        Image(
+                                                                bitmap = bitmap.asImageBitmap(),
+                                                                contentDescription = "App icon",
+                                                                modifier = Modifier.size(22.dp)
+                                                                        .clip(RoundedCornerShape(4.dp)),
+                                                                contentScale = ContentScale.Crop
+                                                        )
+                                                }
                                                 Spacer(modifier = Modifier.width(5.dp))
                                         }
 
