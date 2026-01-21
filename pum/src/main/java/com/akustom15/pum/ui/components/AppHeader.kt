@@ -1,6 +1,7 @@
 package com.akustom15.pum.ui.components
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -10,10 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 
 /** App header with LARGE circular icon + app name + subtitle Exactly like Lunex design */
 @Composable
@@ -30,8 +31,8 @@ fun AppHeader(
     ) {
         // LARGE circular app icon (like Lunex)
         if (appIcon != null) {
-            AsyncImage(
-                    model = appIcon,
+            Image(
+                    painter = painterResource(id = appIcon),
                     contentDescription = "App icon",
                     modifier = Modifier.size(80.dp).clip(CircleShape),
                     contentScale = ContentScale.Crop
