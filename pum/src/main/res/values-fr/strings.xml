@@ -69,6 +69,7 @@
     <string name="about_developer_desc">Je suis un développeur et designer en apprentissage constant, je suis passionné par les personnalisations d\'écran. Si vous aimez mon travail, veuillez me soutenir, noter et me suivre sur mes réseaux sociaux.</string>
     <string name="about_pum_title">PUM - Pack Universal Manager</string>
     <string name="about_pum_desc">Bibliothèque pour gérer les packs de widgets et fonds d\'écran de manière universelle et simple.</string>
+    <string name="about_more_apps">Plus d\'Applications</string>
     <string name="about_error_opening_link">Erreur lors de l\'ouverture du lien</string>
     <string name="changelog_title">Journal des modifications</string>
     <string name="changelog_accept">Accepter</string>

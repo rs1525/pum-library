@@ -84,6 +84,7 @@
     <string name="about_developer_desc">I am a developer and designer in constant learning, I am passionate about screen customizations, if you like my work, please support, rate and follow me on my social networks.</string>
     <string name="about_pum_title">PUM - Pack Universal Manager</string>
     <string name="about_pum_desc">Library to manage widget and wallpaper packs in a universal and simple way.</string>
+    <string name="about_more_apps">More Apps</string>
     <string name="about_error_opening_link">Error opening link</string>
     
     <!-- Changelog -->

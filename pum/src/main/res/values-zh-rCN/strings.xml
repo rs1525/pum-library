@@ -69,6 +69,7 @@
     <string name="about_developer_desc">我是一名不断学习的开发者和设计师，我热衷于屏幕定制。如果您喜欢我的作品，请支持、评分并在社交网络上关注我。</string>
     <string name="about_pum_title">PUM - Pack Universal Manager</string>
     <string name="about_pum_desc">以通用且简单的方式管理小部件和壁纸包的库。</string>
+    <string name="about_more_apps">更多应用</string>
     <string name="about_error_opening_link">打开链接时出错</string>
     <string name="changelog_title">更新日志</string>
     <string name="changelog_accept">接受</string>

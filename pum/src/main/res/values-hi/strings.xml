@@ -69,6 +69,7 @@
     <string name="about_developer_desc">मैं निरंतर सीखने वाला एक डेवलपर और डिज़ाइनर हूं, मुझे स्क्रीन कस्टमाइज़ेशन का शौक है। अगर आपको मेरा काम पसंद है, तो कृपया सपोर्ट करें, रेट करें और मेरे सोशल नेटवर्क पर फॉलो करें।</string>
     <string name="about_pum_title">PUM - Pack Universal Manager</string>
     <string name="about_pum_desc">विजेट और वॉलपेपर पैक को सार्वभौमिक और सरल तरीके से प्रबंधित करने के लिए लाइब्रेरी।</string>
+    <string name="about_more_apps">अधिक ऐप्स</string>
     <string name="about_error_opening_link">लिंक खोलने में त्रुटि</string>
     <string name="changelog_title">परिवर्तन लॉग</string>
     <string name="changelog_accept">स्वीकार करें</string>
