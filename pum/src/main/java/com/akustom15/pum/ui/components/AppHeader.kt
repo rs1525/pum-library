@@ -7,14 +7,17 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.drawable.toBitmap
 
 /** App header with LARGE circular icon + app name + subtitle Exactly like Lunex design */
 @Composable
@@ -24,19 +27,25 @@ fun AppHeader(
         @DrawableRes appIcon: Int? = null,
         modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+    
     Row(
             modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
     ) {
-        // LARGE circular app icon (like Lunex)
+        // LARGE circular app icon (supports adaptive-icons)
         if (appIcon != null) {
-            Image(
-                    painter = painterResource(id = appIcon),
-                    contentDescription = "App icon",
-                    modifier = Modifier.size(80.dp).clip(CircleShape),
-                    contentScale = ContentScale.Crop
-            )
+            val drawable = remember(appIcon) { context.getDrawable(appIcon) }
+            drawable?.let { d ->
+                val bitmap = remember(d) { d.toBitmap(width = 240, height = 240) }
+                Image(
+                        bitmap = bitmap.asImageBitmap(),
+                        contentDescription = "App icon",
+                        modifier = Modifier.size(80.dp).clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                )
+            }
 
             Spacer(modifier = Modifier.width(16.dp))
         }
