@@ -54,7 +54,7 @@ fun ItemCard(
                                         Modifier.fillMaxWidth()
                                                 .aspectRatio(16f / 9f) // Proporción horizontal uniforme
                                                 .clip(RoundedCornerShape(10.dp))
-                                                .background(MaterialTheme.colorScheme.surfaceContainerHighest),
+                                                .background(Color.Transparent),
                                 contentAlignment = Alignment.Center
                         ) {
                                 if (previewUrl != null) {
@@ -62,8 +62,7 @@ fun ItemCard(
                                         AsyncImage(
                                                 model = previewUrl,
                                                 contentDescription = name,
-                                                modifier = Modifier.fillMaxSize()
-                                                        .padding(8.dp),
+                                                modifier = Modifier.fillMaxSize(),
                                                 contentScale = ContentScale.Fit // Mantiene proporción
                                         )
                                 } else {
