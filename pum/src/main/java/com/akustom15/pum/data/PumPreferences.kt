@@ -112,11 +112,11 @@ class PumPreferences private constructor(context: Context) {
     
     // Color de acento
     fun getAccentColor(): AccentColor {
-        val value = prefs.getString(KEY_ACCENT_COLOR, AccentColor.BLUE.name) ?: AccentColor.BLUE.name
+        val value = prefs.getString(KEY_ACCENT_COLOR, AccentColor.DEFAULT.name) ?: AccentColor.DEFAULT.name
         return try {
             AccentColor.valueOf(value)
         } catch (e: Exception) {
-            AccentColor.BLUE
+            AccentColor.DEFAULT
         }
     }
     
