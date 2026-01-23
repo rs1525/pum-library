@@ -2,6 +2,7 @@ package com.akustom15.pum.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
@@ -67,7 +68,9 @@ fun WallpaperGrid(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             if (showHeader) {
-                item { AppHeader(appName = appName, appSubtitle = appSubtitle, appIcon = appIcon) }
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    AppHeader(appName = appName, appSubtitle = appSubtitle, appIcon = appIcon)
+                }
             }
 
             // WALLPAPER CARD - MÁS GRANDE (450dp vs 160dp de widgets)

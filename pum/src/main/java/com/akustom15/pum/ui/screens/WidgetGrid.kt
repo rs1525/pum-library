@@ -2,6 +2,7 @@ package com.akustom15.pum.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
@@ -70,9 +71,11 @@ fun WidgetGrid(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            // Header DENTRO del grid para que haga scroll
+            // Header DENTRO del grid para que haga scroll (ocupa todas las columnas)
             if (showHeader) {
-                item { AppHeader(appName = appName, appSubtitle = appSubtitle, appIcon = appIcon) }
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    AppHeader(appName = appName, appSubtitle = appSubtitle, appIcon = appIcon)
+                }
             }
 
             // Widgets
