@@ -19,7 +19,7 @@
         <!-- Content Provider for Kustom integration - EXACTLY like Lunex -->
         <provider
             android:name=".provider.KustomProvider"
-            android:authorities="${applicationId}"
+            android:authorities="${applicationId}.kustom.provider"
             android:exported="true"
             android:grantUriPermissions="true">
             <intent-filter>

@@ -77,6 +77,8 @@
     <string name="settings_select_theme">Seleccionar tema</string>
     <string name="settings_select_language">Seleccionar idioma</string>
     <string name="settings_accent_default">Predeterminado (Color de la app)</string>
+    <string name="settings_grid_columns">Vista de cuadrícula</string>
+    <string name="settings_select_grid_columns">Seleccionar modo de vista</string>
     
     <!-- About -->
     <string name="about_title">Acerca de</string>
