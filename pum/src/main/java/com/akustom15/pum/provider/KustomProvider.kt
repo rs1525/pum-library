@@ -2,7 +2,6 @@ package com.akustom15.pum.provider
 
 import android.content.ContentProvider
 import android.content.ContentValues
-import android.content.UriMatcher
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
@@ -32,20 +31,8 @@ class KustomProvider : ContentProvider() {
     
     companion object {
         private const val TAG = "KustomProvider"
-        private const val WIDGETS = 1
-        private const val WALLPAPERS = 2
-        private const val WIDGET_FILE = 3
-        private const val WALLPAPER_FILE = 4
-        
         private const val KWGT_MIME_TYPE = "application/vnd.kustom.widget"
         private const val KLWP_MIME_TYPE = "application/vnd.kustom.wallpaper"
-        
-        private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
-            addURI("*.kustom.provider", "widgets", WIDGETS)
-            addURI("*.kustom.provider", "wallpapers", WALLPAPERS)
-            addURI("*.kustom.provider", "widgets/*", WIDGET_FILE)
-            addURI("*.kustom.provider", "wallpapers/*", WALLPAPER_FILE)
-        }
     }
 
     override fun onCreate(): Boolean = true
@@ -58,9 +45,13 @@ class KustomProvider : ContentProvider() {
             sortOrder: String?
     ): Cursor? {
         val context = context ?: return null
+        val path = uri.path ?: return null
         
-        return when (uriMatcher.match(uri)) {
-            WIDGETS -> {
+        Log.d(TAG, "query() called - URI: $uri, path: $path")
+        
+        return when {
+            path == "/widgets" || path.endsWith("/widgets") -> {
+                Log.d(TAG, "Returning widgets list")
                 val cursor = MatrixCursor(arrayOf("_id", "title", "thumb"))
                 val widgets = listAssetItems(context, "widgets", setOf("kwgt"))
                 widgets.forEachIndexed { index, item ->
@@ -68,7 +59,8 @@ class KustomProvider : ContentProvider() {
                 }
                 cursor
             }
-            WALLPAPERS -> {
+            path == "/wallpapers" || path.endsWith("/wallpapers") -> {
+                Log.d(TAG, "Returning wallpapers list")
                 val cursor = MatrixCursor(arrayOf("_id", "title", "thumb"))
                 val wallpapers = listAssetItems(context, "wallpapers", setOf("klwp"))
                 wallpapers.forEachIndexed { index, item ->
@@ -76,7 +68,10 @@ class KustomProvider : ContentProvider() {
                 }
                 cursor
             }
-            else -> null
+            else -> {
+                Log.d(TAG, "Unknown path: $path")
+                null
+            }
         }
     }
     
@@ -105,16 +100,14 @@ class KustomProvider : ContentProvider() {
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
         val currentContext = context ?: throw FileNotFoundException("Context is null")
+        val path = uri.path ?: throw FileNotFoundException("No path in URI")
+        val fileName = uri.lastPathSegment ?: throw FileNotFoundException("No filename")
         
-        return when (uriMatcher.match(uri)) {
-            WIDGET_FILE -> {
-                val fileName = uri.lastPathSegment ?: throw FileNotFoundException("No filename")
-                openAssetFile(currentContext, "widgets", fileName)
-            }
-            WALLPAPER_FILE -> {
-                val fileName = uri.lastPathSegment ?: throw FileNotFoundException("No filename")
-                openAssetFile(currentContext, "wallpapers", fileName)
-            }
+        Log.d(TAG, "openFile() called - URI: $uri, path: $path, fileName: $fileName")
+        
+        return when {
+            path.contains("/widgets/") -> openAssetFile(currentContext, "widgets", fileName)
+            path.contains("/wallpapers/") -> openAssetFile(currentContext, "wallpapers", fileName)
             else -> throw FileNotFoundException("Invalid URI: $uri")
         }
     }
@@ -139,9 +132,10 @@ class KustomProvider : ContentProvider() {
     }
 
     override fun getType(uri: Uri): String? {
-        return when (uriMatcher.match(uri)) {
-            WIDGET_FILE -> KWGT_MIME_TYPE
-            WALLPAPER_FILE -> KLWP_MIME_TYPE
+        val path = uri.path ?: return null
+        return when {
+            path.endsWith(".kwgt") -> KWGT_MIME_TYPE
+            path.endsWith(".klwp") -> KLWP_MIME_TYPE
             else -> null
         }
     }
