@@ -44,7 +44,7 @@ object KustomIntegration {
 
         try {
             // Build kfile:// URI
-            val kfileUri = "kfile://$packageName/widgets/$widgetFileName"
+            val kfileUri = "kfile://$packageName.kustom.provider/widgets/$widgetFileName"
             android.util.Log.d(TAG, "URI: $kfileUri")
 
             // EXACTLY AS DOCUMENTATION - component always uses base package
@@ -88,7 +88,7 @@ object KustomIntegration {
 
         try {
             // Build kfile:// URI - EXACTLY as per Kustom documentation
-            val kfileUri = "kfile://$packageName/wallpapers/$wallpaperFileName"
+            val kfileUri = "kfile://$packageName.kustom.provider/wallpapers/$wallpaperFileName"
             android.util.Log.d(TAG, "URI: $kfileUri")
 
             // EXACTLY AS DOCUMENTATION FOR KLWP - always use base package
