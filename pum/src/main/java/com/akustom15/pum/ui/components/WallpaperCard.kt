@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.akustom15.pum.R
 import androidx.compose.foundation.background
-import com.akustom15.pum.ui.theme.PumColors
 
 /** Card para wallpapers - PREVIEW MÁS GRANDE (como Lunex) */
 @Composable
@@ -46,14 +45,14 @@ fun WallpaperCard(
                             Modifier.fillMaxWidth()
                                     .height(450.dp) // MUY GRANDE para wallpapers
                                     .clip(RoundedCornerShape(10.dp))
-                                    .background(PumColors.PreviewBackground),
+                                    .background(Color.Transparent),
                     contentAlignment = Alignment.Center
             ) {
                 if (previewUrl != null) {
                     AsyncImage(
                             model = previewUrl,
                             contentDescription = name,
-                            modifier = Modifier.fillMaxSize().padding(8.dp),
+                            modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Fit
                     )
                 } else {

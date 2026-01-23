@@ -29,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import com.akustom15.pum.R
 import com.akustom15.pum.data.AccentColor
 import com.akustom15.pum.data.AppLanguage
+import com.akustom15.pum.data.GridColumns
 import com.akustom15.pum.data.PumPreferences
 import com.akustom15.pum.data.ThemeMode
 import com.akustom15.pum.ui.theme.PumTheme
@@ -47,6 +48,7 @@ fun SettingsScreen(
     val themeMode by preferences.themeMode.collectAsState()
     val appLanguage by preferences.appLanguage.collectAsState()
     val accentColor by preferences.accentColor.collectAsState()
+    val gridColumns by preferences.gridColumns.collectAsState()
     val downloadOnWifiOnly by preferences.downloadOnWifiOnly.collectAsState()
     val notificationsEnabled by preferences.notificationsEnabled.collectAsState()
     
@@ -54,6 +56,7 @@ fun SettingsScreen(
     var showThemeDialog by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
     var showAccentColorDialog by remember { mutableStateOf(false) }
+    var showGridColumnsDialog by remember { mutableStateOf(false) }
     
     // Manejar botón atrás
     BackHandler {
@@ -114,6 +117,14 @@ fun SettingsScreen(
                         subtitle = accentColor.displayName,
                         color = Color(accentColor.colorValue),
                         onClick = { showAccentColorDialog = true }
+                    )
+                    
+                    // Columnas del grid
+                    SettingsItem(
+                        icon = Icons.Default.GridView,
+                        title = stringResource(R.string.settings_grid_columns),
+                        subtitle = gridColumns.displayName,
+                        onClick = { showGridColumnsDialog = true }
                     )
                 }
                 
@@ -257,6 +268,20 @@ fun SettingsScreen(
                 showAccentColorDialog = false
             },
             onDismiss = { showAccentColorDialog = false }
+        )
+    }
+    
+    // Diálogo de columnas del grid
+    if (showGridColumnsDialog) {
+        SelectionDialog(
+            title = stringResource(R.string.settings_select_grid_columns),
+            options = GridColumns.entries.map { it.displayName },
+            selectedIndex = GridColumns.entries.indexOf(gridColumns),
+            onSelect = { index ->
+                preferences.setGridColumns(GridColumns.entries[index])
+                showGridColumnsDialog = false
+            },
+            onDismiss = { showGridColumnsDialog = false }
         )
     }
 }

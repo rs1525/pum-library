@@ -51,6 +51,14 @@ enum class AccentColor(val colorValue: Long, val displayName: String, val isDefa
 }
 
 /**
+ * Enum para el modo de visualización de columnas
+ */
+enum class GridColumns(val count: Int, val displayName: String) {
+    SINGLE(1, "Una columna"),
+    DOUBLE(2, "Dos columnas")
+}
+
+/**
  * Gestor de preferencias de PUM usando SharedPreferences
  */
 class PumPreferences private constructor(context: Context) {
@@ -72,6 +80,9 @@ class PumPreferences private constructor(context: Context) {
     
     private val _notificationsEnabled = MutableStateFlow(getNotificationsEnabled())
     val notificationsEnabled: StateFlow<Boolean> = _notificationsEnabled.asStateFlow()
+    
+    private val _gridColumns = MutableStateFlow(getGridColumns())
+    val gridColumns: StateFlow<GridColumns> = _gridColumns.asStateFlow()
     
     // Tema
     fun getThemeMode(): ThemeMode {
@@ -145,6 +156,21 @@ class PumPreferences private constructor(context: Context) {
         _notificationsEnabled.value = enabled
     }
     
+    // Columnas del grid
+    fun getGridColumns(): GridColumns {
+        val value = prefs.getString(KEY_GRID_COLUMNS, GridColumns.SINGLE.name) ?: GridColumns.SINGLE.name
+        return try {
+            GridColumns.valueOf(value)
+        } catch (e: Exception) {
+            GridColumns.SINGLE
+        }
+    }
+    
+    fun setGridColumns(columns: GridColumns) {
+        prefs.edit().putString(KEY_GRID_COLUMNS, columns.name).apply()
+        _gridColumns.value = columns
+    }
+    
     // Limpiar caché (retorna true si se limpió correctamente)
     fun clearImageCache(context: Context): Boolean {
         return try {
@@ -163,6 +189,7 @@ class PumPreferences private constructor(context: Context) {
         private const val KEY_ACCENT_COLOR = "accent_color"
         private const val KEY_DOWNLOAD_WIFI_ONLY = "download_wifi_only"
         private const val KEY_NOTIFICATIONS_ENABLED = "notifications_enabled"
+        private const val KEY_GRID_COLUMNS = "grid_columns"
         
         @Volatile
         private var instance: PumPreferences? = null
