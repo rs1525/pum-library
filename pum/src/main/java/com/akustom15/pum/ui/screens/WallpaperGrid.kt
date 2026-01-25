@@ -64,7 +64,8 @@ fun WallpaperGrid(
                 columns = GridCells.Fixed(gridColumns.count),
                 modifier = modifier.fillMaxSize(),
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             if (showHeader) {
                 item(span = { GridItemSpan(maxLineSpan) }) { 
@@ -80,6 +81,7 @@ fun WallpaperGrid(
                         previewUrl = wallpaper.previewUrl,
                         appIcon = appIcon,
                         appName = appName,
+                        isCompactMode = gridColumns.count > 1,
                         onApplyClick = {
                             KustomIntegration.applyWallpaper(
                                     context = context,

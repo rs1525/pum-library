@@ -28,6 +28,7 @@ fun ItemCard(
         previewUrl: String? = null,
         appIcon: Int? = null,
         appName: String? = null,
+        isCompactMode: Boolean = false,
         onApplyClick: () -> Unit = {},
         onClick: () -> Unit = {}
 ) {
@@ -127,7 +128,7 @@ fun ItemCard(
                                         }
                                 }
 
-                                // Botón Apply
+                                // Botón Apply - más pequeño en modo compacto (2 columnas)
                                 Button(
                                         onClick = {
                                                 android.util.Log.d("ItemCard", "Apply: $name")
@@ -138,23 +139,28 @@ fun ItemCard(
                                                         containerColor = MaterialTheme.colorScheme.primary
                                                 ),
                                         shape = RoundedCornerShape(8.dp),
-                                        modifier = Modifier.height(34.dp),
-                                        contentPadding =
+                                        modifier = Modifier.height(if (isCompactMode) 30.dp else 34.dp),
+                                        contentPadding = if (isCompactMode) {
+                                                PaddingValues(horizontal = 10.dp, vertical = 4.dp)
+                                        } else {
                                                 PaddingValues(horizontal = 14.dp, vertical = 6.dp)
+                                        }
                                 ) {
                                         Icon(
                                                 imageVector = Icons.Default.Edit,
                                                 contentDescription = "Apply",
                                                 tint = Color.White,
-                                                modifier = Modifier.size(14.dp)
+                                                modifier = Modifier.size(if (isCompactMode) 12.dp else 14.dp)
                                         )
-                                        Spacer(modifier = Modifier.width(4.dp))
-                                        Text(
-                                                text = stringResource(R.string.btn_apply),
-                                                color = Color.White,
-                                                fontSize = 12.sp,
-                                                fontWeight = FontWeight.Bold
-                                        )
+                                        if (!isCompactMode) {
+                                                Spacer(modifier = Modifier.width(4.dp))
+                                                Text(
+                                                        text = stringResource(R.string.btn_apply),
+                                                        color = Color.White,
+                                                        fontSize = 12.sp,
+                                                        fontWeight = FontWeight.Bold
+                                                )
+                                        }
                                 }
                         }
                 }

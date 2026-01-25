@@ -67,8 +67,9 @@ fun WidgetGrid(
         LazyVerticalGrid(
                 columns = GridCells.Fixed(gridColumns.count),
                 modifier = modifier.fillMaxSize(),
-                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp), // Más compacto
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             // Header DENTRO del grid para que haga scroll (ocupa toda la fila)
             if (showHeader) {
@@ -85,6 +86,7 @@ fun WidgetGrid(
                         previewUrl = widget.previewUrl,
                         appIcon = appIcon,
                         appName = appName,
+                        isCompactMode = gridColumns.count > 1,
                         onApplyClick = {
                             KustomIntegration.applyWidget(
                                     context = context,
