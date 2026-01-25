@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="pum_library_name">PUM</string>
+    <string name="app_name">PUM</string>
     <string name="tab_widgets">KWGT</string>
     <string name="tab_wallpapers">KLWP</string>
     <string name="tab_wallpaper_cloud">Fond d\'écran</string>
@@ -63,13 +63,14 @@
     <string name="settings_no_email_app">Aucune application de messagerie installée</string>
     <string name="settings_select_theme">Sélectionner le thème</string>
     <string name="settings_select_language">Sélectionner la langue</string>
-    <string name="settings_accent_default">Par défaut (Couleur de l\'app)</string>
+    <string name="settings_grid_view">Vue en grille</string>
+    <string name="settings_one_column">Une colonne</string>
+    <string name="settings_two_columns">Deux colonnes</string>
     <string name="about_title">À propos</string>
     <string name="about_back">Retour</string>
     <string name="about_developer_desc">Je suis un développeur et designer en apprentissage constant, je suis passionné par les personnalisations d\'écran. Si vous aimez mon travail, veuillez me soutenir, noter et me suivre sur mes réseaux sociaux.</string>
     <string name="about_pum_title">PUM - Pack Universal Manager</string>
     <string name="about_pum_desc">Bibliothèque pour gérer les packs de widgets et fonds d\'écran de manière universelle et simple.</string>
-    <string name="about_more_apps">Plus d\'Applications</string>
     <string name="about_error_opening_link">Erreur lors de l\'ouverture du lien</string>
     <string name="changelog_title">Journal des modifications</string>
     <string name="changelog_accept">Accepter</string>

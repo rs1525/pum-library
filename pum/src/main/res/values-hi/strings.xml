@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="pum_library_name">PUM</string>
+    <string name="app_name">PUM</string>
     <string name="tab_widgets">KWGT</string>
     <string name="tab_wallpapers">KLWP</string>
     <string name="tab_wallpaper_cloud">वॉलपेपर</string>
@@ -63,13 +63,14 @@
     <string name="settings_no_email_app">कोई ईमेल ऐप इंस्टॉल नहीं</string>
     <string name="settings_select_theme">थीम चुनें</string>
     <string name="settings_select_language">भाषा चुनें</string>
-    <string name="settings_accent_default">डिफ़ॉल्ट (ऐप रंग)</string>
+    <string name="settings_grid_view">ग्रिड दृश्य</string>
+    <string name="settings_one_column">एक कॉलम</string>
+    <string name="settings_two_columns">दो कॉलम</string>
     <string name="about_title">के बारे में</string>
     <string name="about_back">वापस</string>
     <string name="about_developer_desc">मैं निरंतर सीखने वाला एक डेवलपर और डिज़ाइनर हूं, मुझे स्क्रीन कस्टमाइज़ेशन का शौक है। अगर आपको मेरा काम पसंद है, तो कृपया सपोर्ट करें, रेट करें और मेरे सोशल नेटवर्क पर फॉलो करें।</string>
     <string name="about_pum_title">PUM - Pack Universal Manager</string>
     <string name="about_pum_desc">विजेट और वॉलपेपर पैक को सार्वभौमिक और सरल तरीके से प्रबंधित करने के लिए लाइब्रेरी।</string>
-    <string name="about_more_apps">अधिक ऐप्स</string>
     <string name="about_error_opening_link">लिंक खोलने में त्रुटि</string>
     <string name="changelog_title">परिवर्तन लॉग</string>
     <string name="changelog_accept">स्वीकार करें</string>

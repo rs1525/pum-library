@@ -10,11 +10,9 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.akustom15.pum.R
 import com.akustom15.pum.data.AccentColor
 import com.akustom15.pum.data.PumPreferences
 import com.akustom15.pum.data.ThemeMode
@@ -24,12 +22,14 @@ private fun getDarkColorScheme(accentColor: Color) =
                 primary = accentColor,
                 primaryContainer = accentColor.copy(alpha = 0.7f),
                 secondary = PumColors.Secondary,
-                background = Color(0xFF1C1C1E),
-                surface = Color(0xFF2C2C2E),
-                surfaceVariant = Color(0xFF3A3A3C),
-                surfaceContainerHigh = Color(0xFF3A3A3C),
-                surfaceContainer = Color(0xFF323235),
-                surfaceContainerHighest = Color(0xFF484850),
+                background = PumColors.Background,
+                surface = PumColors.Surface,
+                surfaceVariant = PumColors.SurfaceVariant,
+                surfaceContainerHigh = Color(0xFF2C2C2E),
+                surfaceContainer = Color(0xFF252527),
+                surfaceContainerHighest = Color(0xFF3A3A3C),
+                surfaceBright = Color(0xFF3A3A3C),
+                surfaceDim = Color(0xFF1C1C1E),
                 onPrimary = Color.White,
                 onSecondary = Color.White,
                 onBackground = PumColors.OnBackground,
@@ -43,12 +43,9 @@ private fun getLightColorScheme(accentColor: Color) =
                 primary = accentColor,
                 primaryContainer = accentColor.copy(alpha = 0.3f),
                 secondary = PumColors.Secondary,
-                background = Color(0xFFF5F5F7),
+                background = Color(0xFFF5F5F5),
                 surface = Color.White,
-                surfaceVariant = Color(0xFFEFEFF0),
-                surfaceContainerHigh = Color(0xFFE8E8EA),
-                surfaceContainer = Color(0xFFECECEE),
-                surfaceContainerHighest = Color(0xFFE0E0E2),
+                surfaceVariant = Color(0xFFE8E8E8),
                 onPrimary = Color.White,
                 onSecondary = Color.White,
                 onBackground = Color(0xFF1C1C1E),
@@ -67,23 +64,7 @@ fun PumTheme(
         
         val themeMode = preferences.themeMode.collectAsState().value
         val accentColorPref = preferences.accentColor.collectAsState().value
-        
-        // Si es DEFAULT, obtener color desde resources de la app (pum_accent_color)
-        // Si no existe, usar el color por defecto del enum
-        val accentColor = if (accentColorPref.isDefault) {
-                try {
-                        val colorResId = context.resources.getIdentifier("pum_accent_color", "color", context.packageName)
-                        if (colorResId != 0) {
-                                Color(context.getColor(colorResId))
-                        } else {
-                                Color(accentColorPref.colorValue)
-                        }
-                } catch (e: Exception) {
-                        Color(accentColorPref.colorValue)
-                }
-        } else {
-                Color(accentColorPref.colorValue)
-        }
+        val accentColor = Color(accentColorPref.colorValue)
         
         val systemDarkTheme = isSystemInDarkTheme()
         
@@ -106,7 +87,7 @@ fun PumTheme(
         if (!view.isInEditMode) {
                 SideEffect {
                         val window = (view.context as Activity).window
-                        window.statusBarColor = colorScheme.background.toArgb()
+                        // Set status bar icons color (light/dark) based on theme
                         WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !useDarkTheme
                 }
         }
