@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PUM</string>
     <string name="tab_widgets">KWGT</string>
     <string name="tab_wallpapers">KLWP</string>
     <string name="tab_wallpaper_cloud">壁纸</string>
