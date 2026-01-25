@@ -49,6 +49,14 @@ enum class AccentColor(val colorValue: Long, val displayName: String) {
 }
 
 /**
+ * Enum para el número de columnas en la cuadrícula
+ */
+enum class GridColumns(val count: Int) {
+    ONE(1),
+    TWO(2)
+}
+
+/**
  * Gestor de preferencias de PUM usando SharedPreferences
  */
 class PumPreferences private constructor(context: Context) {
@@ -70,6 +78,9 @@ class PumPreferences private constructor(context: Context) {
     
     private val _notificationsEnabled = MutableStateFlow(getNotificationsEnabled())
     val notificationsEnabled: StateFlow<Boolean> = _notificationsEnabled.asStateFlow()
+    
+    private val _gridColumns = MutableStateFlow(getGridColumns())
+    val gridColumns: StateFlow<GridColumns> = _gridColumns.asStateFlow()
     
     // Tema
     fun getThemeMode(): ThemeMode {
@@ -143,6 +154,21 @@ class PumPreferences private constructor(context: Context) {
         _notificationsEnabled.value = enabled
     }
     
+    // Columnas de la cuadrícula
+    fun getGridColumns(): GridColumns {
+        val value = prefs.getString(KEY_GRID_COLUMNS, GridColumns.TWO.name) ?: GridColumns.TWO.name
+        return try {
+            GridColumns.valueOf(value)
+        } catch (e: Exception) {
+            GridColumns.TWO
+        }
+    }
+    
+    fun setGridColumns(columns: GridColumns) {
+        prefs.edit().putString(KEY_GRID_COLUMNS, columns.name).apply()
+        _gridColumns.value = columns
+    }
+    
     // Limpiar caché (retorna true si se limpió correctamente)
     fun clearImageCache(context: Context): Boolean {
         return try {
@@ -161,6 +187,7 @@ class PumPreferences private constructor(context: Context) {
         private const val KEY_ACCENT_COLOR = "accent_color"
         private const val KEY_DOWNLOAD_WIFI_ONLY = "download_wifi_only"
         private const val KEY_NOTIFICATIONS_ENABLED = "notifications_enabled"
+        private const val KEY_GRID_COLUMNS = "grid_columns"
         
         @Volatile
         private var instance: PumPreferences? = null
