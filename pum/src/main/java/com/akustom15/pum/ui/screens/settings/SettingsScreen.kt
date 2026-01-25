@@ -29,7 +29,6 @@ import androidx.compose.ui.res.stringResource
 import com.akustom15.pum.R
 import com.akustom15.pum.data.AccentColor
 import com.akustom15.pum.data.AppLanguage
-import com.akustom15.pum.data.GridColumns
 import com.akustom15.pum.data.PumPreferences
 import com.akustom15.pum.data.ThemeMode
 import com.akustom15.pum.ui.theme.PumTheme
@@ -48,7 +47,6 @@ fun SettingsScreen(
     val themeMode by preferences.themeMode.collectAsState()
     val appLanguage by preferences.appLanguage.collectAsState()
     val accentColor by preferences.accentColor.collectAsState()
-    val gridColumns by preferences.gridColumns.collectAsState()
     val downloadOnWifiOnly by preferences.downloadOnWifiOnly.collectAsState()
     val notificationsEnabled by preferences.notificationsEnabled.collectAsState()
     
@@ -56,7 +54,6 @@ fun SettingsScreen(
     var showThemeDialog by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
     var showAccentColorDialog by remember { mutableStateOf(false) }
-    var showGridColumnsDialog by remember { mutableStateOf(false) }
     
     // Manejar botón atrás
     BackHandler {
@@ -117,14 +114,6 @@ fun SettingsScreen(
                         subtitle = accentColor.displayName,
                         color = Color(accentColor.colorValue),
                         onClick = { showAccentColorDialog = true }
-                    )
-                    
-                    // Columnas del grid
-                    SettingsItem(
-                        icon = Icons.Default.GridView,
-                        title = stringResource(R.string.settings_grid_columns),
-                        subtitle = gridColumns.displayName,
-                        onClick = { showGridColumnsDialog = true }
                     )
                 }
                 
@@ -270,20 +259,6 @@ fun SettingsScreen(
             onDismiss = { showAccentColorDialog = false }
         )
     }
-    
-    // Diálogo de columnas del grid
-    if (showGridColumnsDialog) {
-        SelectionDialog(
-            title = stringResource(R.string.settings_select_grid_columns),
-            options = GridColumns.entries.map { it.displayName },
-            selectedIndex = GridColumns.entries.indexOf(gridColumns),
-            onSelect = { index ->
-                preferences.setGridColumns(GridColumns.entries[index])
-                showGridColumnsDialog = false
-            },
-            onDismiss = { showGridColumnsDialog = false }
-        )
-    }
 }
 
 @Composable
@@ -304,7 +279,7 @@ private fun SettingsSection(
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),
             shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 content()
@@ -505,22 +480,6 @@ private fun AccentColorDialog(
     onSelect: (AccentColor) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val context = LocalContext.current
-    
-    // Obtener el color predeterminado desde resources
-    val defaultColor = remember {
-        try {
-            val colorResId = context.resources.getIdentifier("pum_accent_color", "color", context.packageName)
-            if (colorResId != 0) {
-                Color(context.getColor(colorResId))
-            } else {
-                Color(AccentColor.DEFAULT.colorValue)
-            }
-        } catch (e: Exception) {
-            Color(AccentColor.DEFAULT.colorValue)
-        }
-    }
-    
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
@@ -532,43 +491,7 @@ private fun AccentColorDialog(
         },
         text = {
             Column {
-                // Primera fila: opción Predeterminado
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onSelect(AccentColor.DEFAULT) }
-                        .padding(vertical = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .clip(CircleShape)
-                            .background(defaultColor),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        if (selectedColor == AccentColor.DEFAULT) {
-                            Icon(
-                                imageVector = Icons.Default.Check,
-                                contentDescription = "Seleccionado",
-                                tint = Color.White,
-                                modifier = Modifier.size(24.dp)
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Text(
-                        text = stringResource(R.string.settings_accent_default),
-                        fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-                
-                Spacer(modifier = Modifier.height(8.dp))
-                
-                // Colores disponibles (excluyendo DEFAULT)
-                val colors = AccentColor.entries.filter { !it.isDefault }
-                colors.chunked(4).forEach { row ->
+                AccentColor.entries.chunked(4).forEach { row ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()

@@ -60,7 +60,7 @@ fun CachedImage(
                 .data(optimizedUrl)
                 .memoryCachePolicy(CachePolicy.ENABLED)
                 .diskCachePolicy(CachePolicy.ENABLED)
-                .memoryCacheKey(optimizedUrl)
+                .memoryCacheKey(optimizedUrl) // Use optimized URL as cache key
                 .diskCacheKey(optimizedUrl)
                 .crossfade(true)
                 .size(if (useThumbnail) Size(thumbnailWidth, thumbnailWidth * 2) else Size.ORIGINAL)
@@ -89,14 +89,19 @@ fun CachedImage(
 /**
  * Converts a Cloudinary URL to use thumbnail transformations.
  * This significantly reduces data usage for grid views.
+ * 
+ * Cloudinary URL format: https://res.cloudinary.com/CLOUD_NAME/image/upload/PUBLIC_ID
+ * Transformed: https://res.cloudinary.com/CLOUD_NAME/image/upload/w_WIDTH,q_auto,f_auto/PUBLIC_ID
  */
 private fun getOptimizedCloudinaryUrl(url: String, width: Int): String {
     return try {
         if (url.contains("cloudinary.com") && url.contains("/upload/")) {
+            // Insert transformation parameters after /upload/
             url.replace("/upload/", "/upload/w_${width},q_auto,f_auto/")
         } else if (url.contains("cloudinary.com") && url.contains("/image/upload/")) {
             url.replace("/image/upload/", "/image/upload/w_${width},q_auto,f_auto/")
         } else {
+            // Not a Cloudinary URL, return as-is
             url
         }
     } catch (e: Exception) {

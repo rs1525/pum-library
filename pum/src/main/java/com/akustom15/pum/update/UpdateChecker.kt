@@ -143,6 +143,7 @@ object UpdateChecker {
         try {
             NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
         } catch (e: SecurityException) {
+            // Permission not granted
             e.printStackTrace()
         }
     }

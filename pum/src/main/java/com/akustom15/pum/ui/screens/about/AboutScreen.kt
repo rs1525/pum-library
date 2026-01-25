@@ -38,8 +38,6 @@ import androidx.activity.compose.BackHandler
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.core.graphics.drawable.toBitmap
 import androidx.compose.ui.res.stringResource
-import androidx.compose.foundation.shape.RoundedCornerShape
-import coil.compose.AsyncImage
 import com.akustom15.pum.R
 import com.akustom15.pum.config.SocialMediaConfig
 import com.akustom15.pum.ui.theme.PumTheme
@@ -51,9 +49,6 @@ import com.akustom15.pum.ui.theme.PumTheme
 @Composable
 fun AboutScreen(
     appIcon: Int?,
-    developerLogoUrl: String? = null,
-    developerName: String = "AKustom15",
-    moreAppsUrl: String? = null,
     @DrawableRes xIcon: Int,
     @DrawableRes instagramIcon: Int,
     @DrawableRes youtubeIcon: Int,
@@ -122,40 +117,29 @@ fun AboutScreen(
                                 .padding(16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            // Logo - desde URL o recurso local
-                            if (developerLogoUrl != null) {
-                                AsyncImage(
-                                    model = developerLogoUrl,
-                                    contentDescription = "Developer Logo",
-                                    modifier = Modifier
-                                        .size(100.dp)
-                                        .padding(8.dp),
-                                    contentScale = ContentScale.Fit
-                                )
-                            } else {
-                                appIcon?.let { iconResId ->
-                                    val drawable = remember(iconResId) {
-                                        context.getDrawable(iconResId)
+                            // Logo circular
+                            appIcon?.let { iconResId ->
+                                val drawable = remember(iconResId) {
+                                    context.getDrawable(iconResId)
+                                }
+                                drawable?.let { d ->
+                                    val bitmap = remember(d) {
+                                        d.toBitmap(width = 300, height = 300)
                                     }
-                                    drawable?.let { d ->
-                                        val bitmap = remember(d) {
-                                            d.toBitmap(width = 300, height = 300)
-                                        }
-                                        Image(
-                                            bitmap = bitmap.asImageBitmap(),
-                                            contentDescription = "Logo",
-                                            modifier = Modifier
-                                                .size(100.dp)
-                                                .padding(8.dp),
-                                            contentScale = ContentScale.Fit
-                                        )
-                                    }
+                                    Image(
+                                        bitmap = bitmap.asImageBitmap(),
+                                        contentDescription = "Logo",
+                                        modifier = Modifier
+                                            .size(100.dp)
+                                            .padding(8.dp),
+                                        contentScale = ContentScale.Fit
+                                    )
                                 }
                             }
                             
-                            // Título del desarrollador
+                            // Título AKustom15
                             LimitedFontScaleText(
-                                text = developerName,
+                                text = "AKustom15",
                                 baseSizeSp = 24f,
                                 color = MaterialTheme.colorScheme.onSurface,
                                 fontWeight = FontWeight.Bold,
@@ -241,34 +225,6 @@ fun AboutScreen(
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)
                             )
-                            
-                            // Botón "Más aplicaciones"
-                            if (moreAppsUrl != null) {
-                                Button(
-                                    onClick = {
-                                        try {
-                                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(moreAppsUrl))
-                                            originalContext.startActivity(intent)
-                                        } catch (e: Exception) {
-                                            Toast.makeText(originalContext, context.getString(R.string.about_error_opening_link), Toast.LENGTH_SHORT).show()
-                                        }
-                                    },
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.primary
-                                    ),
-                                    shape = RoundedCornerShape(12.dp),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 32.dp)
-                                        .height(48.dp)
-                                ) {
-                                    Text(
-                                        text = stringResource(R.string.about_more_apps),
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp
-                                    )
-                                }
-                            }
                             
                             Spacer(modifier = Modifier.height(24.dp))
                         }

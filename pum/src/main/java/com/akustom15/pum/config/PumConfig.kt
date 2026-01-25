@@ -14,9 +14,6 @@ import androidx.annotation.DrawableRes
  * @param showWallpaperCloud Whether to show the Cloud Wallpaper tab
  * @param cloudWallpapersUrl URL to the JSON file containing cloud wallpapers data
  * @param changelog Changelog configuration for the changelog dialog
- * @param developerLogoUrl URL to load the developer logo from (optional, uses appIcon if null)
- * @param developerName Name of the developer to show in About screen
- * @param moreAppsUrl URL to open when "More Apps" button is clicked (optional)
  * @param xIcon Resource ID for Twitter/X social media icon
  * @param instagramIcon Resource ID for Instagram social media icon
  * @param youtubeIcon Resource ID for YouTube social media icon
@@ -33,9 +30,6 @@ data class PumConfig(
         val showWallpaperCloud: Boolean = false,
         val cloudWallpapersUrl: String = "",
         val changelog: ChangelogConfig = ChangelogConfig(),
-        val developerLogoUrl: String? = null,
-        val developerName: String = "AKustom15",
-        val moreAppsUrl: String? = null,
         @DrawableRes val xIcon: Int = android.R.drawable.ic_menu_send,
         @DrawableRes val instagramIcon: Int = android.R.drawable.ic_menu_camera,
         @DrawableRes val youtubeIcon: Int = android.R.drawable.ic_media_play,

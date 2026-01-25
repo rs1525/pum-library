@@ -155,9 +155,6 @@ private fun PumScreenContent(config: PumConfig) {
         if (showAboutDialog) {
             AboutScreen(
                 appIcon = config.appIcon,
-                developerLogoUrl = config.developerLogoUrl,
-                developerName = config.developerName,
-                moreAppsUrl = config.moreAppsUrl,
                 xIcon = config.xIcon,
                 instagramIcon = config.instagramIcon,
                 youtubeIcon = config.youtubeIcon,

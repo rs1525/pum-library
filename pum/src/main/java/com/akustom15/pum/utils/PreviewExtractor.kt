@@ -16,8 +16,6 @@ object PreviewExtractor {
     // Preview file names inside the .kwgt/.klwp archives
     private const val PORTRAIT_THUMB = "preset_thumb_portrait.jpg"
     private const val LANDSCAPE_THUMB = "preset_thumb_landscape.jpg"
-    private const val PORTRAIT_THUMB_PNG = "preset_thumb_portrait.png"
-    private const val LANDSCAPE_THUMB_PNG = "preset_thumb_landscape.png"
 
     /**
      * Extract preview image from a .kwgt widget file Returns the path to the extracted preview
@@ -79,7 +77,7 @@ object PreviewExtractor {
 
             // Generate output file name
             val orientation = if (usePortrait) "portrait" else "landscape"
-            val outputFileName = "${fileName}_${orientation}.png"
+            val outputFileName = "${fileName}_${orientation}.jpg"
             val outputFile = File(previewCacheDir, outputFileName)
 
             // If already extracted, return cached path
@@ -92,24 +90,19 @@ object PreviewExtractor {
             val inputStream = context.assets.open(assetPath)
             val zipInputStream = ZipInputStream(inputStream)
 
-            // Try PNG first, then JPG (PNG preserves transparency)
-            val thumbFileNames = if (usePortrait) {
-                listOf(PORTRAIT_THUMB_PNG, PORTRAIT_THUMB)
-            } else {
-                listOf(LANDSCAPE_THUMB_PNG, LANDSCAPE_THUMB)
-            }
+            val thumbFileName = if (usePortrait) PORTRAIT_THUMB else LANDSCAPE_THUMB
 
             // Search for the thumbnail file inside the ZIP
             var entry = zipInputStream.nextEntry
             while (entry != null) {
-                if (entry.name in thumbFileNames) {
+                if (entry.name == thumbFileName) {
                     // Found the thumbnail, decode it
                     val bitmap = BitmapFactory.decodeStream(zipInputStream)
 
                     if (bitmap != null) {
-                        // Save to cache as PNG to preserve transparency
+                        // Save to cache
                         FileOutputStream(outputFile).use { out ->
-                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
                         }
 
                         Log.d(TAG, "Extracted preview for $fileName: ${outputFile.absolutePath}")

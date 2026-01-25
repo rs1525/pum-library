@@ -15,6 +15,27 @@ import androidx.compose.ui.window.Dialog
 
 /**
  * Diálogo de actualización disponible
+ * 
+ * Uso en Compose:
+ * ```
+ * var showUpdateDialog by remember { mutableStateOf(false) }
+ * var updateInfo by remember { mutableStateOf<UpdateChecker.UpdateInfo?>(null) }
+ * 
+ * LaunchedEffect(Unit) {
+ *     updateInfo = UpdateChecker.checkForUpdate(context, "https://tu-servidor.com/version.json")
+ *     if (updateInfo?.isUpdateAvailable == true) {
+ *         showUpdateDialog = true
+ *     }
+ * }
+ * 
+ * if (showUpdateDialog && updateInfo != null) {
+ *     UpdateDialog(
+ *         updateInfo = updateInfo!!,
+ *         onDismiss = { showUpdateDialog = false },
+ *         onUpdate = { /* navegar a Play Store */ }
+ *     )
+ * }
+ * ```
  */
 @Composable
 fun UpdateDialog(
@@ -32,8 +53,7 @@ fun UpdateDialog(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            shape = MaterialTheme.shapes.large,
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+            shape = MaterialTheme.shapes.large
         ) {
             Column(
                 modifier = Modifier

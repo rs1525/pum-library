@@ -36,10 +36,8 @@ enum class AppLanguage(val code: String, val displayName: String) {
 
 /**
  * Enum para los colores de acento disponibles
- * DEFAULT usa el color definido en colors.xml de la app (pum_accent_color)
  */
-enum class AccentColor(val colorValue: Long, val displayName: String, val isDefault: Boolean = false) {
-    DEFAULT(0xFF2196F3, "Predeterminado", true), // Color se obtiene de resources
+enum class AccentColor(val colorValue: Long, val displayName: String) {
     BLUE(0xFF2196F3, "Azul"),
     PURPLE(0xFF9C27B0, "Púrpura"),
     GREEN(0xFF4CAF50, "Verde"),
@@ -48,14 +46,6 @@ enum class AccentColor(val colorValue: Long, val displayName: String, val isDefa
     TEAL(0xFF009688, "Turquesa"),
     PINK(0xFFE91E63, "Rosa"),
     CYAN(0xFF00BCD4, "Cian")
-}
-
-/**
- * Enum para el modo de visualización de columnas
- */
-enum class GridColumns(val count: Int, val displayName: String) {
-    SINGLE(1, "Una columna"),
-    DOUBLE(2, "Dos columnas")
 }
 
 /**
@@ -80,9 +70,6 @@ class PumPreferences private constructor(context: Context) {
     
     private val _notificationsEnabled = MutableStateFlow(getNotificationsEnabled())
     val notificationsEnabled: StateFlow<Boolean> = _notificationsEnabled.asStateFlow()
-    
-    private val _gridColumns = MutableStateFlow(getGridColumns())
-    val gridColumns: StateFlow<GridColumns> = _gridColumns.asStateFlow()
     
     // Tema
     fun getThemeMode(): ThemeMode {
@@ -123,11 +110,11 @@ class PumPreferences private constructor(context: Context) {
     
     // Color de acento
     fun getAccentColor(): AccentColor {
-        val value = prefs.getString(KEY_ACCENT_COLOR, AccentColor.DEFAULT.name) ?: AccentColor.DEFAULT.name
+        val value = prefs.getString(KEY_ACCENT_COLOR, AccentColor.BLUE.name) ?: AccentColor.BLUE.name
         return try {
             AccentColor.valueOf(value)
         } catch (e: Exception) {
-            AccentColor.DEFAULT
+            AccentColor.BLUE
         }
     }
     
@@ -156,21 +143,6 @@ class PumPreferences private constructor(context: Context) {
         _notificationsEnabled.value = enabled
     }
     
-    // Columnas del grid
-    fun getGridColumns(): GridColumns {
-        val value = prefs.getString(KEY_GRID_COLUMNS, GridColumns.SINGLE.name) ?: GridColumns.SINGLE.name
-        return try {
-            GridColumns.valueOf(value)
-        } catch (e: Exception) {
-            GridColumns.SINGLE
-        }
-    }
-    
-    fun setGridColumns(columns: GridColumns) {
-        prefs.edit().putString(KEY_GRID_COLUMNS, columns.name).apply()
-        _gridColumns.value = columns
-    }
-    
     // Limpiar caché (retorna true si se limpió correctamente)
     fun clearImageCache(context: Context): Boolean {
         return try {
@@ -189,7 +161,6 @@ class PumPreferences private constructor(context: Context) {
         private const val KEY_ACCENT_COLOR = "accent_color"
         private const val KEY_DOWNLOAD_WIFI_ONLY = "download_wifi_only"
         private const val KEY_NOTIFICATIONS_ENABLED = "notifications_enabled"
-        private const val KEY_GRID_COLUMNS = "grid_columns"
         
         @Volatile
         private var instance: PumPreferences? = null
