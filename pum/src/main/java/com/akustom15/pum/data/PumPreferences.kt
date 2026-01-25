@@ -25,12 +25,12 @@ enum class AppLanguage(val code: String, val displayName: String) {
     ENGLISH("en", "English"),
     FRENCH("fr", "Français"),
     GERMAN("de", "Deutsch"),
-    PORTUGUESE("pt", "Português (Brasil)"),
+    PORTUGUESE("pt-BR", "Português (Brasil)"),
     ARABIC("ar", "العربية"),
     ITALIAN("it", "Italiano"),
     HINDI("hi", "हिन्दी"),
     INDONESIAN("in", "Bahasa Indonesia"),
-    CHINESE("zh", "简体中文"),
+    CHINESE("zh-CN", "简体中文"),
     SYSTEM("system", "Automático / Auto")
 }
 

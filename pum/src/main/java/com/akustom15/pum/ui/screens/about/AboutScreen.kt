@@ -49,6 +49,7 @@ import com.akustom15.pum.ui.theme.PumTheme
 @Composable
 fun AboutScreen(
     appIcon: Int?,
+    developerLogoUrl: String = "",
     @DrawableRes xIcon: Int,
     @DrawableRes instagramIcon: Int,
     @DrawableRes youtubeIcon: Int,
@@ -117,23 +118,34 @@ fun AboutScreen(
                                 .padding(16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            // Logo circular
-                            appIcon?.let { iconResId ->
-                                val drawable = remember(iconResId) {
-                                    context.getDrawable(iconResId)
-                                }
-                                drawable?.let { d ->
-                                    val bitmap = remember(d) {
-                                        d.toBitmap(width = 300, height = 300)
+                            // Logo del desarrollador desde URL o icono de la app como fallback
+                            if (developerLogoUrl.isNotEmpty()) {
+                                coil.compose.AsyncImage(
+                                    model = developerLogoUrl,
+                                    contentDescription = "Developer Logo",
+                                    modifier = Modifier
+                                        .size(100.dp)
+                                        .padding(8.dp),
+                                    contentScale = ContentScale.Fit
+                                )
+                            } else {
+                                appIcon?.let { iconResId ->
+                                    val drawable = remember(iconResId) {
+                                        context.getDrawable(iconResId)
                                     }
-                                    Image(
-                                        bitmap = bitmap.asImageBitmap(),
-                                        contentDescription = "Logo",
-                                        modifier = Modifier
-                                            .size(100.dp)
-                                            .padding(8.dp),
-                                        contentScale = ContentScale.Fit
-                                    )
+                                    drawable?.let { d ->
+                                        val bitmap = remember(d) {
+                                            d.toBitmap(width = 300, height = 300)
+                                        }
+                                        Image(
+                                            bitmap = bitmap.asImageBitmap(),
+                                            contentDescription = "Logo",
+                                            modifier = Modifier
+                                                .size(100.dp)
+                                                .padding(8.dp),
+                                            contentScale = ContentScale.Fit
+                                        )
+                                    }
                                 }
                             }
                             
