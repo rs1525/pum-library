@@ -50,6 +50,8 @@ import com.akustom15.pum.ui.theme.PumTheme
 fun AboutScreen(
     appIcon: Int?,
     developerLogoUrl: String = "",
+    developerName: String = "AKustom15",
+    moreAppsUrl: String = "",
     @DrawableRes xIcon: Int,
     @DrawableRes instagramIcon: Int,
     @DrawableRes youtubeIcon: Int,
@@ -149,9 +151,9 @@ fun AboutScreen(
                                 }
                             }
                             
-                            // Título AKustom15
+                            // Título del desarrollador
                             LimitedFontScaleText(
-                                text = "AKustom15",
+                                text = developerName,
                                 baseSizeSp = 24f,
                                 color = MaterialTheme.colorScheme.onSurface,
                                 fontWeight = FontWeight.Bold,
@@ -212,6 +214,29 @@ fun AboutScreen(
                                             modifier = Modifier.size(28.dp)
                                         )
                                     }
+                                }
+                            }
+                            
+                            // Botón More Apps (solo si hay URL)
+                            if (moreAppsUrl.isNotEmpty()) {
+                                Button(
+                                    onClick = {
+                                        try {
+                                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(moreAppsUrl))
+                                            context.startActivity(intent)
+                                        } catch (e: Exception) {
+                                            Toast.makeText(context, context.getString(R.string.about_error_opening_link), Toast.LENGTH_SHORT).show()
+                                        }
+                                    },
+                                    modifier = Modifier.padding(vertical = 16.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = MaterialTheme.colorScheme.primary
+                                    )
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.about_more_apps),
+                                        color = MaterialTheme.colorScheme.onPrimary
+                                    )
                                 }
                             }
                             

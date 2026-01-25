@@ -69,6 +69,7 @@
     <string name="about_title">Informazioni</string>
     <string name="about_back">Indietro</string>
     <string name="about_developer_desc">Sono uno sviluppatore e designer in costante apprendimento, sono appassionato di personalizzazioni dello schermo. Se ti piace il mio lavoro, per favore supportami, valutami e seguimi sui miei social network.</string>
+    <string name="about_more_apps">Altre App</string>
     <string name="about_pum_title">PUM - Pack Universal Manager</string>
     <string name="about_pum_desc">Libreria per gestire pacchetti di widget e sfondi in modo universale e semplice.</string>
     <string name="about_error_opening_link">Errore nell\'apertura del link</string>

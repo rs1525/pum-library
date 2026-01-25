@@ -31,6 +31,8 @@ data class PumConfig(
         val showWallpaperCloud: Boolean = false,
         val cloudWallpapersUrl: String = "",
         val developerLogoUrl: String = "",
+        val developerName: String = "AKustom15",
+        val moreAppsUrl: String = "",
         val changelog: ChangelogConfig = ChangelogConfig(),
         @DrawableRes val xIcon: Int = android.R.drawable.ic_menu_send,
         @DrawableRes val instagramIcon: Int = android.R.drawable.ic_menu_camera,

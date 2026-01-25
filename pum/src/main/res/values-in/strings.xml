@@ -69,6 +69,7 @@
     <string name="about_title">Tentang</string>
     <string name="about_back">Kembali</string>
     <string name="about_developer_desc">Saya seorang pengembang dan desainer yang terus belajar, saya sangat menyukai kustomisasi layar. Jika Anda menyukai pekerjaan saya, tolong dukung, nilai dan ikuti saya di media sosial saya.</string>
+    <string name="about_more_apps">Aplikasi Lainnya</string>
     <string name="about_pum_title">PUM - Pack Universal Manager</string>
     <string name="about_pum_desc">Pustaka untuk mengelola paket widget dan wallpaper secara universal dan sederhana.</string>
     <string name="about_error_opening_link">Gagal membuka tautan</string>

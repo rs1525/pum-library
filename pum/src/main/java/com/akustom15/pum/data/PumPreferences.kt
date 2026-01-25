@@ -38,6 +38,7 @@ enum class AppLanguage(val code: String, val displayName: String) {
  * Enum para los colores de acento disponibles
  */
 enum class AccentColor(val colorValue: Long, val displayName: String) {
+    DEFAULT(0xFFBE1452, "Predeterminado / Default"),
     BLUE(0xFF2196F3, "Azul"),
     PURPLE(0xFF9C27B0, "Púrpura"),
     GREEN(0xFF4CAF50, "Verde"),
@@ -110,7 +111,19 @@ class PumPreferences private constructor(context: Context) {
     fun setAppLanguage(language: AppLanguage) {
         prefs.edit().putString(KEY_APP_LANGUAGE, language.name).apply()
         _appLanguage.value = language
-        
+        applyLanguage(language)
+    }
+    
+    /**
+     * Aplica el idioma guardado al iniciar la app.
+     * Debe llamarse en onCreate de la Activity principal.
+     */
+    fun applyStoredLanguage() {
+        val language = getAppLanguage()
+        applyLanguage(language)
+    }
+    
+    private fun applyLanguage(language: AppLanguage) {
         // Aplicar el idioma usando AppCompatDelegate (funciona sin reiniciar)
         val localeList = when (language) {
             AppLanguage.SYSTEM -> LocaleListCompat.getEmptyLocaleList()
@@ -121,11 +134,11 @@ class PumPreferences private constructor(context: Context) {
     
     // Color de acento
     fun getAccentColor(): AccentColor {
-        val value = prefs.getString(KEY_ACCENT_COLOR, AccentColor.BLUE.name) ?: AccentColor.BLUE.name
+        val value = prefs.getString(KEY_ACCENT_COLOR, AccentColor.DEFAULT.name) ?: AccentColor.DEFAULT.name
         return try {
             AccentColor.valueOf(value)
         } catch (e: Exception) {
-            AccentColor.BLUE
+            AccentColor.DEFAULT
         }
     }
     
