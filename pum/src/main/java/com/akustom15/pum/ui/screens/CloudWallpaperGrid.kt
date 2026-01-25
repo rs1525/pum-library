@@ -40,7 +40,6 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 import androidx.compose.ui.res.stringResource
 import com.akustom15.pum.R
-import com.akustom15.pum.data.PumPreferences
 import com.akustom15.pum.model.CloudWallpaperItem
 import com.akustom15.pum.ui.components.CachedImage
 import com.akustom15.pum.ui.viewmodel.CloudWallpaperUiState
@@ -63,8 +62,6 @@ fun CloudWallpaperGrid(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    val preferences = remember { PumPreferences.getInstance(context) }
-    val gridColumns by preferences.gridColumns.collectAsState()
     val viewModel: CloudWallpaperViewModel = viewModel(
         factory = CloudWallpaperViewModel.Factory(
             context.applicationContext as android.app.Application,
@@ -192,7 +189,7 @@ fun CloudWallpaperGrid(
                 
                 LazyVerticalGrid(
                     state = gridState,
-                    columns = GridCells.Fixed(gridColumns.count),
+                    columns = GridCells.Fixed(2),
                     contentPadding = PaddingValues(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)

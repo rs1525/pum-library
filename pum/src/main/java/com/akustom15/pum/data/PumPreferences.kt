@@ -156,11 +156,11 @@ class PumPreferences private constructor(context: Context) {
     
     // Columnas de la cuadrícula
     fun getGridColumns(): GridColumns {
-        val value = prefs.getString(KEY_GRID_COLUMNS, GridColumns.TWO.name) ?: GridColumns.TWO.name
+        val value = prefs.getString(KEY_GRID_COLUMNS, GridColumns.ONE.name) ?: GridColumns.ONE.name
         return try {
             GridColumns.valueOf(value)
         } catch (e: Exception) {
-            GridColumns.TWO
+            GridColumns.ONE
         }
     }
     
