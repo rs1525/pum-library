@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.stringResource
+import androidx.core.content.ContextCompat
 import com.akustom15.pum.R
 import com.akustom15.pum.data.AccentColor
 import com.akustom15.pum.data.AppLanguage
@@ -110,12 +111,17 @@ fun SettingsScreen(
                         onClick = { showThemeDialog = true }
                     )
                     
-                    // Color de acento
+                    // Color de acento - usar pum_accent_color cuando es DEFAULT
+                    val displayColor = if (accentColor == AccentColor.DEFAULT) {
+                        Color(ContextCompat.getColor(context, R.color.pum_accent_color))
+                    } else {
+                        Color(accentColor.colorValue)
+                    }
                     SettingsItemWithColor(
                         icon = Icons.Default.Palette,
                         title = stringResource(R.string.settings_accent_color),
                         subtitle = accentColor.displayName,
-                        color = Color(accentColor.colorValue),
+                        color = displayColor,
                         onClick = { showAccentColorDialog = true }
                     )
                     
@@ -511,6 +517,10 @@ private fun AccentColorDialog(
     onSelect: (AccentColor) -> Unit,
     onDismiss: () -> Unit
 ) {
+    val context = LocalContext.current
+    // Color de DEFAULT desde recursos de la app
+    val defaultColorFromResources = Color(ContextCompat.getColor(context, R.color.pum_accent_color))
+    
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
@@ -530,11 +540,17 @@ private fun AccentColorDialog(
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         row.forEach { color ->
+                            // Usar el color de recursos para DEFAULT
+                            val displayColor = if (color == AccentColor.DEFAULT) {
+                                defaultColorFromResources
+                            } else {
+                                Color(color.colorValue)
+                            }
                             Box(
                                 modifier = Modifier
                                     .size(48.dp)
                                     .clip(CircleShape)
-                                    .background(Color(color.colorValue))
+                                    .background(displayColor)
                                     .clickable { onSelect(color) },
                                 contentAlignment = Alignment.Center
                             ) {
