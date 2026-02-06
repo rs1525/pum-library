@@ -15,6 +15,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" 
         android:maxSdkVersion="32" />
     
+    <!-- Permission for push notifications (Android 13+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    
     <application>
         <!-- Content Provider for Kustom integration - EXACTLY like Lunex -->
         <provider
@@ -29,6 +32,14 @@
                 <action android:name="org.kustom.provider.LOCKSCREENS" />
             </intent-filter>
         </provider>
+        <!-- Firebase Cloud Messaging Service -->
+        <service
+            android:name=".notifications.PumFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
         
 </manifest>

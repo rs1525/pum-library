@@ -1,9 +1,13 @@
 package com.akustom15.pum.ui.screens.settings
 
+import android.Manifest
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -33,6 +37,7 @@ import com.akustom15.pum.data.AppLanguage
 import com.akustom15.pum.data.GridColumns
 import com.akustom15.pum.data.PumPreferences
 import com.akustom15.pum.data.ThemeMode
+import com.akustom15.pum.notifications.PumNotificationHelper
 import com.akustom15.pum.ui.theme.PumTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,6 +57,13 @@ fun SettingsScreen(
     val gridColumns by preferences.gridColumns.collectAsState()
     val downloadOnWifiOnly by preferences.downloadOnWifiOnly.collectAsState()
     val notificationsEnabled by preferences.notificationsEnabled.collectAsState()
+    
+    // Permission launcher for POST_NOTIFICATIONS (Android 13+)
+    val notificationPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        preferences.setNotificationsEnabled(isGranted)
+    }
     
     // Estados para diálogos
     var showThemeDialog by remember { mutableStateOf(false) }
@@ -178,7 +190,15 @@ fun SettingsScreen(
                         title = stringResource(R.string.settings_notifications),
                         subtitle = stringResource(R.string.settings_notifications_desc),
                         checked = notificationsEnabled,
-                        onCheckedChange = { preferences.setNotificationsEnabled(it) }
+                        onCheckedChange = { enabled ->
+                            if (enabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                                && !PumNotificationHelper.hasNotificationPermission(context)
+                            ) {
+                                notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                            } else {
+                                preferences.setNotificationsEnabled(enabled)
+                            }
+                        }
                     )
                 }
                 

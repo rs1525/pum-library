@@ -62,6 +62,7 @@ enum class GridColumns(val count: Int) {
  */
 class PumPreferences private constructor(context: Context) {
     
+    private val appContext: Context = context.applicationContext
     private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     
     // StateFlows para observar cambios
@@ -165,6 +166,10 @@ class PumPreferences private constructor(context: Context) {
     fun setNotificationsEnabled(enabled: Boolean) {
         prefs.edit().putBoolean(KEY_NOTIFICATIONS_ENABLED, enabled).apply()
         _notificationsEnabled.value = enabled
+        // Sync FCM topic subscription
+        try {
+            com.akustom15.pum.notifications.PumNotificationHelper.syncSubscription(appContext)
+        } catch (_: Exception) { }
     }
     
     // Columnas de la cuadrícula
