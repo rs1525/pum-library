@@ -29,6 +29,9 @@ class PumFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
+        Log.d(TAG, "onMessageReceived called. From: ${message.from}")
+        Log.d(TAG, "Notification payload: ${message.notification?.title} - ${message.notification?.body}")
+        Log.d(TAG, "Data payload: ${message.data}")
 
         // Check if user has notifications enabled
         val preferences = PumPreferences.getInstance(applicationContext)
@@ -39,13 +42,13 @@ class PumFirebaseMessagingService : FirebaseMessagingService() {
 
         // Check notification permission
         if (!PumNotificationHelper.hasNotificationPermission(this)) {
-            Log.d(TAG, "POST_NOTIFICATIONS permission not granted")
-            return
+            Log.w(TAG, "POST_NOTIFICATIONS permission not granted, trying to show anyway")
         }
 
         val title = message.notification?.title ?: message.data["title"] ?: return
         val body = message.notification?.body ?: message.data["body"] ?: ""
 
+        Log.d(TAG, "Showing notification: $title - $body")
         showNotification(title, body)
     }
 
