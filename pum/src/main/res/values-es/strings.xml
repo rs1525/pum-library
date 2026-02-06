@@ -46,6 +46,7 @@
     <string name="wallpaper_info_author">Autor</string>
     <string name="wallpaper_info_resolution">Resolución</string>
     <string name="wallpaper_info_collection">Colección</string>
+    <string name="wifi_only_enabled">Modo solo WiFi activado. Conéctate a WiFi para cargar wallpapers.</string>
     
     <!-- Settings -->
     <string name="settings_title">Configuración</string>

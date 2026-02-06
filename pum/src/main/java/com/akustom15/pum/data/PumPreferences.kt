@@ -182,11 +182,25 @@ class PumPreferences private constructor(context: Context) {
         _gridColumns.value = columns
     }
     
-    // Limpiar caché (retorna true si se limpió correctamente)
+    // Limpiar caché de imágenes (solo Coil y previews, no todo el cacheDir)
     fun clearImageCache(context: Context): Boolean {
         return try {
-            val cacheDir = context.cacheDir
-            cacheDir.deleteRecursively()
+            // Clear Coil image cache
+            val imageLoader = coil.ImageLoader(context)
+            imageLoader.memoryCache?.clear()
+            imageLoader.diskCache?.clear()
+            
+            // Clear preview cache
+            val previewCacheDir = java.io.File(context.cacheDir, "previews")
+            if (previewCacheDir.exists()) {
+                previewCacheDir.deleteRecursively()
+            }
+            
+            // Clear Coil disk cache directory
+            val coilCacheDir = java.io.File(context.cacheDir, "image_cache")
+            if (coilCacheDir.exists()) {
+                coilCacheDir.deleteRecursively()
+            }
             true
         } catch (e: Exception) {
             false

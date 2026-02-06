@@ -45,6 +45,7 @@ import com.akustom15.pum.ui.components.CachedImage
 import com.akustom15.pum.ui.viewmodel.CloudWallpaperUiState
 import com.akustom15.pum.ui.viewmodel.CloudWallpaperViewModel
 import com.akustom15.pum.ui.viewmodel.DownloadState
+import com.akustom15.pum.utils.NetworkUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -77,6 +78,7 @@ fun CloudWallpaperGrid(
     // Get localized strings for toasts
     val wallpaperDownloadedMsg = stringResource(R.string.wallpaper_downloaded)
     val downloadFailedMsg = stringResource(R.string.download_failed)
+    val wifiOnlyMsg = stringResource(R.string.wifi_only_enabled)
     
     // Show download toast
     LaunchedEffect(downloadState) {
@@ -218,11 +220,19 @@ fun CloudWallpaperGrid(
             wallpaper = selectedWallpaper!!,
             onDismiss = { selectedWallpaper = null },
             onDownload = { wallpaper ->
-                downloadWallpaper(context, wallpaper)
+                if (NetworkUtils.isDownloadAllowed(context)) {
+                    downloadWallpaper(context, wallpaper)
+                } else {
+                    Toast.makeText(context, wifiOnlyMsg, Toast.LENGTH_SHORT).show()
+                }
             },
             onApply = { wallpaper, flag ->
-                scope.launch {
-                    applyWallpaper(context, wallpaper.url, flag)
+                if (NetworkUtils.isDownloadAllowed(context)) {
+                    scope.launch {
+                        applyWallpaper(context, wallpaper.url, flag)
+                    }
+                } else {
+                    Toast.makeText(context, wifiOnlyMsg, Toast.LENGTH_SHORT).show()
                 }
             }
         )
@@ -683,6 +693,8 @@ private fun downloadWallpaper(context: Context, wallpaper: CloudWallpaperItem) {
                 Environment.DIRECTORY_PICTURES,
                 "PUM_Wallpapers/${wallpaper.name.replace(" ", "_")}.jpg"
             )
+            setAllowedOverMetered(false)
+            setAllowedOverRoaming(false)
         }
         
         downloadManager.enqueue(request)
@@ -700,8 +712,8 @@ private suspend fun applyWallpaper(context: Context, imageUrl: String, which: In
         withContext(Dispatchers.IO) {
             val wallpaperManager = WallpaperManager.getInstance(context)
             
-            // Load image using Coil with cache policies
-            val imageLoader = coil.ImageLoader.Builder(context).build()
+            // Load image using Coil singleton (shared cache)
+            val imageLoader = coil.ImageLoader(context)
             val request = coil.request.ImageRequest.Builder(context)
                 .data(imageUrl)
                 .memoryCachePolicy(CachePolicy.ENABLED)

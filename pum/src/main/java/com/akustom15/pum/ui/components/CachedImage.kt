@@ -16,6 +16,7 @@ import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import coil.size.Size
+import com.akustom15.pum.utils.NetworkUtils
 
 /**
  * Cached image component with fade-in animation, loading indicator and optimized caching.
@@ -54,13 +55,18 @@ fun CachedImage(
         }
     }
     
+    // If WiFi-only is enabled and not on WiFi, only load from cache
+    val isDownloadAllowed = remember { NetworkUtils.isDownloadAllowed(context) }
+    val networkPolicy = if (isDownloadAllowed) CachePolicy.ENABLED else CachePolicy.DISABLED
+    
     Box(modifier = modifier) {
         AsyncImage(
             model = ImageRequest.Builder(context)
                 .data(optimizedUrl)
                 .memoryCachePolicy(CachePolicy.ENABLED)
                 .diskCachePolicy(CachePolicy.ENABLED)
-                .memoryCacheKey(optimizedUrl) // Use optimized URL as cache key
+                .networkCachePolicy(networkPolicy)
+                .memoryCacheKey(optimizedUrl)
                 .diskCacheKey(optimizedUrl)
                 .crossfade(true)
                 .size(if (useThumbnail) Size(thumbnailWidth, thumbnailWidth * 2) else Size.ORIGINAL)
@@ -95,11 +101,11 @@ fun CachedImage(
  */
 private fun getOptimizedCloudinaryUrl(url: String, width: Int): String {
     return try {
-        if (url.contains("cloudinary.com") && url.contains("/upload/")) {
-            // Insert transformation parameters after /upload/
-            url.replace("/upload/", "/upload/w_${width},q_auto,f_auto/")
-        } else if (url.contains("cloudinary.com") && url.contains("/image/upload/")) {
+        if (url.contains("cloudinary.com") && url.contains("/image/upload/")) {
+            // Insert transformation parameters after /image/upload/
             url.replace("/image/upload/", "/image/upload/w_${width},q_auto,f_auto/")
+        } else if (url.contains("cloudinary.com") && url.contains("/upload/")) {
+            url.replace("/upload/", "/upload/w_${width},q_auto,f_auto/")
         } else {
             // Not a Cloudinary URL, return as-is
             url
