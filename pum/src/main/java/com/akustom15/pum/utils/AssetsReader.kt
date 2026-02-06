@@ -31,10 +31,13 @@ object AssetsReader {
                                 usePortrait = true
                         )
 
+                val description = PreviewExtractor.extractWidgetDescription(context, fileName)
+                        ?: formatName(nameWithoutExtension)
+
                 WidgetItem(
                         id = "widget_$index",
                         name = formatName(nameWithoutExtension),
-                        description = "Widget from $fileName",
+                        description = description,
                         fileName = fileName,
                         previewUrl = previewPath // Now contains actual preview path
                 )
@@ -64,10 +67,13 @@ object AssetsReader {
                                 usePortrait = true
                         )
 
+                val description = PreviewExtractor.extractWallpaperDescription(context, fileName)
+                        ?: formatName(nameWithoutExtension)
+
                 WallpaperItem(
                         id = "wallpaper_$index",
                         name = formatName(nameWithoutExtension),
-                        description = "Wallpaper from $fileName",
+                        description = description,
                         fileName = fileName,
                         previewUrl = previewPath
                 )

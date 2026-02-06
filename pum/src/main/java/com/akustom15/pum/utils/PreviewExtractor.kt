@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.util.zip.ZipInputStream
@@ -118,6 +119,56 @@ object PreviewExtractor {
             return null
         } catch (e: Exception) {
             Log.e(TAG, "Error extracting preview from $fileName", e)
+            return null
+        }
+    }
+
+    /**
+     * Extract description from preset.json inside a .kwgt widget file
+     */
+    fun extractWidgetDescription(context: Context, widgetFileName: String): String? {
+        return extractDescription(context, "widgets/$widgetFileName")
+    }
+
+    /**
+     * Extract description from preset.json inside a .klwp wallpaper file
+     */
+    fun extractWallpaperDescription(context: Context, wallpaperFileName: String): String? {
+        return extractDescription(context, "wallpapers/$wallpaperFileName")
+    }
+
+    /** Generic function to extract description from preset.json inside a Kustom archive */
+    private fun extractDescription(context: Context, assetPath: String): String? {
+        try {
+            val inputStream = context.assets.open(assetPath)
+            val zipInputStream = ZipInputStream(inputStream)
+
+            var entry = zipInputStream.nextEntry
+            while (entry != null) {
+                if (entry.name == "preset.json") {
+                    val jsonString = zipInputStream.bufferedReader().readText()
+                    zipInputStream.close()
+                    val json = JSONObject(jsonString)
+                    // Try preset_info.description first, then top-level description
+                    if (json.has("preset_info")) {
+                        val info = json.getJSONObject("preset_info")
+                        if (info.has("description")) {
+                            val desc = info.getString("description")
+                            if (desc.isNotBlank()) return desc
+                        }
+                    }
+                    if (json.has("description")) {
+                        val desc = json.getString("description")
+                        if (desc.isNotBlank()) return desc
+                    }
+                    return null
+                }
+                entry = zipInputStream.nextEntry
+            }
+            zipInputStream.close()
+            return null
+        } catch (e: Exception) {
+            Log.e(TAG, "Error extracting description from $assetPath", e)
             return null
         }
     }
