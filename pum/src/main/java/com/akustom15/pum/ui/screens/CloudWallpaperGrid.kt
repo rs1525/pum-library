@@ -467,7 +467,7 @@ fun ApplyWallpaperDialog(
                 .fillMaxWidth()
                 .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1E))
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
@@ -475,49 +475,46 @@ fun ApplyWallpaperDialog(
             ) {
                 Text(
                     text = stringResource(R.string.apply_wallpaper),
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = Color.White,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
                 
-                Button(
+                TextButton(
                     onClick = {
                         onApplyHome()
                         onDismiss()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                        .padding(vertical = 8.dp)
                 ) {
-                    Text(stringResource(R.string.home_screen), fontSize = 16.sp)
+                    Text(stringResource(R.string.home_screen), color = Color.White, fontSize = 16.sp)
                 }
                 
-                Button(
+                TextButton(
                     onClick = {
                         onApplyLock()
                         onDismiss()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                        .padding(vertical = 8.dp)
                 ) {
-                    Text(stringResource(R.string.lock_screen), fontSize = 16.sp)
+                    Text(stringResource(R.string.lock_screen), color = Color.White, fontSize = 16.sp)
                 }
                 
-                Button(
+                TextButton(
                     onClick = {
                         onApplyBoth()
                         onDismiss()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                        .padding(vertical = 8.dp)
                 ) {
-                    Text(stringResource(R.string.both_screens), fontSize = 16.sp)
+                    Text(stringResource(R.string.both_screens), color = Color.White, fontSize = 16.sp)
                 }
                 
                 TextButton(
@@ -526,7 +523,7 @@ fun ApplyWallpaperDialog(
                         .fillMaxWidth()
                         .padding(top = 8.dp)
                 ) {
-                    Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.cancel), color = Color.White.copy(alpha = 0.7f))
                 }
             }
         }

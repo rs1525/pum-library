@@ -22,8 +22,8 @@
     <string name="loading_wallpapers">Cargando wallpapers...</string>
     <string name="no_wallpapers_available">No hay wallpapers disponibles</string>
     <string name="retry">Reintentar</string>
-    <string name="apply_wallpaper">Aplicar Wallpaper</string>
-    <string name="home_screen">Pantalla de inicio</string>
+    <string name="apply_wallpaper">Aplicar wallpaper</string>
+    <string name="home_screen">Pantalla principal</string>
     <string name="lock_screen">Pantalla de bloqueo</string>
     <string name="both_screens">Ambas pantallas</string>
     <string name="cancel">Cancelar</string>
