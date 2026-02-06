@@ -36,6 +36,9 @@
     <string name="downloading_description">Descargando wallpaper...</string>
     <string name="wallpaper_downloaded">¡Wallpaper descargado!</string>
     <string name="wallpaper_applied">¡Fondo de pantalla aplicado!</string>
+    <string name="wallpaper_applied_home">¡Fondo aplicado en pantalla de inicio!</string>
+    <string name="wallpaper_applied_lock">¡Fondo aplicado en pantalla de bloqueo!</string>
+    <string name="wallpaper_applied_both">¡Fondo aplicado en ambas pantallas!</string>
     <string name="wallpaper_by_author">por %s</string>
     <string name="wallpaper_failed_load">Error al cargar imagen</string>
     <string name="wallpaper_failed_apply">Error al aplicar fondo</string>

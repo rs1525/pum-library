@@ -39,6 +39,9 @@
     <string name="downloading_description">Downloading wallpaper...</string>
     <string name="wallpaper_downloaded">Wallpaper downloaded!</string>
     <string name="wallpaper_applied">Wallpaper applied!</string>
+    <string name="wallpaper_applied_home">Wallpaper applied to Home Screen!</string>
+    <string name="wallpaper_applied_lock">Wallpaper applied to Lock Screen!</string>
+    <string name="wallpaper_applied_both">Wallpaper applied to both screens!</string>
     <string name="wallpaper_by_author">by %s</string>
     <string name="wallpaper_failed_load">Failed to load image</string>
     <string name="wallpaper_failed_apply">Failed to apply wallpaper</string>

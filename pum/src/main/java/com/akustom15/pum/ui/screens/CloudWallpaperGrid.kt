@@ -346,7 +346,7 @@ fun WallpaperDetailDialog(
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
                     .background(
-                        color = Color.Black.copy(alpha = 0.5f),
+                        color = Color.Black.copy(alpha = 0.1f),
                         shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
                     )
                     .padding(vertical = 16.dp)
@@ -391,7 +391,7 @@ fun WallpaperDetailDialog(
                             )
                     ) {
                         Icon(
-                            Icons.Filled.Info,
+                            Icons.Filled.Palette,
                             contentDescription = "Info",
                             tint = Color.White
                         )
@@ -703,20 +703,41 @@ private suspend fun applyWallpaper(context: Context, imageUrl: String, which: In
         withContext(Dispatchers.IO) {
             val wallpaperManager = WallpaperManager.getInstance(context)
             
-            // Load image using Coil
-            val imageLoader = coil.ImageLoader(context)
+            // Load image using Coil with cache policies
+            val imageLoader = coil.ImageLoader.Builder(context).build()
             val request = coil.request.ImageRequest.Builder(context)
                 .data(imageUrl)
+                .memoryCachePolicy(CachePolicy.ENABLED)
+                .diskCachePolicy(CachePolicy.ENABLED)
                 .allowHardware(false)
                 .build()
             
             val result = imageLoader.execute(request)
-            val bitmap = (result.drawable as? android.graphics.drawable.BitmapDrawable)?.bitmap
+            val drawable = result.drawable
             
-            if (bitmap != null) {
-                wallpaperManager.setBitmap(bitmap, null, true, which)
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(context, context.getString(R.string.wallpaper_applied), Toast.LENGTH_SHORT).show()
+            if (drawable != null) {
+                // Create bitmap from drawable (handles all drawable types)
+                val bitmap = android.graphics.Bitmap.createBitmap(
+                    drawable.intrinsicWidth,
+                    drawable.intrinsicHeight,
+                    android.graphics.Bitmap.Config.ARGB_8888
+                )
+                val canvas = android.graphics.Canvas(bitmap)
+                drawable.setBounds(0, 0, canvas.width, canvas.height)
+                drawable.draw(canvas)
+                
+                try {
+                    wallpaperManager.setBitmap(bitmap, null, true, which)
+                    val message = when (which) {
+                        WallpaperManager.FLAG_SYSTEM -> context.getString(R.string.wallpaper_applied_home)
+                        WallpaperManager.FLAG_LOCK -> context.getString(R.string.wallpaper_applied_lock)
+                        else -> context.getString(R.string.wallpaper_applied_both)
+                    }
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                    }
+                } finally {
+                    bitmap.recycle()
                 }
             } else {
                 withContext(Dispatchers.Main) {
