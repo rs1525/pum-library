@@ -2,6 +2,9 @@ package com.akustom15.pum.ui.theme
 
 import android.app.Activity
 import android.content.ContextWrapper
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -14,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import com.akustom15.pum.R
 import com.akustom15.pum.data.AccentColor
 import com.akustom15.pum.data.PumPreferences
@@ -96,10 +98,15 @@ fun PumTheme(
         if (!view.isInEditMode) {
                 SideEffect {
                         val activity = view.context.findActivity()
-                        if (activity != null) {
-                                val window = activity.window
-                                // Set status bar icons color (light/dark) based on theme
-                                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !useDarkTheme
+                        if (activity is ComponentActivity) {
+                                // Modern edge-to-edge (replaces deprecated statusBarColor/navigationBarColor)
+                                val transparent = android.graphics.Color.TRANSPARENT
+                                activity.enableEdgeToEdge(
+                                        statusBarStyle = if (useDarkTheme) SystemBarStyle.dark(transparent)
+                                                else SystemBarStyle.light(transparent, transparent),
+                                        navigationBarStyle = if (useDarkTheme) SystemBarStyle.dark(transparent)
+                                                else SystemBarStyle.light(transparent, transparent)
+                                )
                         }
                 }
         }
