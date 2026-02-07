@@ -1,6 +1,7 @@
 package com.akustom15.pum.ui.theme
 
 import android.app.Activity
+import android.content.ContextWrapper
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -94,11 +95,23 @@ fun PumTheme(
         val view = LocalView.current
         if (!view.isInEditMode) {
                 SideEffect {
-                        val window = (view.context as Activity).window
-                        // Set status bar icons color (light/dark) based on theme
-                        WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !useDarkTheme
+                        val activity = view.context.findActivity()
+                        if (activity != null) {
+                                val window = activity.window
+                                // Set status bar icons color (light/dark) based on theme
+                                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !useDarkTheme
+                        }
                 }
         }
 
         MaterialTheme(colorScheme = colorScheme, typography = PumTypography, content = content)
+}
+
+private fun android.content.Context.findActivity(): Activity? {
+        var context = this
+        while (context is ContextWrapper) {
+                if (context is Activity) return context
+                context = context.baseContext
+        }
+        return null
 }
