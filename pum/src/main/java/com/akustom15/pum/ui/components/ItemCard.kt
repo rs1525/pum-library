@@ -101,13 +101,16 @@ fun ItemCard(
                                 verticalAlignment = Alignment.CenterVertically
                         ) {
                                 // Icono + nombre app
-                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                Row(
+                                        modifier = Modifier.weight(1f),
+                                        verticalAlignment = Alignment.CenterVertically
+                                ) {
                                         if (appIcon != null) {
                                                 AsyncImage(
                                                         model = appIcon,
                                                         contentDescription = "App icon",
                                                         modifier =
-                                                                Modifier.size(22.dp)
+                                                                Modifier.size(if (isCompactMode) 18.dp else 22.dp)
                                                                         .clip(
                                                                                 RoundedCornerShape(
                                                                                         4.dp
@@ -115,18 +118,22 @@ fun ItemCard(
                                                                         ),
                                                         contentScale = ContentScale.Crop
                                                 )
-                                                Spacer(modifier = Modifier.width(5.dp))
+                                                Spacer(modifier = Modifier.width(if (isCompactMode) 3.dp else 5.dp))
                                         }
 
                                         if (appName != null) {
                                                 Text(
                                                         text = appName,
                                                         style = MaterialTheme.typography.bodySmall,
-                                                        fontSize = 11.sp,
-                                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                                        fontSize = if (isCompactMode) 10.sp else 11.sp,
+                                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                                        maxLines = 1,
+                                                        overflow = TextOverflow.Ellipsis
                                                 )
                                         }
                                 }
+
+                                Spacer(modifier = Modifier.width(4.dp))
 
                                 // Botón Apply - más pequeño en modo compacto (2 columnas)
                                 Button(
@@ -139,9 +146,9 @@ fun ItemCard(
                                                         containerColor = MaterialTheme.colorScheme.primary
                                                 ),
                                         shape = RoundedCornerShape(8.dp),
-                                        modifier = Modifier.height(if (isCompactMode) 30.dp else 34.dp),
+                                        modifier = Modifier.height(if (isCompactMode) 26.dp else 34.dp),
                                         contentPadding = if (isCompactMode) {
-                                                PaddingValues(horizontal = 10.dp, vertical = 4.dp)
+                                                PaddingValues(horizontal = 6.dp, vertical = 2.dp)
                                         } else {
                                                 PaddingValues(horizontal = 14.dp, vertical = 6.dp)
                                         }

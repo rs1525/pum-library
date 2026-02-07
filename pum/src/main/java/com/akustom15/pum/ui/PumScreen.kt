@@ -6,6 +6,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.akustom15.pum.R
 import com.akustom15.pum.config.PumConfig
 import com.akustom15.pum.config.PumTab
@@ -153,29 +155,45 @@ private fun PumScreenContent(config: PumConfig) {
         
         // About screen
         if (showAboutDialog) {
-            AboutScreen(
-                appIcon = config.appIcon,
-                developerLogoUrl = config.developerLogoUrl,
-                developerName = config.developerName,
-                moreAppsUrl = config.moreAppsUrl,
-                moreApps = config.moreApps,
-                moreAppsJsonUrl = config.moreAppsJsonUrl,
-                xIcon = config.xIcon,
-                instagramIcon = config.instagramIcon,
-                youtubeIcon = config.youtubeIcon,
-                facebookIcon = config.facebookIcon,
-                telegramIcon = config.telegramIcon,
-                onNavigateBack = { showAboutDialog = false }
-            )
+            Dialog(
+                onDismissRequest = { showAboutDialog = false },
+                properties = DialogProperties(
+                    usePlatformDefaultWidth = false,
+                    decorFitsSystemWindows = false
+                )
+            ) {
+                AboutScreen(
+                    appIcon = config.appIcon,
+                    developerLogoUrl = config.developerLogoUrl,
+                    developerName = config.developerName,
+                    moreAppsUrl = config.moreAppsUrl,
+                    moreApps = config.moreApps,
+                    moreAppsJsonUrl = config.moreAppsJsonUrl,
+                    xIcon = config.xIcon,
+                    instagramIcon = config.instagramIcon,
+                    youtubeIcon = config.youtubeIcon,
+                    facebookIcon = config.facebookIcon,
+                    telegramIcon = config.telegramIcon,
+                    onNavigateBack = { showAboutDialog = false }
+                )
+            }
         }
         
         // Settings screen
         if (showSettingsDialog) {
-            SettingsScreen(
-                packageName = config.packageName,
-                appVersion = appVersion,
-                updateJsonUrl = config.updateJsonUrl,
-                onNavigateBack = { showSettingsDialog = false }
-            )
+            Dialog(
+                onDismissRequest = { showSettingsDialog = false },
+                properties = DialogProperties(
+                    usePlatformDefaultWidth = false,
+                    decorFitsSystemWindows = false
+                )
+            ) {
+                SettingsScreen(
+                    packageName = config.packageName,
+                    appVersion = appVersion,
+                    updateJsonUrl = config.updateJsonUrl,
+                    onNavigateBack = { showSettingsDialog = false }
+                )
+            }
         }
 }
