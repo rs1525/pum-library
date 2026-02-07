@@ -7,12 +7,18 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.annotation.DrawableRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Apps
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.draw.clip
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,6 +34,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.CompositionLocalProvider
@@ -39,6 +46,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.core.graphics.drawable.toBitmap
 import androidx.compose.ui.res.stringResource
 import com.akustom15.pum.R
+import com.akustom15.pum.config.MoreApp
 import com.akustom15.pum.config.SocialMediaConfig
 import com.akustom15.pum.ui.theme.PumTheme
 
@@ -52,6 +60,7 @@ fun AboutScreen(
     developerLogoUrl: String = "",
     developerName: String = "AKustom15",
     moreAppsUrl: String = "",
+    moreApps: List<MoreApp> = emptyList(),
     @DrawableRes xIcon: Int,
     @DrawableRes instagramIcon: Int,
     @DrawableRes youtubeIcon: Int,
@@ -240,33 +249,181 @@ fun AboutScreen(
                                 }
                             }
                             
-                            HorizontalDivider(
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f),
-                                modifier = Modifier.padding(vertical = 16.dp)
-                            )
-                            
-                            // Sección PUM
-                            LimitedFontScaleText(
-                                text = stringResource(R.string.about_pum_title),
-                                baseSizeSp = 22f,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.Center
-                            )
-                            
-                            LimitedFontScaleText(
-                                text = stringResource(R.string.about_pum_desc),
-                                baseSizeSp = 15f,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                fontWeight = FontWeight.Normal,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)
-                            )
+                            // More Apps section
+                            if (moreApps.isNotEmpty()) {
+                                Spacer(modifier = Modifier.height(16.dp))
+                                
+                                Card(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 0.dp),
+                                    shape = RoundedCornerShape(16.dp),
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+                                    )
+                                ) {
+                                    Column(
+                                        modifier = Modifier.padding(vertical = 16.dp)
+                                    ) {
+                                        // Section header
+                                        Row(
+                                            modifier = Modifier.padding(horizontal = 16.dp),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.Apps,
+                                                contentDescription = null,
+                                                tint = MaterialTheme.colorScheme.primary,
+                                                modifier = Modifier.size(28.dp)
+                                            )
+                                            Spacer(modifier = Modifier.width(12.dp))
+                                            Column {
+                                                Text(
+                                                    text = stringResource(R.string.about_more_apps_title),
+                                                    fontSize = 18.sp,
+                                                    fontWeight = FontWeight.Bold,
+                                                    color = MaterialTheme.colorScheme.onSurface
+                                                )
+                                                Text(
+                                                    text = stringResource(R.string.about_more_apps_desc),
+                                                    fontSize = 13.sp,
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                                )
+                                            }
+                                        }
+                                        
+                                        Spacer(modifier = Modifier.height(12.dp))
+                                        
+                                        // Horizontal scrollable app cards
+                                        LazyRow(
+                                            contentPadding = PaddingValues(horizontal = 16.dp),
+                                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                                        ) {
+                                            items(moreApps) { app ->
+                                                MoreAppCard(
+                                                    app = app,
+                                                    onClick = {
+                                                        if (app.playStoreUrl.isNotEmpty()) {
+                                                            try {
+                                                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(app.playStoreUrl))
+                                                                context.startActivity(intent)
+                                                            } catch (e: Exception) {
+                                                                Toast.makeText(context, context.getString(R.string.about_error_opening_link), Toast.LENGTH_SHORT).show()
+                                                            }
+                                                        }
+                                                    }
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                             
                             Spacer(modifier = Modifier.height(24.dp))
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun MoreAppCard(
+    app: MoreApp,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .width(280.dp)
+            .clickable(onClick = onClick),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
+        )
+    ) {
+        Column {
+            // Screenshots horizontal scroll
+            if (app.screenshotUrls.isNotEmpty()) {
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(160.dp),
+                    contentPadding = PaddingValues(0.dp),
+                    horizontalArrangement = Arrangement.spacedBy(0.dp)
+                ) {
+                    items(app.screenshotUrls) { screenshotUrl ->
+                        coil.compose.AsyncImage(
+                            model = screenshotUrl,
+                            contentDescription = app.name,
+                            modifier = Modifier
+                                .width(280.dp)
+                                .height(160.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
+            }
+            
+            // App info row
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // App icon
+                if (app.iconUrl.isNotEmpty()) {
+                    coil.compose.AsyncImage(
+                        model = app.iconUrl,
+                        contentDescription = app.name,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(RoundedCornerShape(8.dp)),
+                        contentScale = ContentScale.Crop
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                }
+                
+                // Name and description
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = app.name,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    if (app.description.isNotEmpty()) {
+                        Text(
+                            text = app.description,
+                            fontSize = 12.sp,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+            }
+            
+            // Install button
+            Button(
+                onClick = onClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .padding(bottom = 12.dp),
+                shape = RoundedCornerShape(24.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
+            ) {
+                Text(
+                    text = stringResource(R.string.about_install),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontWeight = FontWeight.Bold
+                )
             }
         }
     }

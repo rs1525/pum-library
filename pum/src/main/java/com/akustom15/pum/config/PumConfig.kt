@@ -33,6 +33,8 @@ data class PumConfig(
         val developerLogoUrl: String = "",
         val developerName: String = "AKustom15",
         val moreAppsUrl: String = "",
+        val moreApps: List<MoreApp> = emptyList(),
+        val updateJsonUrl: String = "",
         val changelog: ChangelogConfig = ChangelogConfig(),
         @DrawableRes val xIcon: Int = android.R.drawable.ic_menu_send,
         @DrawableRes val instagramIcon: Int = android.R.drawable.ic_menu_camera,

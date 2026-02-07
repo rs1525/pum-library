@@ -80,14 +80,20 @@
     <string name="settings_grid_view">Vista de cuadrícula</string>
     <string name="settings_one_column">Una columna</string>
     <string name="settings_two_columns">Dos columnas</string>
+    <string name="settings_check_update">Buscar actualizaciones</string>
+    <string name="settings_check_update_desc">Verificar si hay una nueva versión disponible</string>
+    <string name="settings_up_to_date">¡Estás actualizado!</string>
+    <string name="settings_update_error">No se pudo buscar actualizaciones</string>
+    <string name="settings_checking_update">Buscando actualizaciones…</string>
     
     <!-- About -->
     <string name="about_title">Acerca de</string>
     <string name="about_back">Volver</string>
     <string name="about_developer_desc">Soy un desarrollador y diseñador en constante aprendizaje, me apasionan las configuraciones de pantallas, si le agrada mi trabajo, por favor apoyar, califica y sígueme en mis redes sociales.</string>
     <string name="about_more_apps">Más Apps</string>
-    <string name="about_pum_title">PUM - Pack Universal Manager</string>
-    <string name="about_pum_desc">Librería para gestionar packs de widgets y wallpapers de manera universal y sencilla.</string>
+    <string name="about_more_apps_title">Más Apps</string>
+    <string name="about_more_apps_desc">Descubre más apps y recursos útiles</string>
+    <string name="about_install">INSTALAR</string>
     <string name="about_error_opening_link">Error al abrir el enlace</string>
     
     <!-- Changelog -->

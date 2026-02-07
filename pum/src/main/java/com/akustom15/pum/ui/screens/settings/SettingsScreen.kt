@@ -20,6 +20,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,12 +40,16 @@ import com.akustom15.pum.data.PumPreferences
 import com.akustom15.pum.data.ThemeMode
 import com.akustom15.pum.notifications.PumNotificationHelper
 import com.akustom15.pum.ui.theme.PumTheme
+import com.akustom15.pum.update.UpdateChecker
+import com.akustom15.pum.update.UpdateDialog
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     packageName: String,
     appVersion: String,
+    updateJsonUrl: String = "",
     onNavigateBack: () -> Unit
 ) {
     val context = LocalContext.current
@@ -70,6 +75,12 @@ fun SettingsScreen(
     var showLanguageDialog by remember { mutableStateOf(false) }
     var showAccentColorDialog by remember { mutableStateOf(false) }
     var showGridColumnsDialog by remember { mutableStateOf(false) }
+    
+    // Update check state
+    var isCheckingUpdate by remember { mutableStateOf(false) }
+    var showUpdateDialog by remember { mutableStateOf(false) }
+    var updateInfo by remember { mutableStateOf<UpdateChecker.UpdateInfo?>(null) }
+    val coroutineScope = rememberCoroutineScope()
     
     // Manejar botón atrás
     BackHandler {
@@ -204,6 +215,36 @@ fun SettingsScreen(
                 
                 // Sección: Información
                 SettingsSection(title = stringResource(R.string.settings_info)) {
+                    if (updateJsonUrl.isNotEmpty()) {
+                        val checkingText = stringResource(R.string.settings_checking_update)
+                        SettingsItem(
+                            icon = Icons.Default.SystemUpdate,
+                            title = stringResource(R.string.settings_check_update),
+                            subtitle = if (isCheckingUpdate) checkingText
+                                       else stringResource(R.string.settings_check_update_desc),
+                            onClick = {
+                                if (!isCheckingUpdate) {
+                                    isCheckingUpdate = true
+                                    coroutineScope.launch {
+                                        val info = UpdateChecker.checkForUpdate(
+                                            context = context,
+                                            updateJsonUrl = updateJsonUrl
+                                        )
+                                        isCheckingUpdate = false
+                                        if (info != null && info.isUpdateAvailable) {
+                                            updateInfo = info
+                                            showUpdateDialog = true
+                                        } else if (info != null) {
+                                            Toast.makeText(context, context.getString(R.string.settings_up_to_date), Toast.LENGTH_SHORT).show()
+                                        } else {
+                                            Toast.makeText(context, context.getString(R.string.settings_update_error), Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                }
+                            }
+                        )
+                    }
+                    
                     SettingsItem(
                         icon = Icons.Default.Info,
                         title = stringResource(R.string.settings_version),
@@ -314,6 +355,14 @@ fun SettingsScreen(
                 showGridColumnsDialog = false
             },
             onDismiss = { showGridColumnsDialog = false }
+        )
+    }
+    
+    // Update dialog
+    if (showUpdateDialog && updateInfo != null) {
+        UpdateDialog(
+            updateInfo = updateInfo!!,
+            onDismiss = { showUpdateDialog = false }
         )
     }
 }

@@ -158,6 +158,7 @@ private fun PumScreenContent(config: PumConfig) {
                 developerLogoUrl = config.developerLogoUrl,
                 developerName = config.developerName,
                 moreAppsUrl = config.moreAppsUrl,
+                moreApps = config.moreApps,
                 xIcon = config.xIcon,
                 instagramIcon = config.instagramIcon,
                 youtubeIcon = config.youtubeIcon,
@@ -172,6 +173,7 @@ private fun PumScreenContent(config: PumConfig) {
             SettingsScreen(
                 packageName = config.packageName,
                 appVersion = appVersion,
+                updateJsonUrl = config.updateJsonUrl,
                 onNavigateBack = { showSettingsDialog = false }
             )
         }

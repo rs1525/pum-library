@@ -83,14 +83,20 @@
     <string name="settings_grid_view">Grid view</string>
     <string name="settings_one_column">One column</string>
     <string name="settings_two_columns">Two columns</string>
+    <string name="settings_check_update">Check for updates</string>
+    <string name="settings_check_update_desc">Check if there\'s a new version available</string>
+    <string name="settings_up_to_date">You\'re up to date!</string>
+    <string name="settings_update_error">Could not check for updates</string>
+    <string name="settings_checking_update">Checking for updates…</string>
     
     <!-- About -->
     <string name="about_title">About</string>
     <string name="about_back">Back</string>
     <string name="about_developer_desc">I am a developer and designer in constant learning, I am passionate about screen customizations, if you like my work, please support, rate and follow me on my social networks.</string>
     <string name="about_more_apps">More Apps</string>
-    <string name="about_pum_title">PUM - Pack Universal Manager</string>
-    <string name="about_pum_desc">Library to manage widget and wallpaper packs in a universal and simple way.</string>
+    <string name="about_more_apps_title">More Apps</string>
+    <string name="about_more_apps_desc">Discover more apps and useful resources</string>
+    <string name="about_install">INSTALL</string>
     <string name="about_error_opening_link">Error opening link</string>
     
     <!-- Changelog -->
