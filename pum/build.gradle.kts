@@ -10,9 +10,9 @@ afterEvaluate {
         publications {
             create<MavenPublication>("release") {
                 from(components["release"])
-                groupId = "com.github.TU_USUARIO"
-                artifactId = "pum"
-                version = "1.0.0"
+                groupId = "com.github.rs1525"
+                artifactId = "pum-library"
+                version = project.findProperty("VERSION_NAME")?.toString() ?: "1.0.0"
             }
         }
     }
