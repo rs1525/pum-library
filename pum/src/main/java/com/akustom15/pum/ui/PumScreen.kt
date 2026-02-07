@@ -159,6 +159,7 @@ private fun PumScreenContent(config: PumConfig) {
                 developerName = config.developerName,
                 moreAppsUrl = config.moreAppsUrl,
                 moreApps = config.moreApps,
+                moreAppsJsonUrl = config.moreAppsJsonUrl,
                 xIcon = config.xIcon,
                 instagramIcon = config.instagramIcon,
                 youtubeIcon = config.youtubeIcon,

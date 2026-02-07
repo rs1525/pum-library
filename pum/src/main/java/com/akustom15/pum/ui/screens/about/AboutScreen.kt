@@ -47,7 +47,13 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.compose.ui.res.stringResource
 import com.akustom15.pum.R
 import com.akustom15.pum.config.MoreApp
+import com.akustom15.pum.config.MoreAppsLoader
 import com.akustom15.pum.config.SocialMediaConfig
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.rememberCoroutineScope
 import com.akustom15.pum.ui.theme.PumTheme
 
 /**
@@ -61,6 +67,7 @@ fun AboutScreen(
     developerName: String = "AKustom15",
     moreAppsUrl: String = "",
     moreApps: List<MoreApp> = emptyList(),
+    moreAppsJsonUrl: String = "",
     @DrawableRes xIcon: Int,
     @DrawableRes instagramIcon: Int,
     @DrawableRes youtubeIcon: Int,
@@ -69,6 +76,21 @@ fun AboutScreen(
     onNavigateBack: () -> Unit,
     viewModel: AboutViewModel = viewModel()
 ) {
+    // Load More Apps from JSON URL if provided, otherwise use hardcoded list
+    var remoteMoreApps by remember { mutableStateOf<List<MoreApp>?>(null) }
+    val coroutineScope = rememberCoroutineScope()
+    LaunchedEffect(moreAppsJsonUrl) {
+        if (moreAppsJsonUrl.isNotBlank()) {
+            coroutineScope.launch {
+                val loaded = MoreAppsLoader.loadFromUrl(moreAppsJsonUrl)
+                if (loaded.isNotEmpty()) {
+                    remoteMoreApps = loaded
+                }
+            }
+        }
+    }
+    val effectiveMoreApps = remoteMoreApps ?: moreApps
+    
     // Observar cambios en el idioma actual
     val currentLanguage = viewModel.currentLanguage.collectAsState().value
     
@@ -255,7 +277,7 @@ fun AboutScreen(
                             }
                             
                             // More Apps section
-                            if (moreApps.isNotEmpty()) {
+                            if (effectiveMoreApps.isNotEmpty()) {
                                 Spacer(modifier = Modifier.height(16.dp))
                                 
                                 Card(
@@ -304,7 +326,7 @@ fun AboutScreen(
                                             contentPadding = PaddingValues(horizontal = 16.dp),
                                             horizontalArrangement = Arrangement.spacedBy(12.dp)
                                         ) {
-                                            items(moreApps) { app ->
+                                            items(effectiveMoreApps) { app ->
                                                 MoreAppCard(
                                                     app = app,
                                                     onClick = {
