@@ -27,16 +27,6 @@ object PumNotificationHelper {
      */
     fun initialize(context: Context) {
         createNotificationChannel(context)
-        
-        // Log FCM token for debugging
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d(TAG, "FCM Token: ${task.result}")
-            } else {
-                Log.e(TAG, "Failed to get FCM token", task.exception)
-            }
-        }
-        
         syncSubscription(context)
     }
 
@@ -76,21 +66,10 @@ object PumNotificationHelper {
      * Subscribe to the updates FCM topic
      */
     private fun subscribeToUpdates() {
-        try {
-            FirebaseMessaging.getInstance().subscribeToTopic(TOPIC_UPDATES)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "Successfully subscribed to topic: $TOPIC_UPDATES")
-                    } else {
-                        Log.e(TAG, "Failed to subscribe to topic: $TOPIC_UPDATES", task.exception)
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Log.e(TAG, "Error subscribing to topic: $TOPIC_UPDATES", e)
-                }
-        } catch (e: Exception) {
-            Log.e(TAG, "Exception subscribing to topic", e)
-        }
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC_UPDATES)
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Failed to subscribe to topic: $TOPIC_UPDATES", e)
+            }
     }
 
     /**
