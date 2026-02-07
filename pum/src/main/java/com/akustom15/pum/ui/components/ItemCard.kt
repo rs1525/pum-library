@@ -135,31 +135,47 @@ fun ItemCard(
 
                                 Spacer(modifier = Modifier.width(4.dp))
 
-                                // Botón Apply - más pequeño en modo compacto (2 columnas)
-                                Button(
-                                        onClick = {
-                                                android.util.Log.d("ItemCard", "Apply: $name")
-                                                onApplyClick()
-                                        },
-                                        colors =
-                                                ButtonDefaults.buttonColors(
-                                                        containerColor = MaterialTheme.colorScheme.primary
-                                                ),
-                                        shape = RoundedCornerShape(8.dp),
-                                        modifier = Modifier.height(if (isCompactMode) 26.dp else 34.dp),
-                                        contentPadding = if (isCompactMode) {
-                                                PaddingValues(horizontal = 6.dp, vertical = 2.dp)
-                                        } else {
-                                                PaddingValues(horizontal = 14.dp, vertical = 6.dp)
+                                if (isCompactMode) {
+                                        // Botón compacto - sin mínimo de Material3
+                                        Surface(
+                                                onClick = {
+                                                        android.util.Log.d("ItemCard", "Apply: $name")
+                                                        onApplyClick()
+                                                },
+                                                shape = RoundedCornerShape(6.dp),
+                                                color = MaterialTheme.colorScheme.primary,
+                                                modifier = Modifier.size(24.dp)
+                                        ) {
+                                                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                                                        Icon(
+                                                                imageVector = Icons.Default.Edit,
+                                                                contentDescription = "Apply",
+                                                                tint = Color.White,
+                                                                modifier = Modifier.size(12.dp)
+                                                        )
+                                                }
                                         }
-                                ) {
-                                        Icon(
-                                                imageVector = Icons.Default.Edit,
-                                                contentDescription = "Apply",
-                                                tint = Color.White,
-                                                modifier = Modifier.size(if (isCompactMode) 12.dp else 14.dp)
-                                        )
-                                        if (!isCompactMode) {
+                                } else {
+                                        // Botón normal
+                                        Button(
+                                                onClick = {
+                                                        android.util.Log.d("ItemCard", "Apply: $name")
+                                                        onApplyClick()
+                                                },
+                                                colors =
+                                                        ButtonDefaults.buttonColors(
+                                                                containerColor = MaterialTheme.colorScheme.primary
+                                                        ),
+                                                shape = RoundedCornerShape(8.dp),
+                                                modifier = Modifier.height(34.dp),
+                                                contentPadding = PaddingValues(horizontal = 14.dp, vertical = 6.dp)
+                                        ) {
+                                                Icon(
+                                                        imageVector = Icons.Default.Edit,
+                                                        contentDescription = "Apply",
+                                                        tint = Color.White,
+                                                        modifier = Modifier.size(14.dp)
+                                                )
                                                 Spacer(modifier = Modifier.width(4.dp))
                                                 Text(
                                                         text = stringResource(R.string.btn_apply),
