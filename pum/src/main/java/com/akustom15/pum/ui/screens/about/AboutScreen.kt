@@ -132,7 +132,12 @@ fun AboutScreen(
                             // Logo del desarrollador desde URL o icono de la app como fallback
                             if (developerLogoUrl.isNotEmpty()) {
                                 coil.compose.AsyncImage(
-                                    model = developerLogoUrl,
+                                    model = coil.request.ImageRequest.Builder(context)
+                                        .data(developerLogoUrl)
+                                        .crossfade(true)
+                                        .diskCachePolicy(coil.request.CachePolicy.ENABLED)
+                                        .memoryCachePolicy(coil.request.CachePolicy.ENABLED)
+                                        .build(),
                                     contentDescription = "Developer Logo",
                                     modifier = Modifier
                                         .size(100.dp)
@@ -335,85 +340,126 @@ private fun MoreAppCard(
 ) {
     Card(
         modifier = Modifier
-            .width(280.dp)
+            .width(340.dp)
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
         )
     ) {
         Column {
-            // Screenshots horizontal scroll
+            // Large promotional screenshots area
             if (app.screenshotUrls.isNotEmpty()) {
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(160.dp),
-                    contentPadding = PaddingValues(0.dp),
-                    horizontalArrangement = Arrangement.spacedBy(0.dp)
+                        .height(280.dp)
+                        .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
+                    contentPadding = PaddingValues(4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     items(app.screenshotUrls) { screenshotUrl ->
                         coil.compose.AsyncImage(
-                            model = screenshotUrl,
+                            model = coil.request.ImageRequest.Builder(androidx.compose.ui.platform.LocalContext.current)
+                                .data(screenshotUrl)
+                                .crossfade(true)
+                                .diskCachePolicy(coil.request.CachePolicy.ENABLED)
+                                .memoryCachePolicy(coil.request.CachePolicy.ENABLED)
+                                .build(),
                             contentDescription = app.name,
                             modifier = Modifier
-                                .width(280.dp)
-                                .height(160.dp),
+                                .fillMaxHeight()
+                                .width(110.dp)
+                                .clip(RoundedCornerShape(8.dp)),
                             contentScale = ContentScale.Crop
                         )
                     }
                 }
             }
+
+            Spacer(modifier = Modifier.height(12.dp))
             
-            // App info row
+            // App icon + name + "App" label
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(12.dp),
+                    .padding(horizontal = 14.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // App icon
+                // App icon (small, rounded)
                 if (app.iconUrl.isNotEmpty()) {
                     coil.compose.AsyncImage(
-                        model = app.iconUrl,
+                        model = coil.request.ImageRequest.Builder(androidx.compose.ui.platform.LocalContext.current)
+                            .data(app.iconUrl)
+                            .crossfade(true)
+                            .diskCachePolicy(coil.request.CachePolicy.ENABLED)
+                            .memoryCachePolicy(coil.request.CachePolicy.ENABLED)
+                            .build(),
                         contentDescription = app.name,
                         modifier = Modifier
-                            .size(40.dp)
-                            .clip(RoundedCornerShape(8.dp)),
+                            .size(44.dp)
+                            .clip(RoundedCornerShape(10.dp)),
                         contentScale = ContentScale.Crop
                     )
-                    Spacer(modifier = Modifier.width(10.dp))
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .size(44.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(MaterialTheme.colorScheme.primaryContainer),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Apps,
+                            contentDescription = app.name,
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                            modifier = Modifier.size(26.dp)
+                        )
+                    }
                 }
+                Spacer(modifier = Modifier.width(12.dp))
                 
-                // Name and description
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = app.name,
-                        fontSize = 14.sp,
+                        fontSize = 15.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
-                    if (app.description.isNotEmpty()) {
-                        Text(
-                            text = app.description,
-                            fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
+                    Text(
+                        text = "App",
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
             }
+            
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            // Description
+            if (app.description.isNotEmpty()) {
+                Text(
+                    text = app.description,
+                    fontSize = 13.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                    lineHeight = 18.sp,
+                    modifier = Modifier.padding(horizontal = 14.dp)
+                )
+            }
+            
+            Spacer(modifier = Modifier.height(12.dp))
             
             // Install button
             Button(
                 onClick = onClick,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 12.dp)
-                    .padding(bottom = 12.dp),
+                    .height(44.dp)
+                    .padding(horizontal = 14.dp),
                 shape = RoundedCornerShape(24.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
@@ -422,9 +468,12 @@ private fun MoreAppCard(
                 Text(
                     text = stringResource(R.string.about_install),
                     color = MaterialTheme.colorScheme.onPrimary,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp
                 )
             }
+            
+            Spacer(modifier = Modifier.height(14.dp))
         }
     }
 }
