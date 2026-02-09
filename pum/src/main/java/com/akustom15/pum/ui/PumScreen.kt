@@ -105,6 +105,7 @@ private fun PumScreenContent(config: PumConfig) {
                                         .weight(1f)
                                         .fillMaxWidth()
                                         .padding(bottom = if (visibleTabs.size > 1) 80.dp else 0.dp)
+                                        .navigationBarsPadding()
                         ) {
                                 when (selectedTab) {
                                         PumTab.Widgets -> {
