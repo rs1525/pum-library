@@ -94,6 +94,7 @@
     <string name="about_more_apps_title">Más Apps</string>
     <string name="about_more_apps_desc">Descubre más apps y recursos útiles</string>
     <string name="about_install">INSTALAR</string>
+    <string name="about_privacy_policy">Política de privacidad</string>
     <string name="about_error_opening_link">Error al abrir el enlace</string>
     
     <!-- Changelog -->

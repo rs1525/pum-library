@@ -77,6 +77,7 @@
     <string name="about_more_apps_title">المزيد من التطبيقات</string>
     <string name="about_more_apps_desc">اكتشف المزيد من التطبيقات والموارد المفيدة</string>
     <string name="about_install">تثبيت</string>
+    <string name="about_privacy_policy">سياسة الخصوصية</string>
     <string name="about_error_opening_link">خطأ في فتح الرابط</string>
     <string name="changelog_title">سجل التغييرات</string>
     <string name="changelog_accept">قبول</string>

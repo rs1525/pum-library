@@ -77,6 +77,7 @@
     <string name="about_more_apps_title">Mais Apps</string>
     <string name="about_more_apps_desc">Descubra mais apps e recursos úteis</string>
     <string name="about_install">INSTALAR</string>
+    <string name="about_privacy_policy">Política de Privacidade</string>
     <string name="about_error_opening_link">Erro ao abrir o link</string>
     <string name="changelog_title">Registro de alterações</string>
     <string name="changelog_accept">Aceitar</string>

@@ -77,6 +77,7 @@
     <string name="about_more_apps_title">更多应用</string>
     <string name="about_more_apps_desc">发现更多应用和有用资源</string>
     <string name="about_install">安装</string>
+    <string name="about_privacy_policy">隐私政策</string>
     <string name="about_error_opening_link">打开链接时出错</string>
     <string name="changelog_title">更新日志</string>
     <string name="changelog_accept">接受</string>

@@ -77,6 +77,7 @@
     <string name="about_more_apps_title">Aplikasi Lainnya</string>
     <string name="about_more_apps_desc">Temukan lebih banyak aplikasi dan sumber daya berguna</string>
     <string name="about_install">INSTAL</string>
+    <string name="about_privacy_policy">Kebijakan Privasi</string>
     <string name="about_error_opening_link">Gagal membuka tautan</string>
     <string name="changelog_title">Log Perubahan</string>
     <string name="changelog_accept">Terima</string>

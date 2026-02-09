@@ -68,6 +68,7 @@ fun AboutScreen(
     moreAppsUrl: String = "",
     moreApps: List<MoreApp> = emptyList(),
     moreAppsJsonUrl: String = "",
+    privacyPolicyUrl: String = "",
     @DrawableRes xIcon: Int,
     @DrawableRes instagramIcon: Int,
     @DrawableRes youtubeIcon: Int,
@@ -272,6 +273,27 @@ fun AboutScreen(
                                     Text(
                                         text = stringResource(R.string.about_more_apps),
                                         color = MaterialTheme.colorScheme.onPrimary
+                                    )
+                                }
+                            }
+                            
+                            // Privacy Policy link
+                            if (privacyPolicyUrl.isNotEmpty()) {
+                                TextButton(
+                                    onClick = {
+                                        try {
+                                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(privacyPolicyUrl))
+                                            context.startActivity(intent)
+                                        } catch (e: Exception) {
+                                            Toast.makeText(context, context.getString(R.string.about_error_opening_link), Toast.LENGTH_SHORT).show()
+                                        }
+                                    },
+                                    modifier = Modifier.padding(vertical = 4.dp)
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.about_privacy_policy),
+                                        color = MaterialTheme.colorScheme.primary,
+                                        fontSize = 14.sp
                                     )
                                 }
                             }
