@@ -22,19 +22,24 @@ import com.akustom15.pum.data.AccentColor
 import com.akustom15.pum.data.PumPreferences
 import com.akustom15.pum.data.ThemeMode
 
-private fun getDarkColorScheme(accentColor: Color) =
+private fun getDarkColorScheme(
+        accentColor: Color,
+        backgroundColor: Color,
+        surfaceColor: Color,
+        cardColor: Color
+) =
         darkColorScheme(
                 primary = accentColor,
                 primaryContainer = accentColor.copy(alpha = 0.7f),
                 secondary = PumColors.Secondary,
-                background = PumColors.Background,
-                surface = PumColors.Surface,
-                surfaceVariant = PumColors.SurfaceVariant,
-                surfaceContainerHigh = Color(0xFF2C2C2E),
-                surfaceContainer = Color(0xFF252527),
-                surfaceContainerHighest = Color(0xFF3A3A3C),
-                surfaceBright = Color(0xFF3A3A3C),
-                surfaceDim = Color(0xFF1C1C1E),
+                background = backgroundColor,
+                surface = surfaceColor,
+                surfaceVariant = cardColor,
+                surfaceContainerHigh = surfaceColor,
+                surfaceContainer = backgroundColor,
+                surfaceContainerHighest = cardColor,
+                surfaceBright = cardColor,
+                surfaceDim = backgroundColor,
                 onPrimary = Color.White,
                 onSecondary = Color.White,
                 onBackground = PumColors.OnBackground,
@@ -43,14 +48,19 @@ private fun getDarkColorScheme(accentColor: Color) =
                 error = PumColors.Error
         )
 
-private fun getLightColorScheme(accentColor: Color) =
+private fun getLightColorScheme(
+        accentColor: Color,
+        backgroundColor: Color,
+        surfaceColor: Color,
+        cardColor: Color
+) =
         lightColorScheme(
                 primary = accentColor,
                 primaryContainer = accentColor.copy(alpha = 0.3f),
                 secondary = PumColors.Secondary,
-                background = Color(0xFFF5F5F5),
-                surface = Color.White,
-                surfaceVariant = Color(0xFFE8E8E8),
+                background = backgroundColor,
+                surface = surfaceColor,
+                surfaceVariant = cardColor,
                 onPrimary = Color.White,
                 onSecondary = Color.White,
                 onBackground = Color(0xFF1C1C1E),
@@ -85,10 +95,27 @@ fun PumTheme(
                 ThemeMode.SYSTEM -> systemDarkTheme
         }
         
-        val colorScheme = if (useDarkTheme) {
-                getDarkColorScheme(accentColor)
+        // Read customizable colors from app resources
+        val backgroundColor = if (useDarkTheme) {
+                Color(ContextCompat.getColor(context, R.color.pum_background_color_dark))
         } else {
-                getLightColorScheme(accentColor)
+                Color(ContextCompat.getColor(context, R.color.pum_background_color_light))
+        }
+        val surfaceColor = if (useDarkTheme) {
+                Color(ContextCompat.getColor(context, R.color.pum_surface_color_dark))
+        } else {
+                Color(ContextCompat.getColor(context, R.color.pum_surface_color_light))
+        }
+        val cardColor = if (useDarkTheme) {
+                Color(ContextCompat.getColor(context, R.color.pum_card_color_dark))
+        } else {
+                Color(ContextCompat.getColor(context, R.color.pum_card_color_light))
+        }
+        
+        val colorScheme = if (useDarkTheme) {
+                getDarkColorScheme(accentColor, backgroundColor, surfaceColor, cardColor)
+        } else {
+                getLightColorScheme(accentColor, backgroundColor, surfaceColor, cardColor)
         }
         
         // Update PumColors.Primary dynamically

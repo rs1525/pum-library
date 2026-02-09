@@ -4,4 +4,17 @@
     <!-- Este color se usa cuando el usuario selecciona "Predeterminado" en configuración -->
     <!-- Cambia este valor para personalizar el color de tu app -->
     <color name="pum_accent_color">#FFBE1452</color>
+
+    <!-- ═══ Colores de fondo de pantalla ═══ -->
+    <!-- Color principal del fondo de la app -->
+    <color name="pum_background_color_dark">#FF1C1C1E</color>
+    <color name="pum_background_color_light">#FFF5F5F5</color>
+
+    <!-- ═══ Colores de superficie (barras, searchbar, elementos UI) ═══ -->
+    <color name="pum_surface_color_dark">#FF2C2C2E</color>
+    <color name="pum_surface_color_light">#FFFFFFFF</color>
+
+    <!-- ═══ Colores de tarjetas (KWGT, KLWP, Wallpapers, todas las cards) ═══ -->
+    <color name="pum_card_color_dark">#FF3A3A3C</color>
+    <color name="pum_card_color_light">#FFE8E8E8</color>
 </resources>
