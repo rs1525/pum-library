@@ -127,13 +127,10 @@ fun PumTheme(
                         val activity = view.context.findActivity()
                         if (activity != null) {
                                 val window = activity.window
-                                // Reinforce edge-to-edge on every recomposition
-                                WindowCompat.setDecorFitsSystemWindows(window, false)
-                                window.statusBarColor = android.graphics.Color.TRANSPARENT
-                                window.navigationBarColor = android.graphics.Color.TRANSPARENT
+                                // Reinforce edge-to-edge on every recomposition (core 1.17.0 API)
+                                WindowCompat.enableEdgeToEdge(window)
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                                         window.isNavigationBarContrastEnforced = false
-                                        window.isStatusBarContrastEnforced = false
                                 }
                                 // Update status/nav bar icon colors when theme changes
                                 WindowInsetsControllerCompat(window, window.decorView).apply {
