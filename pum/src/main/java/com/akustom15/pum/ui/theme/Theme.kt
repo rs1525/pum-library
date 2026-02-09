@@ -3,6 +3,9 @@ package com.akustom15.pum.ui.theme
 import android.app.Activity
 import android.content.ContextWrapper
 import android.os.Build
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -15,8 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.akustom15.pum.R
 import com.akustom15.pum.data.AccentColor
 import com.akustom15.pum.data.PumPreferences
@@ -125,28 +126,25 @@ fun PumTheme(
         if (!view.isInEditMode) {
                 SideEffect {
                         val activity = view.context.findActivity()
-                        if (activity != null) {
-                                val window = activity.window
-                                // Direct window properties - bypasses enableEdgeToEdge() which
-                                // can internally toggle isNavigationBarContrastEnforced on some styles
-                                @Suppress("DEPRECATION")
-                                window.statusBarColor = android.graphics.Color.TRANSPARENT
-                                // Set system nav bar color to match the pill (configurable via colors.xml)
-                                @Suppress("DEPRECATION")
-                                window.navigationBarColor = if (useDarkTheme) {
-                                        ContextCompat.getColor(activity, R.color.pum_navbar_color_dark)
-                                } else {
-                                        ContextCompat.getColor(activity, R.color.pum_navbar_color_light)
-                                }
-                                WindowCompat.setDecorFitsSystemWindows(window, false)
+                        if (activity is ComponentActivity) {
+                                // enableEdgeToEdge() is the standard for Android 15+
+                                // It sets decor fits system windows = false and configures bar styles
+                                val transparent = android.graphics.Color.TRANSPARENT
+                                activity.enableEdgeToEdge(
+                                        statusBarStyle = if (useDarkTheme)
+                                                SystemBarStyle.dark(transparent)
+                                        else
+                                                SystemBarStyle.light(transparent, transparent),
+                                        navigationBarStyle = if (useDarkTheme)
+                                                SystemBarStyle.dark(transparent)
+                                        else
+                                                SystemBarStyle.light(transparent, transparent)
+                                )
+                                // Disable contrast enforcement AFTER enableEdgeToEdge()
+                                // enableEdgeToEdge() may internally set this to true
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                        window.isNavigationBarContrastEnforced = false
-                                        window.isStatusBarContrastEnforced = false
-                                }
-                                // Set icon colors based on theme
-                                WindowInsetsControllerCompat(window, window.decorView).apply {
-                                        isAppearanceLightStatusBars = !useDarkTheme
-                                        isAppearanceLightNavigationBars = !useDarkTheme
+                                        activity.window.isNavigationBarContrastEnforced = false
+                                        activity.window.isStatusBarContrastEnforced = false
                                 }
                         }
                 }
