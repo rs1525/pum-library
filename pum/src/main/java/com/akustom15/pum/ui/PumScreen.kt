@@ -1,6 +1,7 @@
 package com.akustom15.pum.ui
 
 import android.content.pm.PackageManager
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -78,8 +79,13 @@ private fun PumScreenContent(config: PumConfig) {
         }
 
         PumTheme {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(
+                modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.background)
+        ) {
                 Scaffold(
+                        contentWindowInsets = WindowInsets(0.dp),
                         topBar = {
                                 // Solo search + menu (NO el header con icono)
                                 AnimatedSearchTopBar(

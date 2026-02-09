@@ -67,7 +67,7 @@ fun PumBottomNavigation(
                         Row(
                                 modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(58.dp)
+                                        .height(62.dp)
                                         .padding(horizontal = 8.dp),
                                 horizontalArrangement = Arrangement.SpaceEvenly,
                                 verticalAlignment = Alignment.CenterVertically
@@ -95,7 +95,8 @@ fun PumBottomNavigation(
                                                         .clickable(
                                                                 interactionSource = remember { MutableInteractionSource() },
                                                                 indication = null
-                                                        ) { onTabSelected(tab) },
+                                                        ) { onTabSelected(tab) }
+                                                        .padding(vertical = 6.dp),
                                                 horizontalAlignment = Alignment.CenterHorizontally,
                                                 verticalArrangement = Arrangement.Center
                                         ) {
