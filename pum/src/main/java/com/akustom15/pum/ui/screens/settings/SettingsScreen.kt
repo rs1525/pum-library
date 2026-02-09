@@ -289,7 +289,6 @@ fun SettingsScreen(
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
-    }
     
     // Diálogo de tema
     val themeLight = stringResource(R.string.settings_theme_light)
@@ -365,6 +364,7 @@ fun SettingsScreen(
             onDismiss = { showUpdateDialog = false }
         )
     }
+    } // PumTheme
 }
 
 @Composable
