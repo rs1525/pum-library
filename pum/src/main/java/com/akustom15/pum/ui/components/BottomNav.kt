@@ -21,7 +21,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -65,12 +64,11 @@ fun PumBottomNavigation(
                         .padding(bottom = 8.dp)
                         .navigationBarsPadding()
         ) {
-                // Pill container - NO Surface, NO shadowElevation to avoid black rectangle
+                // Pill container - background(color, shape) draws directly without graphics layer
                 Box(
                         modifier = Modifier
                                 .fillMaxWidth()
-                                .clip(pillShape)
-                                .background(navbarColor.copy(alpha = 0.80f))
+                                .background(navbarColor.copy(alpha = 0.80f), pillShape)
                                 .border(
                                         width = 0.5.dp,
                                         color = borderColor,
@@ -118,12 +116,12 @@ fun PumBottomNavigation(
                                                         modifier = Modifier
                                                                 .width(24.dp)
                                                                 .height(3.dp)
-                                                                .clip(RoundedCornerShape(50))
                                                                 .background(
                                                                         if (isSelected)
                                                                                 MaterialTheme.colorScheme.primary
                                                                         else
-                                                                                Color.Transparent
+                                                                                Color.Transparent,
+                                                                        RoundedCornerShape(50)
                                                                 )
                                                 )
 
