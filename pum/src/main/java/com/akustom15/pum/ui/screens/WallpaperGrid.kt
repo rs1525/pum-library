@@ -94,13 +94,3 @@ fun WallpaperGrid(
         }
     }
 }
-                                    context = context,
-                                    wallpaperFileName = wallpaper.fileName,
-                                    packageName = packageName
-                            )
-                        }
-                )
-            }
-        }
-    }
-}

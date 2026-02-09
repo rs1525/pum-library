@@ -99,13 +99,3 @@ fun WidgetGrid(
         }
     }
 }
-                                    context = context,
-                                    widgetFileName = widget.fileName,
-                                    packageName = packageName
-                            )
-                        }
-                )
-            }
-        }
-    }
-}

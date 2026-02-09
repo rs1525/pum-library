@@ -730,13 +730,3 @@ private suspend fun applyWallpaper(context: Context, imageUrl: String, which: In
         }
     }
 }
-                    Toast.makeText(context, context.getString(R.string.wallpaper_failed_load), Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    } catch (e: Exception) {
-        withContext(Dispatchers.Main) {
-            Toast.makeText(context, context.getString(R.string.wallpaper_failed_apply), Toast.LENGTH_SHORT).show()
-        }
-    }
-}
