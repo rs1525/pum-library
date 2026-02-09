@@ -1,8 +1,10 @@
 package com.akustom15.pum.ui.components
 
+import android.os.Build
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -20,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.graphics.Color
@@ -51,6 +54,12 @@ fun PumBottomNavigation(
                 Color(ContextCompat.getColor(context, R.color.pum_navbar_color_light))
         }
 
+        val pillShape = RoundedCornerShape(50)
+        val borderColor = if (isDark)
+                Color.White.copy(alpha = 0.08f)
+        else
+                Color.Black.copy(alpha = 0.06f)
+
         Box(
                 modifier = modifier
                         .fillMaxWidth()
@@ -58,12 +67,27 @@ fun PumBottomNavigation(
                         .padding(bottom = 8.dp)
                         .navigationBarsPadding()
         ) {
-                Surface(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(50),
-                        color = navbarColor.copy(alpha = 0.92f),
-                        shadowElevation = 8.dp
+                // Pill container - NO Surface, NO shadowElevation to avoid black rectangle
+                Box(
+                        modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(pillShape)
+                                .background(navbarColor.copy(alpha = 0.80f))
+                                .border(
+                                        width = 0.5.dp,
+                                        color = borderColor,
+                                        shape = pillShape
+                                )
                 ) {
+                        // Blur background layer (API 31+)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                                Box(
+                                        modifier = Modifier
+                                                .matchParentSize()
+                                                .blur(24.dp)
+                                )
+                        }
+
                         Row(
                                 modifier = Modifier
                                         .fillMaxWidth()

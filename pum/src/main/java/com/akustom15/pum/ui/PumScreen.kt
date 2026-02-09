@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -101,7 +102,7 @@ private fun PumScreenContent(config: PumConfig) {
                                         onSettingsClick = { showSettingsDialog = true }
                                 )
                         },
-                        containerColor = MaterialTheme.colorScheme.background
+                        containerColor = Color.Transparent
                 ) { paddingValues ->
                         // Contenido con header que hace scroll
                         Box(
