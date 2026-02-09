@@ -19,6 +19,7 @@
     <color name="pum_card_color_light">#FFE8E8E8</color>
 
     <!-- ═══ Colores de barra de navegación inferior (bottom nav pill) ═══ -->
-    <color name="pum_navbar_color_dark">#FF2C2C2E</color>
-    <color name="pum_navbar_color_light">#FFFFFFFF</color>
+    <!-- Los primeros 2 dígitos hex controlan la opacidad: FF=100%, CC=80%, 99=60%, 80=50% -->
+    <color name="pum_navbar_color_dark">#CC2C2C2E</color>
+    <color name="pum_navbar_color_light">#CCFFFFFF</color>
 </resources>

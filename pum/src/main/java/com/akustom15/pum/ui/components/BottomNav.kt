@@ -21,8 +21,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -44,7 +44,9 @@ fun PumBottomNavigation(
         if (visibleTabs.isEmpty()) return
 
         val context = LocalContext.current
-        val isDark = isSystemInDarkTheme()
+        // Use MaterialTheme background luminance to detect dark mode correctly
+        // (isSystemInDarkTheme() doesn't reflect app's own theme preference)
+        val isDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
         val navbarColor = if (isDark) {
                 Color(ContextCompat.getColor(context, R.color.pum_navbar_color_dark))
         } else {
@@ -68,7 +70,7 @@ fun PumBottomNavigation(
                 Box(
                         modifier = Modifier
                                 .fillMaxWidth()
-                                .background(navbarColor.copy(alpha = 0.80f), pillShape)
+                                .background(navbarColor, pillShape)
                                 .border(
                                         width = 0.5.dp,
                                         color = borderColor,

@@ -3,9 +3,6 @@ package com.akustom15.pum.ui.theme
 import android.app.Activity
 import android.content.ContextWrapper
 import android.os.Build
-import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -18,6 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.akustom15.pum.R
 import com.akustom15.pum.data.AccentColor
 import com.akustom15.pum.data.PumPreferences
@@ -126,23 +125,23 @@ fun PumTheme(
         if (!view.isInEditMode) {
                 SideEffect {
                         val activity = view.context.findActivity()
-                        if (activity is ComponentActivity) {
-                                // Modern edge-to-edge with auto() style to avoid system nav bar scrim.
-                                // IMPORTANT: SystemBarStyle.dark()/light() internally set
-                                // isNavigationBarContrastEnforced=true inside enableEdgeToEdge(),
-                                // which causes a translucent dark scrim on 3-button navigation.
-                                // SystemBarStyle.auto() keeps isNavigationBarContrastEnforced=false.
-                                val transparent = android.graphics.Color.TRANSPARENT
-                                val barStyle = SystemBarStyle.auto(
-                                        transparent, transparent
-                                ) { _ -> useDarkTheme }
-                                activity.enableEdgeToEdge(
-                                        statusBarStyle = barStyle,
-                                        navigationBarStyle = barStyle
-                                )
-                                // Belt-and-suspenders: ensure contrast scrim stays disabled
+                        if (activity != null) {
+                                val window = activity.window
+                                // Direct window properties - bypasses enableEdgeToEdge() which
+                                // can internally toggle isNavigationBarContrastEnforced on some styles
+                                @Suppress("DEPRECATION")
+                                window.statusBarColor = android.graphics.Color.TRANSPARENT
+                                @Suppress("DEPRECATION")
+                                window.navigationBarColor = android.graphics.Color.TRANSPARENT
+                                WindowCompat.setDecorFitsSystemWindows(window, false)
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                        activity.window.isNavigationBarContrastEnforced = false
+                                        window.isNavigationBarContrastEnforced = false
+                                        window.isStatusBarContrastEnforced = false
+                                }
+                                // Set icon colors based on theme
+                                WindowInsetsControllerCompat(window, window.decorView).apply {
+                                        isAppearanceLightStatusBars = !useDarkTheme
+                                        isAppearanceLightNavigationBars = !useDarkTheme
                                 }
                         }
                 }
