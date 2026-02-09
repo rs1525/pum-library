@@ -1,6 +1,5 @@
 package com.akustom15.pum.ui.components
 
-import android.os.Build
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -22,7 +21,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.graphics.Color
@@ -79,15 +77,6 @@ fun PumBottomNavigation(
                                         shape = pillShape
                                 )
                 ) {
-                        // Blur background layer (API 31+)
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                                Box(
-                                        modifier = Modifier
-                                                .matchParentSize()
-                                                .blur(24.dp)
-                                )
-                        }
-
                         Row(
                                 modifier = Modifier
                                         .fillMaxWidth()
