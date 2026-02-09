@@ -2,6 +2,7 @@ package com.akustom15.pum.ui.theme
 
 import android.app.Activity
 import android.content.ContextWrapper
+import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -134,6 +135,10 @@ fun PumTheme(
                                         navigationBarStyle = if (useDarkTheme) SystemBarStyle.dark(transparent)
                                                 else SystemBarStyle.light(transparent, transparent)
                                 )
+                                // Disable system contrast scrim on navigation bar
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                        activity.window.isNavigationBarContrastEnforced = false
+                                }
                         }
                 }
         }

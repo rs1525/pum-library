@@ -4,7 +4,6 @@ import android.content.pm.PackageManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -85,30 +84,26 @@ private fun PumScreenContent(config: PumConfig) {
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.background)
         ) {
-                Scaffold(
-                        contentWindowInsets = WindowInsets(0.dp),
-                        topBar = {
-                                // Solo search + menu (NO el header con icono)
-                                AnimatedSearchTopBar(
-                                        isSearchActive = isSearchActive,
-                                        searchQuery = searchQuery,
-                                        onSearchQueryChange = { searchQuery = it },
-                                        onSearchActiveChange = { isSearchActive = it },
-                                        onMenuClick = { showMenu = true },
-                                        showMenuDropdown = showMenu,
-                                        onMenuDismiss = { showMenu = false },
-                                        onChangelogClick = { showChangelogDialog = true },
-                                        onAboutClick = { showAboutDialog = true },
-                                        onSettingsClick = { showSettingsDialog = true }
-                                )
-                        },
-                        containerColor = Color.Transparent
-                ) { paddingValues ->
+                Column(modifier = Modifier.fillMaxSize()) {
+                        // Solo search + menu (NO el header con icono)
+                        AnimatedSearchTopBar(
+                                isSearchActive = isSearchActive,
+                                searchQuery = searchQuery,
+                                onSearchQueryChange = { searchQuery = it },
+                                onSearchActiveChange = { isSearchActive = it },
+                                onMenuClick = { showMenu = true },
+                                showMenuDropdown = showMenu,
+                                onMenuDismiss = { showMenu = false },
+                                onChangelogClick = { showChangelogDialog = true },
+                                onAboutClick = { showAboutDialog = true },
+                                onSettingsClick = { showSettingsDialog = true }
+                        )
+
                         // Contenido con header que hace scroll
                         Box(
                                 modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(paddingValues)
+                                        .weight(1f)
+                                        .fillMaxWidth()
                                         .padding(bottom = if (visibleTabs.size > 1) 80.dp else 0.dp)
                         ) {
                                 when (selectedTab) {
