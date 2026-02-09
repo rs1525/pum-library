@@ -4,8 +4,10 @@ import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.akustom15.pum.R
@@ -76,6 +78,7 @@ private fun PumScreenContent(config: PumConfig) {
         }
 
         PumTheme {
+        Box(modifier = Modifier.fillMaxSize()) {
                 Scaffold(
                         topBar = {
                                 // Solo search + menu (NO el header con icono)
@@ -92,19 +95,15 @@ private fun PumScreenContent(config: PumConfig) {
                                         onSettingsClick = { showSettingsDialog = true }
                                 )
                         },
-                        bottomBar = {
-                                if (visibleTabs.size > 1) {
-                                        PumBottomNavigation(
-                                                visibleTabs = visibleTabs,
-                                                selectedTab = selectedTab,
-                                                onTabSelected = { selectedTab = it }
-                                        )
-                                }
-                        },
                         containerColor = MaterialTheme.colorScheme.background
                 ) { paddingValues ->
                         // Contenido con header que hace scroll
-                        Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+                        Box(
+                                modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(paddingValues)
+                                        .padding(bottom = if (visibleTabs.size > 1) 80.dp else 0.dp)
+                        ) {
                                 when (selectedTab) {
                                         PumTab.Widgets -> {
                                                 WidgetGrid(
@@ -139,6 +138,16 @@ private fun PumScreenContent(config: PumConfig) {
                                         }
                                 }
                         }
+                }
+
+                // Floating bottom navigation - overlays content, no black background
+                if (visibleTabs.size > 1) {
+                        PumBottomNavigation(
+                                visibleTabs = visibleTabs,
+                                selectedTab = selectedTab,
+                                onTabSelected = { selectedTab = it },
+                                modifier = Modifier.align(Alignment.BottomCenter)
+                        )
                 }
         }
         
@@ -196,4 +205,5 @@ private fun PumScreenContent(config: PumConfig) {
                 )
             }
         }
+        } // PumTheme
 }
