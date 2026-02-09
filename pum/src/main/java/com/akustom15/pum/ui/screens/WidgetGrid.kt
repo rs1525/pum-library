@@ -73,8 +73,8 @@ fun WidgetGrid(
         ) {
             // Header DENTRO del grid para que haga scroll (ocupa toda la fila)
             if (showHeader) {
-                item(span = { GridItemSpan(maxLineSpan) }) { 
-                    AppHeader(appName = appName, appSubtitle = appSubtitle, appIcon = appIcon) 
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    AppHeader(appName = appName, appSubtitle = appSubtitle, appIcon = appIcon)
                 }
             }
 
@@ -89,6 +89,16 @@ fun WidgetGrid(
                         isCompactMode = gridColumns.count > 1,
                         onApplyClick = {
                             KustomIntegration.applyWidget(
+                                    context = context,
+                                    widgetFileName = widget.fileName,
+                                    packageName = packageName
+                            )
+                        }
+                )
+            }
+        }
+    }
+}
                                     context = context,
                                     widgetFileName = widget.fileName,
                                     packageName = packageName

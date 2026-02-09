@@ -68,8 +68,8 @@ fun WallpaperGrid(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             if (showHeader) {
-                item(span = { GridItemSpan(maxLineSpan) }) { 
-                    AppHeader(appName = appName, appSubtitle = appSubtitle, appIcon = appIcon) 
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    AppHeader(appName = appName, appSubtitle = appSubtitle, appIcon = appIcon)
                 }
             }
 
@@ -84,6 +84,16 @@ fun WallpaperGrid(
                         isCompactMode = gridColumns.count > 1,
                         onApplyClick = {
                             KustomIntegration.applyWallpaper(
+                                    context = context,
+                                    wallpaperFileName = wallpaper.fileName,
+                                    packageName = packageName
+                            )
+                        }
+                )
+            }
+        }
+    }
+}
                                     context = context,
                                     wallpaperFileName = wallpaper.fileName,
                                     packageName = packageName
