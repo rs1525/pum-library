@@ -127,15 +127,20 @@ fun PumTheme(
                 SideEffect {
                         val activity = view.context.findActivity()
                         if (activity is ComponentActivity) {
-                                // Modern edge-to-edge (replaces deprecated statusBarColor/navigationBarColor)
+                                // Modern edge-to-edge with auto() style to avoid system nav bar scrim.
+                                // IMPORTANT: SystemBarStyle.dark()/light() internally set
+                                // isNavigationBarContrastEnforced=true inside enableEdgeToEdge(),
+                                // which causes a translucent dark scrim on 3-button navigation.
+                                // SystemBarStyle.auto() keeps isNavigationBarContrastEnforced=false.
                                 val transparent = android.graphics.Color.TRANSPARENT
+                                val barStyle = SystemBarStyle.auto(
+                                        transparent, transparent
+                                ) { _ -> useDarkTheme }
                                 activity.enableEdgeToEdge(
-                                        statusBarStyle = if (useDarkTheme) SystemBarStyle.dark(transparent)
-                                                else SystemBarStyle.light(transparent, transparent),
-                                        navigationBarStyle = if (useDarkTheme) SystemBarStyle.dark(transparent)
-                                                else SystemBarStyle.light(transparent, transparent)
+                                        statusBarStyle = barStyle,
+                                        navigationBarStyle = barStyle
                                 )
-                                // Disable system contrast scrim on navigation bar
+                                // Belt-and-suspenders: ensure contrast scrim stays disabled
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                                         activity.window.isNavigationBarContrastEnforced = false
                                 }

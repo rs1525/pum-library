@@ -64,11 +64,10 @@ fun PumBottomNavigation(
                         .padding(bottom = 8.dp)
                         .navigationBarsPadding()
         ) {
-                // Pill container - opaque base layer covers any artifact, then semi-transparent overlay
+                // Pill container - background(color, shape) draws directly without graphics layer
                 Box(
                         modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.background, pillShape)
                                 .background(navbarColor.copy(alpha = 0.80f), pillShape)
                                 .border(
                                         width = 0.5.dp,
