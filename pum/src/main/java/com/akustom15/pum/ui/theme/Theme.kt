@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.akustom15.pum.R
 import com.akustom15.pum.data.AccentColor
@@ -126,8 +127,10 @@ fun PumTheme(
                         val activity = view.context.findActivity()
                         if (activity != null) {
                                 val window = activity.window
-                                // Ensure contrast enforcement stays disabled
-                                // (enableEdgeToEdge() is called in Activity.onCreate)
+                                // Reinforce edge-to-edge on every recomposition
+                                WindowCompat.setDecorFitsSystemWindows(window, false)
+                                window.statusBarColor = android.graphics.Color.TRANSPARENT
+                                window.navigationBarColor = android.graphics.Color.TRANSPARENT
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                                         window.isNavigationBarContrastEnforced = false
                                         window.isStatusBarContrastEnforced = false
