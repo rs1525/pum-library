@@ -131,8 +131,13 @@ fun PumTheme(
                                 // can internally toggle isNavigationBarContrastEnforced on some styles
                                 @Suppress("DEPRECATION")
                                 window.statusBarColor = android.graphics.Color.TRANSPARENT
+                                // Set system nav bar color to match the pill (configurable via colors.xml)
                                 @Suppress("DEPRECATION")
-                                window.navigationBarColor = android.graphics.Color.TRANSPARENT
+                                window.navigationBarColor = if (useDarkTheme) {
+                                        ContextCompat.getColor(activity, R.color.pum_navbar_color_dark)
+                                } else {
+                                        ContextCompat.getColor(activity, R.color.pum_navbar_color_light)
+                                }
                                 WindowCompat.setDecorFitsSystemWindows(window, false)
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                                         window.isNavigationBarContrastEnforced = false
