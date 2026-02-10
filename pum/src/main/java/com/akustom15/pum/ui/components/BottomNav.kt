@@ -201,6 +201,28 @@ private fun getTabIcon(tab: PumTab, selected: Boolean): ImageVector {
                 PumTab.WallpaperCloud -> if (selected) Icons.Filled.Cloud else Icons.Outlined.Cloud
         }
 }
+                                                        text = tabLabel,
+                                                        color = tabColor,
+                                                        fontSize = 11.sp,
+                                                        fontWeight =
+                                                                if (isSelected) FontWeight.SemiBold
+                                                                else FontWeight.Normal,
+                                                        maxLines = 1
+                                                )
+                                        }
+                                }
+                        }
+                }
+        }
+}
+
+private fun getTabIcon(tab: PumTab, selected: Boolean): ImageVector {
+        return when (tab) {
+                PumTab.Widgets -> if (selected) Icons.Filled.Widgets else Icons.Outlined.Widgets
+                PumTab.Wallpapers -> if (selected) Icons.Filled.Image else Icons.Outlined.Image
+                PumTab.WallpaperCloud -> if (selected) Icons.Filled.Cloud else Icons.Outlined.Cloud
+        }
+}
                 PumTab.WallpaperCloud -> if (selected) Icons.Filled.Cloud else Icons.Outlined.Cloud
         }
 }
