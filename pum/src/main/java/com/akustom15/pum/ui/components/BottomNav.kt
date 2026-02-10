@@ -47,84 +47,102 @@ fun PumBottomNavigation(
         // Use MaterialTheme background luminance to detect dark mode correctly
         // (isSystemInDarkTheme() doesn't reflect app's own theme preference)
         val isDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
-        val navbarColor = if (isDark) {
-                Color(ContextCompat.getColor(context, R.color.pum_navbar_color_dark))
-        } else {
-                Color(ContextCompat.getColor(context, R.color.pum_navbar_color_light))
-        }
+        val navbarColor =
+                if (isDark) {
+                        Color(ContextCompat.getColor(context, R.color.pum_navbar_color_dark))
+                } else {
+                        Color(ContextCompat.getColor(context, R.color.pum_navbar_color_light))
+                }
 
         val pillShape = RoundedCornerShape(50)
-        val borderColor = if (isDark)
-                Color.White.copy(alpha = 0.08f)
-        else
-                Color.Black.copy(alpha = 0.06f)
+        val borderColor =
+                if (isDark) Color.White.copy(alpha = 0.08f) else Color.Black.copy(alpha = 0.06f)
 
         Box(
-                modifier = modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp)
-                        .padding(bottom = 8.dp)
-                        .navigationBarsPadding()
+                modifier =
+                        modifier.fillMaxWidth()
+                                .padding(horizontal = 24.dp)
+                                .padding(bottom = 8.dp)
+                                .navigationBarsPadding()
         ) {
                 // Pill container - background(color, shape) draws directly without graphics layer
                 Box(
-                        modifier = Modifier
-                                .fillMaxWidth()
-                                .background(navbarColor, pillShape)
-                                .border(
-                                        width = 0.5.dp,
-                                        color = borderColor,
-                                        shape = pillShape
-                                )
+                        modifier =
+                                Modifier.fillMaxWidth()
+                                        .background(navbarColor, pillShape)
+                                        .border(
+                                                width = 0.5.dp,
+                                                color = borderColor,
+                                                shape = pillShape
+                                        )
                 ) {
                         Row(
-                                modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(62.dp)
-                                        .padding(horizontal = 8.dp),
+                                modifier =
+                                        Modifier.fillMaxWidth()
+                                                .height(62.dp)
+                                                .padding(horizontal = 8.dp),
                                 horizontalArrangement = Arrangement.SpaceEvenly,
                                 verticalAlignment = Alignment.CenterVertically
                         ) {
                                 visibleTabs.forEach { tab ->
                                         val isSelected = selectedTab == tab
-                                        val tabColor by animateColorAsState(
-                                                targetValue = if (isSelected)
-                                                        MaterialTheme.colorScheme.primary
-                                                else
-                                                        MaterialTheme.colorScheme.onSurfaceVariant,
-                                                animationSpec = tween(200),
-                                                label = "tabColor"
-                                        )
-                                        val tabLabel = when (tab) {
-                                                PumTab.Widgets -> stringResource(R.string.tab_widgets)
-                                                PumTab.Wallpapers -> stringResource(R.string.tab_wallpapers)
-                                                PumTab.WallpaperCloud -> stringResource(R.string.tab_wallpaper_cloud)
-                                        }
+                                        val tabColor by
+                                                animateColorAsState(
+                                                        targetValue =
+                                                                if (isSelected)
+                                                                        MaterialTheme.colorScheme
+                                                                                .primary
+                                                                else
+                                                                        MaterialTheme.colorScheme
+                                                                                .onSurfaceVariant,
+                                                        animationSpec = tween(200),
+                                                        label = "tabColor"
+                                                )
+                                        val tabLabel =
+                                                when (tab) {
+                                                        PumTab.Widgets ->
+                                                                stringResource(R.string.tab_widgets)
+                                                        PumTab.Wallpapers ->
+                                                                stringResource(
+                                                                        R.string.tab_wallpapers
+                                                                )
+                                                        PumTab.WallpaperCloud ->
+                                                                stringResource(
+                                                                        R.string.tab_wallpaper_cloud
+                                                                )
+                                                }
 
                                         Column(
-                                                modifier = Modifier
-                                                        .weight(1f)
-                                                        .fillMaxHeight()
-                                                        .clickable(
-                                                                interactionSource = remember { MutableInteractionSource() },
-                                                                indication = null
-                                                        ) { onTabSelected(tab) }
-                                                        .padding(vertical = 6.dp),
+                                                modifier =
+                                                        Modifier.weight(1f)
+                                                                .fillMaxHeight()
+                                                                .clickable(
+                                                                        interactionSource =
+                                                                                remember {
+                                                                                        MutableInteractionSource()
+                                                                                },
+                                                                        indication = null
+                                                                ) { onTabSelected(tab) }
+                                                                .padding(vertical = 6.dp),
                                                 horizontalAlignment = Alignment.CenterHorizontally,
                                                 verticalArrangement = Arrangement.Center
                                         ) {
                                                 // Indicator line for selected tab
                                                 Box(
-                                                        modifier = Modifier
-                                                                .width(24.dp)
-                                                                .height(3.dp)
-                                                                .background(
-                                                                        if (isSelected)
-                                                                                MaterialTheme.colorScheme.primary
-                                                                        else
-                                                                                Color.Transparent,
-                                                                        RoundedCornerShape(50)
-                                                                )
+                                                        modifier =
+                                                                Modifier.width(24.dp)
+                                                                        .height(3.dp)
+                                                                        .background(
+                                                                                if (isSelected)
+                                                                                        MaterialTheme
+                                                                                                .colorScheme
+                                                                                                .primary
+                                                                                else
+                                                                                        Color.Transparent,
+                                                                                RoundedCornerShape(
+                                                                                        50
+                                                                                )
+                                                                        )
                                                 )
 
                                                 Spacer(modifier = Modifier.height(4.dp))
@@ -142,7 +160,8 @@ fun PumBottomNavigation(
                                                         text = tabLabel,
                                                         color = tabColor,
                                                         fontSize = 11.sp,
-                                                        fontWeight = if (isSelected) FontWeight.SemiBold
+                                                        fontWeight =
+                                                                if (isSelected) FontWeight.SemiBold
                                                                 else FontWeight.Normal,
                                                         maxLines = 1
                                                 )
@@ -157,6 +176,9 @@ private fun getTabIcon(tab: PumTab, selected: Boolean): ImageVector {
         return when (tab) {
                 PumTab.Widgets -> if (selected) Icons.Filled.Widgets else Icons.Outlined.Widgets
                 PumTab.Wallpapers -> if (selected) Icons.Filled.Image else Icons.Outlined.Image
+                PumTab.WallpaperCloud -> if (selected) Icons.Filled.Cloud else Icons.Outlined.Cloud
+        }
+}
                 PumTab.WallpaperCloud -> if (selected) Icons.Filled.Cloud else Icons.Outlined.Cloud
         }
 }
