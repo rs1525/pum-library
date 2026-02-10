@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -57,6 +58,7 @@ fun CloudWallpaperGrid(
         appName: String,
         searchQuery: String = "",
         cloudWallpapersUrl: String = "",
+        bottomContentPadding: Dp = 0.dp,
         modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -175,7 +177,12 @@ fun CloudWallpaperGrid(
                 LazyVerticalGrid(
                         state = gridState,
                         columns = GridCells.Fixed(2),
-                        contentPadding = PaddingValues(16.dp),
+                        contentPadding = PaddingValues(
+                                start = 16.dp,
+                                end = 16.dp,
+                                top = 16.dp,
+                                bottom = 16.dp + bottomContentPadding
+                        ),
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {

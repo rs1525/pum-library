@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.akustom15.pum.R
 import com.akustom15.pum.data.PumPreferences
@@ -30,6 +31,7 @@ fun WidgetGrid(
         appSubtitle: String = "",
         searchQuery: String = "",
         showHeader: Boolean = true,
+        bottomContentPadding: Dp = 0.dp,
         modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -67,7 +69,12 @@ fun WidgetGrid(
         LazyVerticalGrid(
                 columns = GridCells.Fixed(gridColumns.count),
                 modifier = modifier.fillMaxSize(),
-                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                contentPadding = PaddingValues(
+                        start = 12.dp,
+                        end = 12.dp,
+                        top = 8.dp,
+                        bottom = 8.dp + bottomContentPadding
+                ),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {

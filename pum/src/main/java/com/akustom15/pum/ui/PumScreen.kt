@@ -79,6 +79,10 @@ private fun PumScreenContent(config: PumConfig) {
         }
 
         PumTheme {
+        // Calculate bottom padding for grids: nav bar inset + pill height if visible
+        val navBarBottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+        val bottomContentPadding = if (visibleTabs.size > 1) navBarBottom + 80.dp else navBarBottom
+
         Box(
                 modifier = Modifier
                         .fillMaxSize()
@@ -104,7 +108,6 @@ private fun PumScreenContent(config: PumConfig) {
                                 modifier = Modifier
                                         .weight(1f)
                                         .fillMaxWidth()
-                                        .padding(bottom = if (visibleTabs.size > 1) 80.dp else 0.dp)
                         ) {
                                 when (selectedTab) {
                                         PumTab.Widgets -> {
@@ -115,8 +118,9 @@ private fun PumScreenContent(config: PumConfig) {
                                                         appSubtitle = config.appSubtitle,
                                                         searchQuery = searchQuery,
                                                         showHeader =
-                                                                !isSearchActive // Ocultar header
+                                                                !isSearchActive, // Ocultar header
                                                         // cuando busca
+                                                        bottomContentPadding = bottomContentPadding
                                                         )
                                         }
                                         PumTab.Wallpapers -> {
@@ -126,7 +130,8 @@ private fun PumScreenContent(config: PumConfig) {
                                                         appName = config.appName,
                                                         appSubtitle = config.appSubtitle,
                                                         searchQuery = searchQuery,
-                                                        showHeader = !isSearchActive
+                                                        showHeader = !isSearchActive,
+                                                        bottomContentPadding = bottomContentPadding
                                                 )
                                         }
                                         PumTab.WallpaperCloud -> {
@@ -135,7 +140,8 @@ private fun PumScreenContent(config: PumConfig) {
                                                         appIcon = config.appIcon,
                                                         appName = config.appName,
                                                         searchQuery = searchQuery,
-                                                        cloudWallpapersUrl = config.cloudWallpapersUrl
+                                                        cloudWallpapersUrl = config.cloudWallpapersUrl,
+                                                        bottomContentPadding = bottomContentPadding
                                                 )
                                         }
                                 }
