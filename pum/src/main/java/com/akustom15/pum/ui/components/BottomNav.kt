@@ -1,5 +1,6 @@
 package com.akustom15.pum.ui.components
 
+import android.os.Build
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -21,6 +22,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -58,6 +61,10 @@ fun PumBottomNavigation(
         val borderColor =
                 if (isDark) Color.White.copy(alpha = 0.08f) else Color.Black.copy(alpha = 0.06f)
 
+        // Frosted glass: semi-transparent color so blur shows through
+        val blurredNavbarColor = navbarColor.copy(alpha = 0.65f)
+        val supportsBlur = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
         Box(
                 modifier =
                         modifier.fillMaxWidth()
@@ -65,11 +72,20 @@ fun PumBottomNavigation(
                                 .padding(bottom = 8.dp)
                                 .navigationBarsPadding()
         ) {
-                // Pill container - background(color, shape) draws directly without graphics layer
+                // Pill container with blur effect (frosted glass)
                 Box(
                         modifier =
                                 Modifier.fillMaxWidth()
-                                        .background(navbarColor, pillShape)
+                                        .clip(pillShape)
+                                        .then(
+                                                if (supportsBlur) Modifier.blur(24.dp)
+                                                else Modifier
+                                        )
+                                        .background(
+                                                if (supportsBlur) blurredNavbarColor
+                                                else navbarColor,
+                                                pillShape
+                                        )
                                         .border(
                                                 width = 0.5.dp,
                                                 color = borderColor,
@@ -176,53 +192,6 @@ private fun getTabIcon(tab: PumTab, selected: Boolean): ImageVector {
         return when (tab) {
                 PumTab.Widgets -> if (selected) Icons.Filled.Widgets else Icons.Outlined.Widgets
                 PumTab.Wallpapers -> if (selected) Icons.Filled.Image else Icons.Outlined.Image
-                PumTab.WallpaperCloud -> if (selected) Icons.Filled.Cloud else Icons.Outlined.Cloud
-        }
-}
-                                                        text = tabLabel,
-                                                        color = tabColor,
-                                                        fontSize = 11.sp,
-                                                        fontWeight =
-                                                                if (isSelected) FontWeight.SemiBold
-                                                                else FontWeight.Normal,
-                                                        maxLines = 1
-                                                )
-                                        }
-                                }
-                        }
-                }
-        }
-}
-
-private fun getTabIcon(tab: PumTab, selected: Boolean): ImageVector {
-        return when (tab) {
-                PumTab.Widgets -> if (selected) Icons.Filled.Widgets else Icons.Outlined.Widgets
-                PumTab.Wallpapers -> if (selected) Icons.Filled.Image else Icons.Outlined.Image
-                PumTab.WallpaperCloud -> if (selected) Icons.Filled.Cloud else Icons.Outlined.Cloud
-        }
-}
-                                                        text = tabLabel,
-                                                        color = tabColor,
-                                                        fontSize = 11.sp,
-                                                        fontWeight =
-                                                                if (isSelected) FontWeight.SemiBold
-                                                                else FontWeight.Normal,
-                                                        maxLines = 1
-                                                )
-                                        }
-                                }
-                        }
-                }
-        }
-}
-
-private fun getTabIcon(tab: PumTab, selected: Boolean): ImageVector {
-        return when (tab) {
-                PumTab.Widgets -> if (selected) Icons.Filled.Widgets else Icons.Outlined.Widgets
-                PumTab.Wallpapers -> if (selected) Icons.Filled.Image else Icons.Outlined.Image
-                PumTab.WallpaperCloud -> if (selected) Icons.Filled.Cloud else Icons.Outlined.Cloud
-        }
-}
                 PumTab.WallpaperCloud -> if (selected) Icons.Filled.Cloud else Icons.Outlined.Cloud
         }
 }

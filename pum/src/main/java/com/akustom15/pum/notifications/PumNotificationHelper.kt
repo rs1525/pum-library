@@ -5,6 +5,8 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
+import android.media.AudioAttributes
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.content.ContextCompat
@@ -37,12 +39,28 @@ object PumNotificationHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "App Updates"
             val descriptionText = "Notifications for new versions and content"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
+                // Try to use custom sound from consuming app's res/raw
+                val soundResId = context.resources.getIdentifier(
+                    "new_notification_011", "raw", context.packageName
+                )
+                if (soundResId != 0) {
+                    val soundUri = Uri.parse(
+                        "android.resource://${context.packageName}/$soundResId"
+                    )
+                    val audioAttributes = AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                        .build()
+                    setSound(soundUri, audioAttributes)
+                }
             }
 
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            // Delete existing channel to apply sound changes
+            notificationManager.deleteNotificationChannel(CHANNEL_ID)
             notificationManager.createNotificationChannel(channel)
         }
     }

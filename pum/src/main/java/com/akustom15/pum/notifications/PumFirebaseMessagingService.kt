@@ -2,6 +2,7 @@ package com.akustom15.pum.notifications
 
 import android.app.PendingIntent
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -56,15 +57,24 @@ class PumFirebaseMessagingService : FirebaseMessagingService() {
             null
         }
 
-        val notification = NotificationCompat.Builder(this, PumNotificationHelper.CHANNEL_ID)
+        // Custom sound from app's res/raw (for pre-O devices where channel sound isn't used)
+        val soundResId = resources.getIdentifier(
+            "new_notification_011", "raw", packageName
+        )
+        val builder = NotificationCompat.Builder(this, PumNotificationHelper.CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(title)
             .setContentText(body)
             .setStyle(NotificationCompat.BigTextStyle().bigText(body))
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
-            .build()
+        if (soundResId != 0) {
+            builder.setSound(
+                Uri.parse("android.resource://$packageName/$soundResId")
+            )
+        }
+        val notification = builder.build()
 
         try {
             NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, notification)
