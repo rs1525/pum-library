@@ -24,6 +24,8 @@ import com.akustom15.pum.ui.screens.WallpaperGrid
 import com.akustom15.pum.ui.screens.WidgetGrid
 import com.akustom15.pum.ui.theme.PumTheme
 import com.akustom15.pum.utils.AssetsReader
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.haze
 
 /**
  * Main PUM screen TopBar solo tiene search + menu Header con icono está DENTRO del contenido y hace
@@ -83,6 +85,9 @@ private fun PumScreenContent(config: PumConfig) {
         val navBarBottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
         val bottomContentPadding = if (visibleTabs.size > 1) navBarBottom + 80.dp else navBarBottom
 
+        // Haze state for frosted glass blur on bottom nav pill
+        val hazeState = remember { HazeState() }
+
         Box(
                 modifier = Modifier
                         .fillMaxSize()
@@ -108,6 +113,7 @@ private fun PumScreenContent(config: PumConfig) {
                                 modifier = Modifier
                                         .weight(1f)
                                         .fillMaxWidth()
+                                        .haze(state = hazeState)
                         ) {
                                 when (selectedTab) {
                                         PumTab.Widgets -> {
@@ -154,6 +160,7 @@ private fun PumScreenContent(config: PumConfig) {
                                 visibleTabs = visibleTabs,
                                 selectedTab = selectedTab,
                                 onTabSelected = { selectedTab = it },
+                                hazeState = hazeState,
                                 modifier = Modifier.align(Alignment.BottomCenter)
                         )
                 }

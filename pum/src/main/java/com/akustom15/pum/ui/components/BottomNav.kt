@@ -1,7 +1,8 @@
 package com.akustom15.pum.ui.components
 
-import android.os.Build
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -23,7 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -35,6 +36,9 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.akustom15.pum.R
 import com.akustom15.pum.config.PumTab
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeChild
+import dev.chrisbanes.haze.materials.HazeMaterials
 
 /** Modern floating bottom navigation bar with pill shape - Telegram style */
 @Composable
@@ -42,6 +46,7 @@ fun PumBottomNavigation(
         visibleTabs: List<PumTab>,
         selectedTab: PumTab,
         onTabSelected: (PumTab) -> Unit,
+        hazeState: HazeState,
         modifier: Modifier = Modifier
 ) {
         if (visibleTabs.isEmpty()) return
@@ -61,10 +66,6 @@ fun PumBottomNavigation(
         val borderColor =
                 if (isDark) Color.White.copy(alpha = 0.08f) else Color.Black.copy(alpha = 0.06f)
 
-        // Frosted glass: semi-transparent color so blur shows through
-        val blurredNavbarColor = navbarColor.copy(alpha = 0.65f)
-        val supportsBlur = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-
         Box(
                 modifier =
                         modifier.fillMaxWidth()
@@ -72,19 +73,14 @@ fun PumBottomNavigation(
                                 .padding(bottom = 8.dp)
                                 .navigationBarsPadding()
         ) {
-                // Pill container with blur effect (frosted glass)
+                // Pill container with real frosted glass blur (Haze)
                 Box(
                         modifier =
                                 Modifier.fillMaxWidth()
                                         .clip(pillShape)
-                                        .then(
-                                                if (supportsBlur) Modifier.blur(24.dp)
-                                                else Modifier
-                                        )
-                                        .background(
-                                                if (supportsBlur) blurredNavbarColor
-                                                else navbarColor,
-                                                pillShape
+                                        .hazeChild(
+                                                state = hazeState,
+                                                style = HazeMaterials.thin()
                                         )
                                         .border(
                                                 width = 0.5.dp,
@@ -128,6 +124,16 @@ fun PumBottomNavigation(
                                                                 )
                                                 }
 
+                                        // Icon scale animation on selection
+                                        val iconScale by animateFloatAsState(
+                                                targetValue = if (isSelected) 1.15f else 1f,
+                                                animationSpec = spring(
+                                                        dampingRatio = 0.5f,
+                                                        stiffness = 400f
+                                                ),
+                                                label = "iconScale"
+                                        )
+
                                         Column(
                                                 modifier =
                                                         Modifier.weight(1f)
@@ -167,7 +173,9 @@ fun PumBottomNavigation(
                                                         imageVector = getTabIcon(tab, isSelected),
                                                         contentDescription = tabLabel,
                                                         tint = tabColor,
-                                                        modifier = Modifier.size(22.dp)
+                                                        modifier = Modifier
+                                                                .size(22.dp)
+                                                                .scale(iconScale)
                                                 )
 
                                                 Spacer(modifier = Modifier.height(2.dp))

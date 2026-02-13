@@ -77,6 +77,10 @@ dependencies {
     // Material Icons Extended
     implementation(libs.androidx.compose.material.icons.extended)
     
+    // Haze (frosted glass blur)
+    api(libs.haze)
+    api(libs.haze.materials)
+    
     // Networking for cloud wallpapers
     implementation(libs.okhttp)
     implementation(libs.gson)
