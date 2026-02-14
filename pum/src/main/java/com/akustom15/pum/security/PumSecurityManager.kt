@@ -173,6 +173,52 @@ object PumSecurityManager {
     }
 
     // ==========================================
+    // LICENSE VERIFICATION (async)
+    // ==========================================
+
+    /**
+     * Perform Google Play license verification.
+     * This is asynchronous because it communicates with the Play Store app.
+     * Call this AFTER [performSecurityChecks] — it runs independently.
+     *
+     * In debug builds, the check is skipped automatically.
+     *
+     * @param context Application or Activity context
+     * @param config  Per-app security configuration (needs licenseKey)
+     * @param onResult Callback with (isLicensed: Boolean, reason: String)
+     */
+    fun checkLicense(
+        context: Context,
+        config: PumSecurityConfig,
+        onResult: (isLicensed: Boolean, reason: String) -> Unit
+    ) {
+        if (config.isDebugBuild) {
+            Log.d(TAG, "Debug build — license check skipped")
+            onResult(true, "Debug build")
+            return
+        }
+
+        if (!config.enableLicenseCheck) {
+            Log.d(TAG, "License check disabled in config")
+            onResult(true, "Disabled")
+            return
+        }
+
+        if (config.licenseKey.isEmpty()) {
+            Log.w(TAG, "LICENSE_KEY is empty — cannot verify license")
+            onResult(true, "No license key")
+            return
+        }
+
+        val checker = PumLicenseChecker(context, config.licenseKey)
+        checker.checkLicense(object : PumLicenseChecker.LicenseCallback {
+            override fun onLicenseResult(isLicensed: Boolean, reason: String) {
+                onResult(isLicensed, reason)
+            }
+        })
+    }
+
+    // ==========================================
     // INDIVIDUAL CHECKS
     // ==========================================
 

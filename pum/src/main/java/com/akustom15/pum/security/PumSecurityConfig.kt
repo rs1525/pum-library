@@ -11,6 +11,8 @@ data class PumSecurityConfig(
     val enableInstallerCheck: Boolean = true,
     /** Enable debug/emulator/piracy detection */
     val enableDebugCheck: Boolean = true,
+    /** Enable Google Play license verification (LVL) */
+    val enableLicenseCheck: Boolean = true,
     /**
      * Expected SHA-256 hash of the release signing certificate.
      * Leave empty on first run — the current hash will be logged to Logcat
@@ -18,6 +20,11 @@ data class PumSecurityConfig(
      * Run: ./gradlew signingReport  OR  check Logcat for "PumSecurity"
      */
     val expectedSignatureHash: String = "",
+    /**
+     * RSA public key from Google Play Console for license verification.
+     * Go to: Play Console > Your App > Monetization > Licensing
+     */
+    val licenseKey: String = "",
     /** Whether this is a debug build (BuildConfig.DEBUG from the app) */
     val isDebugBuild: Boolean = false
 )

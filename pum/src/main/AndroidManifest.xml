@@ -18,6 +18,9 @@
     <!-- Permission for push notifications (Android 13+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     
+    <!-- Permission for Google Play license verification -->
+    <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
+    
     <application>
         <!-- Default FCM notification channel (used when app is in background) -->
         <meta-data
