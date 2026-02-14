@@ -19,6 +19,11 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     
     <application>
+        <!-- Default FCM notification channel (used when app is in background) -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="pum_updates" />
+            
         <!-- Content Provider for Kustom integration - EXACTLY like Lunex -->
         <provider
             android:name=".provider.KustomProvider"
