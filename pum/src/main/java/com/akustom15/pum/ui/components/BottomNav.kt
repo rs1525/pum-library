@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -66,13 +67,33 @@ fun PumBottomNavigation(
         val borderColor =
                 if (isDark) Color.White.copy(alpha = 0.08f) else Color.Black.copy(alpha = 0.06f)
 
-        Box(
+        Column(
                 modifier =
                         modifier.fillMaxWidth()
                                 .padding(horizontal = 24.dp)
                                 .padding(bottom = 8.dp)
                                 .navigationBarsPadding()
         ) {
+                // Gradient fade above pill (Telegram-style)
+                Box(
+                        modifier =
+                                Modifier.fillMaxWidth()
+                                        .height(31.dp)
+                                        .background(
+                                                brush =
+                                                        Brush.verticalGradient(
+                                                                colors =
+                                                                        listOf(
+                                                                                Color.Transparent,
+                                                                                navbarColor.copy(
+                                                                                        alpha =
+                                                                                                0.30f
+                                                                                )
+                                                                        )
+                                                        )
+                                        )
+                )
+
                 // Pill container with real frosted glass blur (Haze)
                 Box(
                         modifier =
