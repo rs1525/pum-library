@@ -24,6 +24,10 @@ import com.akustom15.pum.ui.screens.WallpaperGrid
 import com.akustom15.pum.ui.screens.WidgetGrid
 import com.akustom15.pum.ui.theme.PumTheme
 import com.akustom15.pum.utils.AssetsReader
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
+import androidx.core.content.ContextCompat
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 
@@ -156,13 +160,39 @@ private fun PumScreenContent(config: PumConfig) {
 
                 // Floating bottom navigation - overlays content, no black background
                 if (visibleTabs.size > 1) {
-                        PumBottomNavigation(
-                                visibleTabs = visibleTabs,
-                                selectedTab = selectedTab,
-                                onTabSelected = { selectedTab = it },
-                                hazeState = hazeState,
+                        val isDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
+                        val navbarColor = if (isDark) {
+                                Color(ContextCompat.getColor(context, R.color.pum_navbar_color_dark))
+                        } else {
+                                Color(ContextCompat.getColor(context, R.color.pum_navbar_color_light))
+                        }
+
+                        Column(
                                 modifier = Modifier.align(Alignment.BottomCenter)
-                        )
+                        ) {
+                                // Gradient topbar - full width, sits above the pill
+                                Box(
+                                        modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(62.dp)
+                                                .background(
+                                                        brush = Brush.verticalGradient(
+                                                                colors = listOf(
+                                                                        Color.Transparent,
+                                                                        navbarColor.copy(alpha = 0.80f)
+                                                                )
+                                                        )
+                                                )
+                                )
+
+                                // Pill with icons
+                                PumBottomNavigation(
+                                        visibleTabs = visibleTabs,
+                                        selectedTab = selectedTab,
+                                        onTabSelected = { selectedTab = it },
+                                        hazeState = hazeState
+                                )
+                        }
                 }
         }
         
