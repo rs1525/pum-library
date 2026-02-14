@@ -14,8 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.content.ContextCompat
-import androidx.activity.ComponentActivity
-import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.akustom15.pum.R
@@ -128,10 +126,10 @@ fun PumTheme(
                         val activity = view.context.findActivity()
                         if (activity != null) {
                                 val window = activity.window
-                                // Edge-to-edge via ComponentActivity (avoids deprecated setStatusBarColor/setNavigationBarColor)
-                                if (activity is ComponentActivity) {
-                                        (activity as ComponentActivity).enableEdgeToEdge()
-                                }
+                                // Edge-to-edge manual: no enableEdgeToEdge() to avoid deprecated
+                                // setStatusBarColor/setNavigationBarColor/CUTOUT_SHORT_EDGES in bytecode.
+                                // Colors are set via themes.xml (XML attrs, not bytecode).
+                                // SDK 35+ handles edge-to-edge automatically.
                                 WindowCompat.setDecorFitsSystemWindows(window, false)
                                 // Update status/nav bar icon colors when theme changes
                                 WindowInsetsControllerCompat(window, window.decorView).apply {
