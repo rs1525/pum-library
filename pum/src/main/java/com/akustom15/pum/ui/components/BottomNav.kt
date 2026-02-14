@@ -74,11 +74,15 @@ fun PumBottomNavigation(
                                 .padding(bottom = 8.dp)
                                 .navigationBarsPadding()
         ) {
-                // Gradient fade above pill (Telegram-style)
+                // Gradient fade above pill (Telegram-style) with blur
                 Box(
                         modifier =
                                 Modifier.fillMaxWidth()
                                         .height(31.dp)
+                                        .hazeChild(
+                                                state = hazeState,
+                                                style = HazeMaterials.thin()
+                                        )
                                         .background(
                                                 brush =
                                                         Brush.verticalGradient(
@@ -87,7 +91,7 @@ fun PumBottomNavigation(
                                                                                 Color.Transparent,
                                                                                 navbarColor.copy(
                                                                                         alpha =
-                                                                                                0.60f
+                                                                                                0.80f
                                                                                 )
                                                                         )
                                                         )
