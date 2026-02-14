@@ -2,7 +2,6 @@ package com.akustom15.pum.ui.theme
 
 import android.app.Activity
 import android.content.ContextWrapper
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -15,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.content.ContextCompat
+import androidx.activity.ComponentActivity
+import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.akustom15.pum.R
@@ -127,11 +128,11 @@ fun PumTheme(
                         val activity = view.context.findActivity()
                         if (activity != null) {
                                 val window = activity.window
-                                // Reinforce edge-to-edge on every recomposition (core 1.17.0 API)
-                                WindowCompat.enableEdgeToEdge(window)
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                        window.isNavigationBarContrastEnforced = false
+                                // Edge-to-edge via ComponentActivity (avoids deprecated setStatusBarColor/setNavigationBarColor)
+                                if (activity is ComponentActivity) {
+                                        (activity as ComponentActivity).enableEdgeToEdge()
                                 }
+                                WindowCompat.setDecorFitsSystemWindows(window, false)
                                 // Update status/nav bar icon colors when theme changes
                                 WindowInsetsControllerCompat(window, window.decorView).apply {
                                         isAppearanceLightStatusBars = !useDarkTheme
