@@ -85,9 +85,11 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.gson)
     
-    // Firebase Cloud Messaging (transitive for consumer apps)
+    // Firebase (transitive for consumer apps)
     api(platform(libs.firebase.bom))
     api(libs.firebase.messaging)
+    api(libs.firebase.analytics)
+    api(libs.firebase.inappmessaging.display)
     
     // Testing
     testImplementation(libs.junit)
