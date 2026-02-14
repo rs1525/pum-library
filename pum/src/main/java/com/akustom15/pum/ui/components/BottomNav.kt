@@ -87,7 +87,7 @@ fun PumBottomNavigation(
                                                                                 Color.Transparent,
                                                                                 navbarColor.copy(
                                                                                         alpha =
-                                                                                                0.30f
+                                                                                                0.60f
                                                                                 )
                                                                         )
                                                         )
