@@ -166,33 +166,36 @@ private fun PumScreenContent(config: PumConfig) {
                         } else {
                                 Color(ContextCompat.getColor(context, R.color.pum_navbar_color_light))
                         }
+                        val navBarBottom = WindowInsets.navigationBars
+                                .asPaddingValues().calculateBottomPadding()
+                        // pillAreaHeight = nav bar inset + 8dp bottom padding + 62dp pill
+                        val pillAreaHeight = navBarBottom + 8.dp + 62.dp
 
-                        Column(
-                                modifier = Modifier.align(Alignment.BottomCenter)
-                        ) {
-                                // Gradient topbar - full width, sits above the pill
-                                Box(
-                                        modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(62.dp)
-                                                .background(
-                                                        brush = Brush.verticalGradient(
-                                                                colors = listOf(
-                                                                        Color.Transparent,
-                                                                        navbarColor.copy(alpha = 0.80f)
-                                                                )
+                        // Gradient topbar - full width, exactly above the pill
+                        Box(
+                                modifier = Modifier
+                                        .align(Alignment.BottomCenter)
+                                        .fillMaxWidth()
+                                        .padding(bottom = pillAreaHeight)
+                                        .height(62.dp)
+                                        .background(
+                                                brush = Brush.verticalGradient(
+                                                        colors = listOf(
+                                                                Color.Transparent,
+                                                                navbarColor.copy(alpha = 0.80f)
                                                         )
                                                 )
-                                )
+                                        )
+                        )
 
-                                // Pill with icons
-                                PumBottomNavigation(
-                                        visibleTabs = visibleTabs,
-                                        selectedTab = selectedTab,
-                                        onTabSelected = { selectedTab = it },
-                                        hazeState = hazeState
-                                )
-                        }
+                        // Pill with icons
+                        PumBottomNavigation(
+                                visibleTabs = visibleTabs,
+                                selectedTab = selectedTab,
+                                onTabSelected = { selectedTab = it },
+                                hazeState = hazeState,
+                                modifier = Modifier.align(Alignment.BottomCenter)
+                        )
                 }
         }
         
