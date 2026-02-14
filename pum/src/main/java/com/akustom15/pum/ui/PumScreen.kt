@@ -30,6 +30,8 @@ import androidx.compose.ui.graphics.luminance
 import androidx.core.content.ContextCompat
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
+import dev.chrisbanes.haze.hazeChild
+import dev.chrisbanes.haze.materials.HazeMaterials
 
 /**
  * Main PUM screen TopBar solo tiene search + menu Header con icono está DENTRO del contenido y hace
@@ -168,16 +170,20 @@ private fun PumScreenContent(config: PumConfig) {
                         }
                         val navBarBottom = WindowInsets.navigationBars
                                 .asPaddingValues().calculateBottomPadding()
-                        // pillAreaHeight = nav bar inset + 8dp bottom padding + 62dp pill
-                        val pillAreaHeight = navBarBottom + 8.dp + 62.dp
+                        // Total height from top of pill to bottom of screen
+                        val topbarHeight = 62.dp + 8.dp + navBarBottom
 
-                        // Gradient topbar - full width, exactly above the pill
+                        // Gradient topbar - BEHIND the pill (drawn first = lower Z-order)
+                        // Full width, from pill top edge to screen bottom
                         Box(
                                 modifier = Modifier
                                         .align(Alignment.BottomCenter)
                                         .fillMaxWidth()
-                                        .padding(bottom = pillAreaHeight)
-                                        .height(62.dp)
+                                        .height(topbarHeight)
+                                        .hazeChild(
+                                                state = hazeState,
+                                                style = HazeMaterials.thin()
+                                        )
                                         .background(
                                                 brush = Brush.verticalGradient(
                                                         colors = listOf(
@@ -188,7 +194,7 @@ private fun PumScreenContent(config: PumConfig) {
                                         )
                         )
 
-                        // Pill with icons
+                        // Pill with icons - ON TOP of the topbar (drawn second = higher Z-order)
                         PumBottomNavigation(
                                 visibleTabs = visibleTabs,
                                 selectedTab = selectedTab,
