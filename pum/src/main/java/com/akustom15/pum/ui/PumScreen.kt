@@ -180,10 +180,6 @@ private fun PumScreenContent(config: PumConfig) {
                                         .align(Alignment.BottomCenter)
                                         .fillMaxWidth()
                                         .height(topbarHeight)
-                                        .hazeChild(
-                                                state = hazeState,
-                                                style = HazeMaterials.thin()
-                                        )
                                         .background(
                                                 brush = Brush.verticalGradient(
                                                         colors = listOf(
