@@ -89,7 +89,6 @@ dependencies {
     // Firebase (transitive for consumer apps)
     api(platform(libs.firebase.bom))
     api(libs.firebase.messaging)
-    api(libs.firebase.analytics)
     api(libs.firebase.firestore)
     
     // Testing
