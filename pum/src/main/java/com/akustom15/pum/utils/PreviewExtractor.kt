@@ -70,8 +70,8 @@ object PreviewExtractor {
             usePortrait: Boolean
     ): String? {
         try {
-            // Create cache directory for previews
-            val previewCacheDir = File(context.cacheDir, "previews")
+            // Use filesDir instead of cacheDir so previews survive cache clearing
+            val previewCacheDir = File(context.filesDir, "previews")
             if (!previewCacheDir.exists()) {
                 previewCacheDir.mkdirs()
             }
@@ -176,10 +176,17 @@ object PreviewExtractor {
     /** Clear all cached preview images */
     fun clearPreviewCache(context: Context) {
         try {
+            // Clean from filesDir (current location)
+            val previewFilesDir = File(context.filesDir, "previews")
+            if (previewFilesDir.exists()) {
+                previewFilesDir.deleteRecursively()
+                Log.d(TAG, "Preview cache cleared (filesDir)")
+            }
+            // Also clean legacy cacheDir location if it exists
             val previewCacheDir = File(context.cacheDir, "previews")
             if (previewCacheDir.exists()) {
                 previewCacheDir.deleteRecursively()
-                Log.d(TAG, "Preview cache cleared")
+                Log.d(TAG, "Preview cache cleared (cacheDir legacy)")
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error clearing preview cache", e)
