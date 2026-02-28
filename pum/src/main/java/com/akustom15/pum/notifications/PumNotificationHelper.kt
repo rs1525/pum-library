@@ -28,8 +28,18 @@ object PumNotificationHelper {
      * Call this from MainActivity.onCreate().
      */
     fun initialize(context: Context) {
+        Log.d(TAG, "initialize() called for package: ${context.packageName}")
         createNotificationChannel(context)
         syncSubscription(context)
+        // Log FCM token for debugging
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d(TAG, "FCM token: ${task.result}")
+            } else {
+                Log.e(TAG, "Failed to get FCM token", task.exception)
+            }
+        }
+        Log.d(TAG, "POST_NOTIFICATIONS permission: ${hasNotificationPermission(context)}")
     }
 
     /**
@@ -55,13 +65,16 @@ object PumNotificationHelper {
                         .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                         .build()
                     setSound(soundUri, audioAttributes)
+                    Log.d(TAG, "Channel created with custom sound: new_notification_011")
+                } else {
+                    Log.w(TAG, "Custom sound not found, using default")
                 }
             }
 
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            // Delete existing channel to apply sound changes
             notificationManager.deleteNotificationChannel(CHANNEL_ID)
             notificationManager.createNotificationChannel(channel)
+            Log.d(TAG, "Notification channel '$CHANNEL_ID' created with importance HIGH")
         }
     }
 
@@ -85,6 +98,9 @@ object PumNotificationHelper {
      */
     private fun subscribeToUpdates() {
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC_UPDATES)
+            .addOnSuccessListener {
+                Log.d(TAG, "Successfully subscribed to topic: $TOPIC_UPDATES")
+            }
             .addOnFailureListener { e ->
                 Log.e(TAG, "Failed to subscribe to topic: $TOPIC_UPDATES", e)
             }

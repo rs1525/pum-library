@@ -28,16 +28,23 @@ class PumFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
+        Log.d(TAG, "onMessageReceived: from=${message.from}, notification=${message.notification != null}, data=${message.data}")
 
         // Check if user has notifications enabled
         val preferences = PumPreferences.getInstance(applicationContext)
         if (!preferences.getNotificationsEnabled()) {
+            Log.d(TAG, "Notifications disabled by user, skipping")
             return
         }
 
-        val title = message.notification?.title ?: message.data["title"] ?: return
+        val title = message.notification?.title ?: message.data["title"]
+        if (title == null) {
+            Log.w(TAG, "No title found in message, skipping")
+            return
+        }
         val body = message.notification?.body ?: message.data["body"] ?: ""
 
+        Log.d(TAG, "Showing notification: title=$title")
         showNotification(title, body)
     }
 
@@ -68,8 +75,11 @@ class PumFirebaseMessagingService : FirebaseMessagingService() {
 
         try {
             NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, notification)
+            Log.d(TAG, "Notification posted successfully")
         } catch (e: SecurityException) {
-            Log.e(TAG, "Failed to show notification: permission denied", e)
+            Log.e(TAG, "Failed to show notification: POST_NOTIFICATIONS permission denied", e)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to show notification", e)
         }
     }
 }
