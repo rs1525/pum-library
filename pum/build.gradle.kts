@@ -90,7 +90,6 @@ dependencies {
     api(platform(libs.firebase.bom))
     api(libs.firebase.messaging)
     api(libs.firebase.analytics)
-    api(libs.firebase.inappmessaging.display)
     
     // Testing
     testImplementation(libs.junit)

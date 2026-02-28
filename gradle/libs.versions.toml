@@ -57,7 +57,6 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
-firebase-inappmessaging-display = { group = "com.google.firebase", name = "firebase-inappmessaging-display" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
