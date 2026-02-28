@@ -12,6 +12,7 @@ package com.akustom15.pum.notifications
  *   - actionText: String? (optional, button label)
  *   - active: Boolean
  *   - createdAt: Long (timestamp millis)
+ *   - targetApp: String? (optional, package name e.g. "com.akustom15.lunex". If null/empty, shows in all apps)
  */
 data class PumInAppMessage(
     val id: String = "",
@@ -21,5 +22,6 @@ data class PumInAppMessage(
     val actionUrl: String? = null,
     val actionText: String? = null,
     val active: Boolean = false,
-    val createdAt: Long = 0L
+    val createdAt: Long = 0L,
+    val targetApp: String? = null
 )

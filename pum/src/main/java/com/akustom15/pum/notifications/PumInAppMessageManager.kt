@@ -44,8 +44,13 @@ object PumInAppMessageManager {
                 .get()
                 .await()
 
+            val packageName = context.packageName
+
             for (doc in snapshot.documents) {
                 if (doc.id in dismissed) continue
+
+                val targetApp = doc.getString("targetApp")
+                if (!targetApp.isNullOrEmpty() && targetApp != packageName) continue
 
                 val message = PumInAppMessage(
                     id = doc.id,
@@ -55,7 +60,8 @@ object PumInAppMessageManager {
                     actionUrl = doc.getString("actionUrl"),
                     actionText = doc.getString("actionText"),
                     active = doc.getBoolean("active") ?: false,
-                    createdAt = doc.getLong("createdAt") ?: 0L
+                    createdAt = doc.getLong("createdAt") ?: 0L,
+                    targetApp = targetApp
                 )
 
                 if (message.title.isNotEmpty() || message.body.isNotEmpty()) {
